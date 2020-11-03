@@ -1,0 +1,183 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+.center{
+    width: 75%;
+    margin: 0px auto; 
+  }
+
+header nav{
+    width: 90%;
+    max-width: 1000px;
+    height:60px;
+    margin: 20px auto;
+    /*background: #024959;*/
+    background: rgba(230, 228, 228, 0.664);
+
+}
+
+
+
+.menu_bar{
+    display: none;
+
+}
+
+.menu nav ul{
+    height: 100%;
+    overflow: hidden;
+    list-style: none;
+}
+
+.menu nav ul li{
+    float:left;
+
+
+}
+
+.menu nav ul li a{
+
+    color:#024959;
+    padding:20px;
+    display: block;
+    text-decoration: none;
+
+}
+
+.menu nav ul li a:hover{
+    /*background:#84A9AC;*/
+    color:black;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.menu nav ul li .active{
+    background-color: #3b6978;
+    color:white;
+}
+
+
+
+#menuvar{
+    display:inline-flex;
+    float: right;
+    font-size:16px;
+}
+
+#logo {
+    width: 25%;
+    font-size: 25px;
+    float: left;
+    margin-top:5px;
+  
+  }
+  
+  #logo img { /*queremos modificar la imagen*/
+    display: block; /*el elemento se comporta como un bloque*/
+    float:left;
+    height:90px;
+    width: 170px;
+    margin-top:2px;
+    margin-right: -40px;
+    transition: transform .2s; 
+    
+  
+  }
+  #logo-img:hover{
+    transform: scale(1.1);
+   
+
+  }
+  
+  #dropdown-basic-button{
+     
+      background-color: transparent;
+      color:black;
+      margin-top:25px;
+ }
+
+ 
+  .btn-primary{
+      border-color:transparent;
+  }
+
+  .mini-avatar{
+    margin-top:auto;
+    margin-bottom: auto;
+    width: 48px;
+    height:48px;
+    border-radius: 50%;
+    border:1px solid grey;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    margin-right: 5px;
+  }
+
+  .perfil-header{
+     
+      display:inline-flex;
+      margin-left: auto;
+  }
+
+  .perfil-header h1{
+    font-size: 16px;
+    margin-top: auto;
+    margin-left: 5px;
+     margin-right: 5px;
+     line-height: 1em;
+     letter-spacing: 0.0852em;
+     font-family: 'open sans',sans-serif;
+     
+  }
+
+  .dropdown-menu.show {
+    display: block;
+    left:auto;
+    right: 95%;
+}
+
+ 
+@media(max-width: 800px){
+
+    #menuvar{
+        width: 70%;
+        height: 100%;
+        left:-100%;
+        margin:0;
+        position:fixed;
+    }
+
+    header nav ul li{
+        display:block;
+        float:none;
+        border-bottom: 1px solid rgb(255,255,255, .3);
+
+    }
+
+    .menu_bar{
+        display: block;
+        width: 100%;
+        background: transparent;
+        height: 60px;
+    }
+
+    .menu_bar #btn-menu{
+        display: block;
+        padding: 20px;
+       /* background: rgba(230, 228, 228, 0.664);*/
+       background: transparent;
+        color: black;
+        text-decoration: none;
+        font-weight: bold;
+        font-size:25px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .menu_bar span{
+        float: left;
+        font-size: 40px;
+    }
+}
