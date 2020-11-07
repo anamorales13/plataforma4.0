@@ -170,6 +170,16 @@ class MiPerfil extends Component {
                                                         </div>
                                                     </li>
                                                 }
+                                                {this.state.identity.tipo === "profesor" &&
+                                                    <li>
+                                                        <span className="form-perfil-value-title">Datos de interés</span>
+                                                        <span className="form-perfil-value">{this.state.identity.datos}</span>
+                                                        <br /><br />
+                                                        <div className="form-line">
+
+                                                        </div>
+                                                    </li>
+                                                }
                                                 {this.state.identity.tipo == 'profesor' &&
                                                     <li>
                                                         <span className="form-perfil-value-title">Numero despacho</span>

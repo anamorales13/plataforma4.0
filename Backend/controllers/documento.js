@@ -67,6 +67,12 @@ var controllers = {
                 documento.profesor = params.nombre;
             }
 
+            if(params.tipo_nube=='particular'){
+                documento.tipo_nube='particular';
+            }else{
+                documento.tipo_nube="compartida";
+            }
+
             /*  if (params.comentario) {
                   documento.comentario = params.comentario;
               } else {
@@ -130,7 +136,11 @@ var controllers = {
 
         
         
-            Documento.find({ alumno: { $eq: userId } }).populate('alumno', 'nombre apellido1 apellido2')
+        Documento.find({
+            $and: [
+                { alumno: { $eq: userId } },
+                { tipo_nube: { $eq: tipo } }]
+        }).populate('alumno', 'nombre apellido1 apellido2')
                 .exec((err, documento) => {
 
                     if (err) {
@@ -162,7 +172,44 @@ var controllers = {
     getDocumentosProfesor: (req, res) =>{
         var userId=req.params.id;
         
-        Documento.find({ profesor: { $eq: userId } }).populate('profesor', 'nombre apellido1 apellido2')
+        Documento.find({
+            $and: [
+                { profesor: { $eq: userId } },
+                { tipo_nube: { $eq: tipo } }]
+        }).populate('profesor', 'nombre apellido1 apellido2')
+                .exec((err, documento) => {
+
+                    if (err) {
+                        return res.status(500).send({
+                            status: 'error',
+                            message: 'Error en la petición'
+                        });
+                    }
+
+                    if (!documento || documento.length <= 0) {
+                        return res.status(404).send({
+                            status: 'error',
+                            message: ' no hay documentos que coincidan con tu usuario'
+                        });
+                    }
+                    console.log('hola');
+                    return res.status(200).send({
+
+                        status: 'sucess',
+                        documento
+                    });
+                });
+    },
+
+    getmydropbox: (req,res) =>{
+        var userId=req.params.id;
+        var tipo="particular";
+        
+    Documento.find({
+            $and: [
+                { profesor: { $eq: userId } },
+                { tipo_nube: { $eq: tipo } }]
+        }).populate('profesor', 'nombre apellido1 apellido2')
                 .exec((err, documento) => {
 
                     if (err) {

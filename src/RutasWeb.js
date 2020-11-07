@@ -16,6 +16,9 @@ import recibidos from './components/mensajes/recibidos';
 import enviados from './components/mensajes/enviados';
 import mensaje from './components/mensajes/mensaje'
 import Alumnos from './components/Alumnos';
+import mydropbox from './components/mydropbox';
+import quienes from './components/inicio/quienes-somos';
+import donde from './components/inicio/donde-estamos';
 
 class Rutas extends Component {
 
@@ -32,6 +35,7 @@ class Rutas extends Component {
                             <Route exact path="/informacion" component={Informacion}></Route>
                             <Route exact path="/documentos/:id?" component={Documento}></Route>
                             <Route exact path="/dropbox/:id?/:nombre?/:apellido1?/:apellido2?" component={Dropbox}></Route>
+                            <Route exact path="/mydropbox" component={mydropbox}></Route>
                             <Route exact path="/user/profile/:id?" component={MiPerfil}></Route>
                             <Route exact path="/user/edit" component={EditPerfil}></Route>
                             <Route exact path="/user/erasmus" component={perfilErasmus}/>
@@ -41,6 +45,8 @@ class Rutas extends Component {
                             <Route exact path="/mensajes/:id" component={mensaje}></Route>
                             <Route exact path="/enviados" component={enviados}/>
                             <Route exact path="/Alumnos" component={Alumnos} />
+                            <Route exact path="/quienes-somos" component={quienes}/>
+                            <Route exact path="/donde-estamos" component={donde}/>
                            
                             <RutasInicio />
                             {/*  <Route exact path="/" component={InicioSesion}/> */}

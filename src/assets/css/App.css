@@ -107,7 +107,7 @@ color: rgb(6, 78, 129);
   display: block; /*el elemento se comporta como un bloque*/
   height:217px;
   margin-top:25px;
-  margin-left: 484Px;
+  margin:auto;
   
 }
 
@@ -532,9 +532,59 @@ input[type="submit"]:hover{
   .grid-inicio{
     
       display:grid;
-      grid-template-rows: 120px auto;
+      grid-template-rows: 120px 120px auto;
   
   }
+
+  .grid-inicio-botones{
+    display: grid;
+    grid-template-columns:repeat(2, 510px) auto
+
+  }
+
+
+  .inicio-botones{
+    width:100%;
+     height:240px;
+     background-color: rgb(236, 235, 235);
+    border:none;
+  }
+
+  .boton-sin-deco{
+    float: right;
+    background-color:'none'; 
+      color:black; 
+     border:none;
+     text-decoration: none;
+
+  }
+
+  .boton-sin-deco:hover{
+    transform: scale(1.13);
+    text-decoration: none;
+    color:black;
+    
+  }
+
+  /* QUIENES SOMOS */
+
+  .quienes-somos{
+    text-align:center;
+     display:block;
+     margin-top: 20px;
+  }
+  
+
+  /* DONDE ESTAMOS */
+
+  .donde-estamos{
+    border: 1px solid rgb(218, 215, 215);
+    margin:auto;
+    margin-top:50px;
+    box-shadow: 0px 0px 2px 0px rgb(122, 122, 122);
+    width:600px;
+  }
+
 
 
   /* PANTALLA INICIO SESION*/
@@ -688,7 +738,7 @@ input[type="submit"]:hover{
   padding:17px;
   font-weight: bold;
   text-transform: uppercase;
-  font-size: 14xp;
+  font-size: 16xp;
   text-decoration:none;
   max-width:139px;
   transition: 300ms all;

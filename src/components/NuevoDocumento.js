@@ -21,6 +21,7 @@ class NuevoDocumento extends Component {
     nombreRef = React.createRef();
     fileRef = React.createRef();
     contentRef = React.createRef();
+    descripcionRef = React.createRef();
 
     url = GlobalDocumentos.url;
     urldocoficial = Global.url;
@@ -30,7 +31,7 @@ class NuevoDocumento extends Component {
         this.state = {
             documento: {},
             documentoOficial: {},
-            nombre:"",
+            nombre: "",
             status: null,
             statuss: null,
             value: null,
@@ -51,17 +52,38 @@ class NuevoDocumento extends Component {
     }
 
     changeState = () => {
-        this.setState({
-            documento: {
-                title: this.titleRef.current.value,
-                url: this.fileRef.current.value,
-                // comentario: this.contentRef.current.value,
-                nombre: this.state.identity._id,
-                tipoDocumento: null,
-                tipousuario: this.state.identity.tipo,
-            }
-        });
+
+        if (this.props.type === "documento-particular") {
+            this.setState({
+                documento: {
+                    title: this.titleRef.current.value,
+                    url: this.fileRef.current.value,
+                    // comentario: this.contentRef.current.value,
+                    nombre: this.state.identity._id,
+                    tipoDocumento: null,
+                    tipousuario: this.state.identity.tipo,
+                    descripcion: this.descripcionRef.current.value,
+                    tipo_nube: 'particular'
+                }
+            });
+        }
+        else {
+            this.setState({
+                documento: {
+                    title: this.titleRef.current.value,
+                    url: this.fileRef.current.value,
+                    // comentario: this.contentRef.current.value,
+                    nombre: this.state.identity._id,
+                    tipoDocumento: null,
+                    tipousuario: this.state.identity.tipo,
+                    descripcion: this.descripcionRef.current.value,
+                    tipo_nube: "compartida"
+                }
+            });
+        }
     }
+
+
     changeStateDocOficial = (e) => {
         this.setState({
             documentoOficial: {
@@ -158,8 +180,8 @@ class NuevoDocumento extends Component {
         e.preventDefault();
 
         // 1- Rellenar el state con el formulario
-       
-    
+
+
 
         const formDatadoc = new FormData();
 
@@ -175,7 +197,7 @@ class NuevoDocumento extends Component {
         console.log("upload")
         console.log("nombre: " + this.state.nombre)
         // VENTANA ALUMNO
-        if (this.props.type ==="nuevo") {
+        if (this.props.type === "nuevo") {
             console.log("1");
             axios.put(this.urldocoficial + 'upload-image/' + this.state.identity._id + '/' + this.state.nombre, formDatadoc)
                 .then(res => {
@@ -255,19 +277,19 @@ class NuevoDocumento extends Component {
 
     notificarProfesor = () => {
         var mensaje = {
-            asunto: 'Modificación del documento '+  this.state.nombre  ,
-            texto: 'El documento ' +  this.state.nombre  + ' se ha subido por parte del alumno ' + this.state.identity.nombre + " " + this.state.identity.apellido1 + " " + this.state.identity.apellido2
+            asunto: 'Modificación del documento ' + this.state.nombre,
+            texto: 'El documento ' + this.state.nombre + ' se ha subido por parte del alumno ' + this.state.identity.nombre + " " + this.state.identity.apellido1 + " " + this.state.identity.apellido2
                 + '  Puede obtener más información en el apartado de ALUMNOS. ',
-            emisor: { profesor: '5f7c4c32fceb54223c41cf44'},
+            emisor: { profesor: '5f7c4c32fceb54223c41cf44' },
             receptor: { profesor: this.state.identity.profesor }
         }
 
         var mensaje2 = {
-            asunto: 'Modificación del documento '+  this.state.nombre,
+            asunto: 'Modificación del documento ' + this.state.nombre,
             texto: 'El documento ' + this.state.nombre + ' se ha subido por parte del alumno ' + this.state.identity.nombre + " " + this.state.identity.apellido1 + " " + this.state.identity.apellido2
                 + 'Puede obtener más información en el apartado de ALUMNOS',
-               
-            emisor: { profesor: '5f7c4c32fceb54223c41cf44'},
+
+            emisor: { profesor: '5f7c4c32fceb54223c41cf44' },
             receptor: { profesor: this.state.identity.coordinador }
         }
 
@@ -284,8 +306,33 @@ class NuevoDocumento extends Component {
                 });
             });
 
-        if(this.state.documentoOficial.nombre=='CPRA' || this.state.documentoOficial.nombre=='Modificacion_CPRA'){
+        if (this.state.documentoOficial.nombre == 'CPRA' || this.state.documentoOficial.nombre == 'Modificacion_CPRA') {
             axios.post('http://localhost:3900/api/mensaje', mensaje2)
+                .then(res => {
+                    this.setState({
+                        nuevoMensaje: res.data.mensaje,
+                        status: 'sucess',
+                    });
+                })
+                .catch(err => {
+                    this.setState({
+                        status: 'failed'
+                    });
+                });
+        }
+    }
+
+
+    notificarAlumno = () => {
+        var mensaje = {
+            asunto: ' Modificación del documento ' + this.state.nombre,
+            texto: 'El documento ' + this.state.nombre + ' se ha subido por parte del profesor ' + this.state.identity.nombre + " " + this.state.identity.apellido1 + " " + this.state.identity.apellido2
+                + '  Puede obtener más información en el apartado de DOCUMENTOS. ',
+            emisor: { profesor: '5f7c4c32fceb54223c41cf44' },
+            receptor: { alumno: this.props.type }
+        }
+
+        axios.post('http://localhost:3900/api/mensaje', mensaje)
             .then(res => {
                 this.setState({
                     nuevoMensaje: res.data.mensaje,
@@ -297,31 +344,6 @@ class NuevoDocumento extends Component {
                     status: 'failed'
                 });
             });
-        }
-    }
-
-
-    notificarAlumno=()=>{
-        var mensaje = {
-            asunto: ' Modificación del documento '+  this.state.nombre,
-            texto: 'El documento ' +  this.state.nombre  + ' se ha subido por parte del profesor ' + this.state.identity.nombre + " " + this.state.identity.apellido1 + " " + this.state.identity.apellido2
-                + '  Puede obtener más información en el apartado de DOCUMENTOS. ',
-            emisor: { profesor: '5f7c4c32fceb54223c41cf44'},
-            receptor: { alumno: this.props.type }
-        }
-
-        axios.post('http://localhost:3900/api/mensaje', mensaje)
-        .then(res => {
-            this.setState({
-                nuevoMensaje: res.data.mensaje,
-                status: 'sucess',
-            });
-        })
-        .catch(err => {
-            this.setState({
-                status: 'failed'
-            });
-        });
     }
 
     fileChange = (event) => {
@@ -366,6 +388,11 @@ class NuevoDocumento extends Component {
                                     <input type="text" id="tittle" name="tittle" ref={this.titleRef} placeholder="Titulo" className="form-input-nuevo" />
                                     {this.validator.message('tittle', this.state.documento.title, 'required')}
                                 </div>
+                                <div >
+                                    {/*<label for="tittle">Titulo:</label>*/}
+                                    <textarea type="text" id="descripcion" name="descripcion" ref={this.descripcionRef} placeholder="Comentario (opcional)" className="form-input-nuevo" style={{ resize:'none'}} />
+
+                                </div>
                                 <div id="div_file" >
                                     {/*} <label htmlFor="file0"> URL: </label>*/}
                                     <input type="file" name="file0" onChange={this.fileChange} ref={this.fileRef} className="form-input-nuevo" />
@@ -378,6 +405,47 @@ class NuevoDocumento extends Component {
                             <button variant="secondary" onClick={this.onCloseModal} className="btn-cerrar">
                                 Close
                              </button>
+
+                        </Modal.Footer>
+                    </Modal>
+                </div>
+            );
+        } else if (this.props.type === "documento-particular") {
+            return (
+                <div>
+                    <Fab color="primary" aria-label="add" onClick={this.openModal}>
+                        <AddIcon onClick={this.openModal} />
+                    </Fab>
+
+
+                    <Modal show={this.state.open} onHide={this.onCloseModal} animation={false}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>SUBIR ARCHIVO</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <form onSubmit={this.saveDocument} className="nuevo-doc">
+                                <div >
+                                    {/*<label for="tittle">Titulo:</label>*/}
+                                    <input type="text" id="tittle" name="tittle" ref={this.titleRef} placeholder="Titulo" className="form-input-nuevo" />
+                                    {this.validator.message('tittle', this.state.documento.title, 'required')}
+                                </div>
+                                <div >
+                                    {/*<label for="tittle">Titulo:</label>*/}
+                                    <textarea type="text" id="descripcion" name="descripcion" ref={this.descripcionRef} placeholder="Comentario (opcional)" className="form-input-nuevo" style={{ resize:'none'}} />
+
+                                </div>
+                                <div id="div_file" >
+                                    {/*} <label htmlFor="file0"> URL: </label>*/}
+                                    <input type="file" name="file0" onChange={this.fileChange} ref={this.fileRef} className="form-input-nuevo" />
+                                    {this.validator.message('file0', this.state.selectedFile, 'required')}
+                                </div>
+                                <input type="submit" value="SUBIR" className="btn-submit" ></input>
+                            </form>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <button variant="secondary" onClick={this.onCloseModal} className="btn-cerrar">
+                                Close
+                         </button>
 
                         </Modal.Footer>
                     </Modal>
@@ -400,7 +468,7 @@ class NuevoDocumento extends Component {
                             <form onSubmit={this.saveDocOficial} className="nuevo-doc">
                                 <div className="form-subir">
                                     <label for="tittle">Seleccionar documento:</label>
-                                    <select className="form-input-nuevo" ref={this.nombreRef}  onChange={this.handleChange('nombre')}>
+                                    <select className="form-input-nuevo" ref={this.nombreRef} onChange={this.handleChange('nombre')}>
                                         <option selected value=""></option>
                                         <option value="CPRA">CPRA</option>
                                         <option value="Learning_Agreement">Learning Agreement</option>

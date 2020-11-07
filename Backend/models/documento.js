@@ -20,6 +20,7 @@ const DocumentosSchema = Schema({
     }*/
     alumno: {type: Schema.ObjectId, ref: 'Alumno'},
     profesor: {type: Schema.ObjectId, ref: 'Profesor'},
+    tipo_nube:String
  });
 
 

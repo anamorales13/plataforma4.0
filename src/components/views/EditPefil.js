@@ -6,6 +6,9 @@ import Global from '../../Global';
 import ReactDOM from 'react-dom';
 import swal from 'sweetalert';
 import MenuPerfil from './MenuPerfil';
+import Form from 'react-bootstrap/Form';
+import Col from 'react-bootstrap/Col';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 import SimpleReactValidator from 'simple-react-validator';
 
@@ -14,9 +17,9 @@ class EditPerfil extends Component {
     state = {
         identity: null,
         alumno: {},
-        profesor:{},
+        profesor: {},
         alumnoNuevo: {},
-        profesorNuevo:{},
+        profesorNuevo: {},
         selectedFile: null,
         token: "",
         navigate: false,
@@ -33,6 +36,7 @@ class EditPerfil extends Component {
     apellido1Ref = React.createRef();
     apellido2Ref = React.createRef();
     imageRef = React.createRef();
+    datosRef = React.createRef();
 
     url = Global.url;
 
@@ -84,7 +88,7 @@ class EditPerfil extends Component {
 
     }
 
-    changeStateProfesor=()=>{
+    changeStateProfesor = () => {
         this.setState({
             profesor: {
                 nombre: this.nombreRef.current.value,
@@ -94,7 +98,8 @@ class EditPerfil extends Component {
                 email: this.emailRef.current.value,
                 telefono: this.telefonoRef.current.value,
                 edificio: this.edificioRef.current.value,
-                despacho: this.despachoRef.current.value
+                despacho: this.despachoRef.current.value,
+                datos: this.datosRef.current.value,
 
 
 
@@ -115,7 +120,7 @@ class EditPerfil extends Component {
 
         this.changeState();
         console.log("HOLA");
-        if(this.validator.allValid()){
+        if (this.validator.allValid()) {
             axios.put(this.url + 'update-user/' + this.state.identity._id, this.state.alumno)
                 .then(res => {
                     console.log("HOLA2");
@@ -139,48 +144,48 @@ class EditPerfil extends Component {
                         status: 'failed'
                     });
                 });
-            }
-            else{
-                this.validator.showMessages();
-                this.forceUpdate();
-            }
+        }
+        else {
+            this.validator.showMessages();
+            this.forceUpdate();
+        }
 
-        
+
 
     }
 
-    updateUserProfesor=(e) =>{
+    updateUserProfesor = (e) => {
         e.preventDefault();
-        if(this.validator.allValid()){
-        axios.put('http://localhost:3900/apiProfesor/update-user/' + this.state.identity._id, this.state.profesor)
-        .then(res => {
-            console.log("HOLA2");
-            this.setState({
-                profesor: res.data.user,
-                status: 'sucess',
+        if (this.validator.allValid()) {
+            axios.put('http://localhost:3900/apiProfesor/update-user/' + this.state.identity._id, this.state.profesor)
+                .then(res => {
+                    console.log("HOLA2");
+                    this.setState({
+                        profesor: res.data.user,
+                        status: 'sucess',
 
-            });
-            console.log("prueba alumno:" + this.state.profesor.edificio);
-            localStorage.setItem('user', JSON.stringify(this.state.profesor));
+                    });
+                    console.log("prueba alumno:" + this.state.profesor.edificio);
+                    localStorage.setItem('user', JSON.stringify(this.state.profesor));
 
-            swal(
-                '¡Perfil Actualizado!',
-                'Su perfil ha sido actualizado correctamente',
-                'sucess'
-            )
-        })
-        .catch(err => {
-            this.setState({
-                profesor: {},
-                status: 'failed'
-            });
-        });
-    }else{
-        this.validator.showMessages();
-        this.forceUpdate();
-    }
+                    swal(
+                        '¡Perfil Actualizado!',
+                        'Su perfil ha sido actualizado correctamente',
+                        'sucess'
+                    )
+                })
+                .catch(err => {
+                    this.setState({
+                        profesor: {},
+                        status: 'failed'
+                    });
+                });
+        } else {
+            this.validator.showMessages();
+            this.forceUpdate();
+        }
 
-       
+
     }
 
     updateImage = (e) => {
@@ -216,7 +221,7 @@ class EditPerfil extends Component {
 
     }
 
-    updateImageProfesor= (e) =>{
+    updateImageProfesor = (e) => {
         e.preventDefault();
 
         console.log(this.state.selectedFile.name);
@@ -269,49 +274,79 @@ class EditPerfil extends Component {
 
                             <article className="elemt-one">
 
-                                <form className="elemt-form" onSubmit={this.updateUser}>
-                                    <div className="form-edit">
+                                <Form className="elemt-form" onSubmit={this.updateUser}>
+                                    <Form.Group className="form-edit">
                                         <label className="form-edit-value-title">Nombre </label>
-                                        <input className="form-edit-value" onChange={this.changeState} type="text" defaultValue={this.state.identity.nombre} ref={this.nombreRef}></input>
+                                        <Form.Control
+                                            className="form-edit-value"
+                                            onChange={this.changeState}
+                                            type="text"
+                                            defaultValue={this.state.identity.nombre}
+                                            ref={this.nombreRef} />
                                         {this.validator.message('nombre', this.state.alumno.nombre, 'required|alpha_space', { className: 'text-danger' })}
-                                    </div>
-                                    <div className="form-edit">
+                                    </Form.Group>
+                                    <Form.Group className="form-edit">
                                         <label className="form-edit-value-title">Primer apellido</label>
-                                        <input className="form-edit-value" onChange={this.changeState} type="text" defaultValue={this.state.identity.apellido1} ref={this.apellido1Ref}></input>
+                                        <Form.Control
+                                            className="form-edit-value"
+                                            onChange={this.changeState}
+                                            type="text"
+                                            defaultValue={this.state.identity.apellido1}
+                                            ref={this.apellido1Ref} />
                                         {this.validator.message('apellido1', this.state.alumno.apellido1, 'required|alpha_space', { className: 'text-danger' })}
-                                    </div>
-                                    <div className="form-edit">
+                                    </Form.Group>
+                                    <Form.Group className="form-edit">
                                         <label className="form-edit-value-title">Segundo apellido</label>
-                                        <input className="form-edit-value" onChange={this.changeState} type="text" defaultValue={this.state.identity.apellido2} ref={this.apellido2Ref}></input>
+                                        <Form.Control
+                                            className="form-edit-value"
+                                            onChange={this.changeState}
+                                            type="text"
+                                            defaultValue={this.state.identity.apellido2}
+                                            ref={this.apellido2Ref} />
                                         {this.validator.message('apellido2', this.state.alumno.apellido2, 'required|alpha_space', { className: 'text-danger' })}
-                                    </div>
-                                    <div className="form-edit">
+                                    </Form.Group>
+                                    <Form.Group className="form-edit">
                                         <label className="form-edit-value-title">Usuario</label>
-                                        <input className="form-edit-value" onChange={this.changeState} type="text" defaultValue={this.state.identity.usuario} ref={this.usuarioRef}></input>
+                                        <Form.Control
+                                            className="form-edit-value"
+                                            onChange={this.changeState}
+                                            type="text"
+                                            defaultValue={this.state.identity.usuario}
+                                            ref={this.usuarioRef} />
                                         {this.validator.message('usuario', this.state.alumno.usuario, 'required', { className: 'text-danger' })}
-                                    </div>
-                                    <div className="form-edit">
+                                    </Form.Group>
+                                    <Form.Group className="form-edit">
                                         <label className="form-edit-value-title">Email</label>
-                                        <input className="form-edit-value" onChange={this.changeState} type="text" defaultValue={this.state.identity.email} ref={this.emailRef}></input>
+                                        <Form.Control
+                                            className="form-edit-value"
+                                            onChange={this.changeState}
+                                            type="text"
+                                            defaultValue={this.state.identity.email}
+                                            ref={this.emailRef} />
                                         {this.validator.message('email', this.state.alumno.email, 'required', { className: 'text-danger' })}
-                                    </div>
-                                    <div className="form-edit">
+                                    </Form.Group>
+                                    <Form.Group className="form-edit">
                                         <label className="form-edit-value-title">Teléfono</label>
-                                        <input className="form-edit-value" onChange={this.changeState} type="text" defaultValue={this.state.identity.telefono} ref={this.telefonoRef}></input>
-                                        {this.validator.message('telefono', this.state.alumno.telefono, 'phone', { className: 'text-danger' })}
-                                    </div>
+                                        <Form.Control
+                                            className="form-edit-value"
+                                            onChange={this.changeState}
+                                            type="text"
+                                            defaultValue={this.state.identity.telefono}
+                                            ref={this.telefonoRef} />
+                                        {/* {this.validator.message('telefono', this.state.alumno.telefono, 'phone', { className: 'text-danger' })}*/}
+                                    </Form.Group>
 
-                                   
+
 
 
                                     <input type="submit" value="ACTUALIZAR" className="btn-update" ></input>
-                                </form>
+                                </Form>
 
 
                             </article>
 
                             <article className="elemt-one">
-                                <form className="elemt-formImage" onSubmit={this.updateImage}>
+                                <Form className="elemt-formImage" onSubmit={this.updateImage}>
                                     <div className="form-editImage">
                                         <label className="form-editImage-value-title">Imagen de perfil</label>
                                         <br />
@@ -319,7 +354,7 @@ class EditPerfil extends Component {
 
                                     </div>
                                     <input type="submit" value="ACTUALIZAR" className="btn-update" ></input>
-                                </form>
+                                </Form>
                             </article>
                         </div>
                     </div>
@@ -328,7 +363,7 @@ class EditPerfil extends Component {
                     <div id="content" className="grid">
                         <MenuPerfil />
                         <div className="avatar-edit">
-                            <img src={ 'http://localhost:3900/apiProfesor/get-image-user/' + this.state.identity.image} classname=" avatar-edit"></img>
+                            <img src={'http://localhost:3900/apiProfesor/get-image-user/' + this.state.identity.image} classname=" avatar-edit"></img>
 
                         </div>
                         <div>
@@ -336,53 +371,105 @@ class EditPerfil extends Component {
 
                             <article className="elemt-one">
 
-                                <form className="elemt-form" onSubmit={this.updateUserProfesor}>
-                                    <div className="form-edit">
+                                <Form className="elemt-form" onSubmit={this.updateUserProfesor}>
+                                    <Form.Group className="form-edit" style={{ marginBottom: '0.8em' }}>
                                         <label className="form-edit-value-title">Nombre </label>
-                                        <input className="form-edit-value" onChange={this.changeStateProfesor} type="text" defaultValue={this.state.identity.nombre} ref={this.nombreRef}></input>
+                                        <Form.Control
+                                            className="form-edit-value"
+                                            onChange={this.changeStateProfesor}
+                                            type="text"
+                                            defaultValue={this.state.identity.nombre}
+                                            ref={this.nombreRef} />
+
                                         {this.validator.message('nombre', this.state.profesor.nombre, 'required|alpha_space', { className: 'text-danger' })}
-                                    </div>
-                                    <div className="form-edit">
+                                    </Form.Group>
+                                    <Form.Group className="form-edit" style={{ marginBottom: '0.8em' }}>
                                         <label className="form-edit-value-title">Primer apellido</label>
-                                        <input className="form-edit-value" onChange={this.changeStateProfesor} type="text" defaultValue={this.state.identity.apellido1} ref={this.apellido1Ref}></input>
+                                        <Form.Control
+                                            className="form-edit-value"
+                                            onChange={this.changeStateProfesor}
+                                            type="text"
+                                            defaultValue={this.state.identity.apellido1}
+                                            ref={this.apellido1Ref} />
                                         {this.validator.message('apellido1', this.state.profesor.apellido1, 'required|alpha_space', { className: 'text-danger' })}
-                                    </div>
-                                    <div className="form-edit">
+                                    </Form.Group>
+                                    <Form.Group className="form-edit" style={{ marginBottom: '0.8em' }}>
                                         <label className="form-edit-value-title">Segundo apellido</label>
-                                        <input className="form-edit-value" onChange={this.changeStateProfesor} type="text" defaultValue={this.state.identity.apellido2} ref={this.apellido2Ref}></input>
+                                        <Form.Control
+                                            className="form-edit-value"
+                                            onChange={this.changeStateProfesor}
+                                            type="text"
+                                            defaultValue={this.state.identity.apellido2}
+                                            ref={this.apellido2Ref} />
                                         {this.validator.message('apellido2', this.state.profesor.apellido2, 'required|alpha_space', { className: 'text-danger' })}
-                                    </div>
-                                    <div className="form-edit">
+                                    </Form.Group>
+                                    <Form.Group className="form-edit" style={{ marginBottom: '0.8em' }}>
                                         <label className="form-edit-value-title">Usuario</label>
-                                        <input className="form-edit-value" onChange={this.changeStateProfesor} type="text" defaultValue={this.state.identity.usuario} ref={this.usuarioRef}></input>
+                                        <Form.Control
+                                            className="form-edit-value"
+                                            onChange={this.changeStateProfesor}
+                                            type="text"
+                                            defaultValue={this.state.identity.usuario}
+                                            ref={this.usuarioRef} />
                                         {this.validator.message('usuario', this.state.profesor.usuario, 'required', { className: 'text-danger' })}
-                                    </div>
-                                    <div className="form-edit">
+                                    </Form.Group>
+                                    <Form.Group className="form-edit" style={{ marginBottom: '0.8em' }}>
                                         <label className="form-edit-value-title">Correo electrónico</label>
-                                        <input className="form-edit-value" onChange={this.changeStateProfesor} type="text" defaultValue={this.state.identity.email} ref={this.emailRef}></input>
+                                        <Form.Control
+                                            className="form-edit-value"
+                                            onChange={this.changeStateProfesor}
+                                            type="text"
+                                            defaultValue={this.state.identity.email}
+                                            ref={this.emailRef} />
                                         {this.validator.message('email', this.state.profesor.email, 'required', { className: 'text-danger' })}
-                                    </div>
-                                    <div className="form-edit">
+                                    </Form.Group>
+                                    <Form.Group className="form-edit" style={{ marginBottom: '0.8em' }}>
                                         <label className="form-edit-value-title">Teléfono</label>
-                                        <input className="form-edit-value" onChange={this.changeStateProfesor} type="text" defaultValue={this.state.identity.telefono} ref={this.telefonoRef}></input>
-                                        {this.validator.message('telefono', this.state.profesor.telefono, 'phone', { className: 'text-danger' })}
-                                    </div>
+                                        <Form.Control
+                                            className="form-edit-value"
+                                            onChange={this.changeStateProfesor}
+                                            type="text"
+                                            defaultValue={this.state.identity.telefono}
+                                            ref={this.telefonoRef} />
+                                        {/*  {this.validator.message('telefono', this.state.profesor.telefono, 'phone', { className: 'text-danger' })}*/}
+                                    </Form.Group>
 
-                                    <div className="form-edit">
+                                    <Form.Group className="form-edit" style={{ marginBottom: '0.8em' }}>
                                         <label className="form-edit-value-title">Edificio</label>
-                                        <input className="form-edit-value" onChange={this.changeStateProfesor} type="text" defaultValue={this.state.identity.edificio} ref={this.edificioRef}></input>
+                                        <Form.Control
+                                            className="form-edit-value"
+                                            onChange={this.changeStateProfesor}
+                                            type="text"
+                                            defaultValue={this.state.identity.edificio}
+                                            ref={this.edificioRef} />
                                         {this.validator.message('edificio', this.state.profesor.edificio, 'required', { className: 'text-danger' })}
-                                    </div>
+                                    </Form.Group>
 
-                                    <div className="form-edit">
+                                    <Form.Group className="form-edit" style={{ marginBottom: '0.8em' }}>
                                         <label className="form-edit-value-title">Numero despacho</label>
-                                        <input className="form-edit-value" onChange={this.changeStateProfesor} type="number" defaultValue={this.state.identity.despacho} ref={this.despachoRef}></input>
+                                        <Form.Control
+                                            className="form-edit-value"
+                                            onChange={this.changeStateProfesor}
+                                            type="number"
+                                            defaultValue={this.state.identity.despacho}
+                                            ref={this.despachoRef} />
                                         {this.validator.message('despacho', this.state.profesor.despacho, 'required', { className: 'text-danger' })}
-                                    </div>
+                                    </Form.Group>
 
+                                    <Form.Group className="form-edit" style={{ marginBottom: '0.8em' }}>
+                                        <label className="form-edit-value-title">Datos de interes</label>
+                                        <textarea
+                                            className=" form-control form-edit-value-textarea"
+                                            style={{ resize: 'none' }}
+                                            onChange={this.changeStateProfesor}
+                                            type="textarea"
+                                            defaultValue={this.state.identity.datos}
+                                            ref={this.datosRef} />
+
+                                    </Form.Group>
 
                                     <input type="submit" value="ACTUALIZAR" className="btn-update" ></input>
-                                </form>
+                                </Form>
 
 
                             </article>
