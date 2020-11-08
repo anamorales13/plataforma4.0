@@ -14,5 +14,6 @@ router.post('/save', DestinoController.save);
 router.get('/buscar',DestinoController.buscar );
 router.get('/destinos' , DestinoController.getDestinos);
 router.get('/destino/:id' , DestinoController.getdestino);
+router.put('/update_coordinador/:id', DestinoController.putcoordinador);
 
 module.exports= router;

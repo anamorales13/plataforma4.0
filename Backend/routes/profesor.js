@@ -19,6 +19,9 @@ router.get('/alumnos/:id', ProfesorController.getAlumnos);
 router.post('/compararPassword/:id', ProfesorController.comparePassword);
 router.put('/update-password/:id', ProfesorController.updatePassword);
 
+/*coordinador de centro */
+router.get('/get-coordinador-centro', ProfesorController.getcoordinador_de_centro);
+
 
 router.post('/upload-image-user/:id',/* [md_auth.ensureAuth,*/ md_uploadd, ProfesorController.uploadImage);
 router.get('/get-image-user/:imageFile', ProfesorController.getImageFile);

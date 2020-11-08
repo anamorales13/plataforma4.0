@@ -39,7 +39,7 @@ var controllers = {
             var validate_apellido1 = !validator.isEmpty(params.apellido1);
             var validate_apellido2 = !validator.isEmpty(params.apellido2);
             var validate_edificio = !validator.isEmpty(params.edificio);
-            
+
 
         } catch (err) {
             return res.status(200).send({
@@ -68,8 +68,8 @@ var controllers = {
             profesor.edificio = params.edificio;
             profesor.tipo = 'profesor';
 
-            if(params.datos){
-                profesor.datos=params.datos;
+            if (params.datos) {
+                profesor.datos = params.datos;
             }
 
 
@@ -235,9 +235,9 @@ var controllers = {
               })
           }*/
 
-          console.log("hola");
-          console.log(userId);
-          console.log(update);
+        console.log("hola");
+        console.log(userId);
+        console.log(update);
 
         Profesor.findByIdAndUpdate(userId, update, { new: true }, (err, userUpdate) => {
             if (err) {
@@ -251,7 +251,7 @@ var controllers = {
                 });
             }
 
-            userUpdate.password=undefined;
+            userUpdate.password = undefined;
             console.log("userupdate: " + userUpdate);
             return res.status(200).send({
                 status: 'sucess',
@@ -290,7 +290,7 @@ var controllers = {
 
         })
     },
-    
+
     /*--------------------------------*/
     /***** SUBIR AVATAR USUARIO  *****/
     /*--------------------------------*/
@@ -427,8 +427,8 @@ var controllers = {
 
         userString = params.usuario;
         passwString = params.password;
-console.log(userString);
-console.log(passwString);
+        console.log(userString);
+        console.log(passwString);
 
         Profesor.findOne({ usuario: { $eq: userString } })
             .exec((err, users) => {
@@ -447,7 +447,7 @@ console.log(passwString);
                             // if(params.gettoken){
                             //generar y devolver el token
                             users.password = undefined;
-                            users.alumnos=undefined;
+                            users.alumnos = undefined;
                             return res.status(200).send({
                                 status: 'sucess',
                                 users,
@@ -527,7 +527,8 @@ console.log(passwString);
 
     getProfesores: (req, res) => {
 
-        Profesor.find()
+        var profesor = "profesor";
+        Profesor.find({ tipo: { $eq: profesor } })
             .exec((err, profesor) => {
 
                 if (err) {
@@ -551,7 +552,33 @@ console.log(passwString);
                 });
             });
     },
-  
+    getcoordinador_de_centro: (req, res) => {
+
+        var profesor = "coordinador_de_centro";
+
+        Profesor.findOne({ rol: profesor }, (err, profesor) => {
+            if (err) {
+                return res.status(500).send({
+                    message: 'Error en la petición'
+                });
+            }
+            if (!profesor) {
+                return res.status(404).send({
+                    message: 'El usuario no existe'
+                });
+            }
+            profesor.password = undefined;
+            return res.status(200).send({
+                status: 'sucess',
+                profesor: profesor
+            })
+
+        });
+
+
+
+    },
+
 
     setAlumno: (req, res) => {
         var update = req.body;
@@ -611,27 +638,27 @@ console.log(passwString);
 
     },
 
-    getAlumnos: (req, res) =>{
-        var userId= req.params.id;
+    getAlumnos: (req, res) => {
+        var userId = req.params.id;
 
         Profesor.findById(userId).populate('alumnos', 'nombre apellido1 apellido2 image email')
-        .exec((err, userget) => {
-            if (err) {
-                return res.status(500).send({
-                    message: 'Error en la petición'
-                });
-            }
-            if (!userget) {
-                return res.status(404).send({
-                    message: 'El usuario no existe'
-                });
-            }
+            .exec((err, userget) => {
+                if (err) {
+                    return res.status(500).send({
+                        message: 'Error en la petición'
+                    });
+                }
+                if (!userget) {
+                    return res.status(404).send({
+                        message: 'El usuario no existe'
+                    });
+                }
 
-            return res.status(200).send({
-                status: 'sucess',
-               user: userget
-            });
-        })
+                return res.status(200).send({
+                    status: 'sucess',
+                    user: userget
+                });
+            })
     }
 }
 

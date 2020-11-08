@@ -19,7 +19,8 @@ var ProfesorSchema=Schema ({
     image: String,
     tipo:String,
     datos:String,
-    alumnos:[{type: Schema.ObjectId, ref:'Alumno'}]
+    alumnos:[{type: Schema.ObjectId, ref:'Alumno'}],
+    rol:String
       
 });
 

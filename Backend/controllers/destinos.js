@@ -27,14 +27,13 @@ var controllers = {
 
         var params = req.body;
         var destino = new Destino();
-
-
+    
 
         destino.pais = params.pais;
         destino.ciudad = params.ciudad;
         destino.carrera = params.carrera;
         destino.profesor = params.profesor;
-        destino.coordinador = params.coordinador;
+        destino.coordinador=params.coordinador;
 
 
 
@@ -43,7 +42,7 @@ var controllers = {
             if (errn || !destinoStored) {
                 return res.status(500).send({
                     status: 'error',
-                    message: 'El alumno no se ha guardado'
+                    message: 'El destino no se ha guardado'
                 });
             }
 
@@ -54,6 +53,25 @@ var controllers = {
 
         });
 
+    },
+
+    putcoordinador:(req,res) =>{
+        var id= req.params.id;
+        var update= req.body;
+
+        Destino.findByIdAndUpdate(req.params.id, { $set: { coordinador: update.value } }, { new: true }, function (err, destino) {
+            if (err || !destino) {
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'El destino no se ha guardado'
+                });
+            }
+
+            return res.status(200).send({
+                status: 'sucess',
+                destino: destino
+            });
+        });
     },
 
     buscar: (req, res) => {
@@ -136,7 +154,9 @@ var controllers = {
                 destinoget
             });
         })
-    }
+    },
+
+    
 }
 
 module.exports = controllers;

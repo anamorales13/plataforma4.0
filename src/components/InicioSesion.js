@@ -281,8 +281,7 @@ class InicioSesion extends Component {
                         </div>
                     </div>
                 }
-                <div id="administrador">
-                    <label>¿Eres administrador?</label> <Link to={"/inicioAdministrador"}>Inicia sesión aquí</Link> </div>
+               
             </div>
 
 

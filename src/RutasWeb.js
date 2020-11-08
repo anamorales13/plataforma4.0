@@ -19,6 +19,10 @@ import Alumnos from './components/Alumnos';
 import mydropbox from './components/mydropbox';
 import quienes from './components/inicio/quienes-somos';
 import donde from './components/inicio/donde-estamos';
+import destinos from './components/admin/destinos';
+import profesores from './components/admin/gestionProfesores';
+import editardestino from './components/admin/editDestinos';
+import borrardestino from './components/admin/borrardestino';
 
 class Rutas extends Component {
 
@@ -47,6 +51,10 @@ class Rutas extends Component {
                             <Route exact path="/Alumnos" component={Alumnos} />
                             <Route exact path="/quienes-somos" component={quienes}/>
                             <Route exact path="/donde-estamos" component={donde}/>
+                            <Route exact path="/destinos" component={destinos}/>
+                            <Route exact path="/gestino-profesores" component={profesores}/>
+                            <Route exact path="/editar-destinos" component={editardestino}/>
+                            <Route exact path="/borrar-destinos" component={borrardestino}/>
                            
                             <RutasInicio />
                             {/*  <Route exact path="/" component={InicioSesion}/> */}

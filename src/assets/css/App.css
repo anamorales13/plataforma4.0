@@ -51,7 +51,7 @@ invalid {
 }
 
 #menu{
-  width: 70%;
+  width: 75%;
   float: right;
   font-size:16px;
 }
@@ -59,7 +59,7 @@ invalid {
 #menu ul{
   
   line-height: 68px ; /*la altura de los elementos en linea*/
-  width: 60%;
+  width: 70%;
   float:right;
 
 }
@@ -452,6 +452,7 @@ input[type="submit"]:hover{
 
 }
 
+/*
   .btn{
     display:block; 
     background: rgb(57, 178, 182);
@@ -462,17 +463,16 @@ input[type="submit"]:hover{
     font-size:14px;
     text-decoration: none;
     max-width: 120px;
-    /*para que el cambio de color sea mas suavizado:*/
+    
     transition: 300ms all;
     border:none;
     border-radius: 3px;
-    /*para que siempre que este el raton
-    encima del cursor cambie el mouse a mano que va pulsar:*/
+    
     cursor: pointer;
   
   }
 
-
+*/
   .documento-item{
     text-align: center;
 
@@ -748,6 +748,15 @@ input[type="submit"]:hover{
   justify-content: center;
 }
 
+.menu-admin{
+  display:block;
+  color:black;
+  max-width: 200px;
+  border:none;
+  background: transparent;
+  margin-top:20px
+
+}
 
 
 .notificacion-mensajes:hover{
