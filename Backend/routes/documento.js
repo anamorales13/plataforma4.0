@@ -19,5 +19,6 @@ routerDoc.post('/upload-image/:id', md_upload, DocumentoController.upload)
 routerDoc.get('/get-image/:image', DocumentoController.getImage);
 routerDoc.delete('/delete/:title', DocumentoController.delete);
 routerDoc.get('/mydropboxProfesor/:id', DocumentoController.getmydropbox);
+routerDoc.get('/mydropboxAlumno/:id', DocumentoController.getmydropboxAlumno);
 
 module.exports= routerDoc;

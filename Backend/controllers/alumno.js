@@ -38,10 +38,10 @@ var controllers = {
     save: (req, res) => {
         var params = req.body;
 
-        console.log("nombre"+params.nombre);
-        console.log("email"+params.email);
-        console.log("apellido"+params.apellido1);
-        console.log("apellido"+params.apellido2);
+        console.log("nombre" + params.nombre);
+        console.log("email" + params.email);
+        console.log("apellido" + params.apellido1);
+        console.log("apellido" + params.apellido2);
 
         //1.- validar los datos
         try {
@@ -63,7 +63,7 @@ var controllers = {
         console.log(validate_apellido1);
         console.log(validate_apellido2);
         console.log(validate_email);
-        
+
 
 
         if (validate_nombre && validate_apellido1 && validate_apellido2 && validate_email) {
@@ -209,7 +209,7 @@ var controllers = {
         passwString = params.password;
 
         console.log("usuario" + userString);
-        console.log("password"+ passwString);
+        console.log("password" + passwString);
 
         Alumno.findOne({ usuario: { $eq: userString } })
             .exec((err, users) => {
@@ -579,11 +579,11 @@ var controllers = {
 
         var image_file = req.params.imageFile;
         var path_file = './upload/users/' + image_file;
-      
-        
+
+
         fss.exists(path_file, (exists) => {
             if (exists) {
-             
+
                 res.sendFile(path.resolve(path_file));
             } else {
                 res.status(200).send({
@@ -603,7 +603,7 @@ var controllers = {
     addDocumentos: (req, res) => {
         var userId = req.params.id;
         var update = req.body;
-        var fechanueva= new Date();
+        var fechanueva = new Date();
 
         Alumno.findOne({ _id: userId }, (err, user) => {
             if (err) {
@@ -619,7 +619,7 @@ var controllers = {
 
             console.log(update.nombre);
             user.documentos.push({ nombre: req.body.nombre, estado: req.body.estado });
-            
+
             user.save(function (err) {
                 if (err) {
                     console.log("error");
@@ -844,7 +844,7 @@ var controllers = {
             });
     },
 
-    getalumnosdecoordinador :(req, res) =>{
+    getalumnosdecoordinador: (req, res) => {
         var userId = req.params.id;
         console.log("hola busqueda de coordinador");
         console.log(userId);
@@ -861,6 +861,47 @@ var controllers = {
                     });
                 }
             });
+    },
+
+    /****** SET DESTINOS POR QUE SE HA MODIFICADO */
+    setdestinos: (req, res) => {
+        var iddestinos = req.params.iddestino;
+        var update = req.body;
+
+        Alumno.updateMany({ destino: iddestinos }, { profesor: update.profesor })
+            .exec((err, users) => {
+                if (err) return res.status(500).send({
+                    status: 'fail',
+                    message: 'error en al peticion'
+                });
+                if (users) {
+                    return res.status(200).send({
+                        status: 'sucess'
+                    });
+                }
+            });
+    },
+
+    /**** DAR DE BAJA */
+    dardebaja:(req,res) =>{
+        var userId=req.params.id;
+
+        Alumno.findByIdAndDelete(userId)
+            .exec((err) =>{
+                if(err){
+                    return res.status(500).send({
+                        message:'Error en la peticion'
+                    });
+                }
+                
+
+                return res.status(200).send({
+                    status: 'sucess',
+                    navigate:true
+                  
+                });
+            })
+
     }
 
 

@@ -36,7 +36,7 @@ class mydropbox extends Component {
     };
 
     url = GlobalDocumentos.url;
-
+ 
 
 
 
@@ -60,6 +60,7 @@ class mydropbox extends Component {
 
     getDocumentos() {
 
+
         if (this.state.identity.tipo === "profesor") {
             axios.get(this.url + "mydropboxProfesor/" + this.state.identity._id)
                 .then(res => {
@@ -68,11 +69,7 @@ class mydropbox extends Component {
                         status: 'sucess'
                     });
                 });
-
-
-
         } else {
-
             axios.get(this.url + "mydropboxAlumno/" + this.state.identity._id)
                 .then(res => {
                     this.setState({
@@ -80,9 +77,9 @@ class mydropbox extends Component {
                         status: 'sucess'
                     });
                 });
-
         }
     }
+
 
     delete(title) {
         axios.delete(this.url + "delete/" + title)

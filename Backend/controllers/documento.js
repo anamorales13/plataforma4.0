@@ -4,6 +4,7 @@ var validator = require('validator');
 var Documento = require('../models/documento');
 var fs = require('fs');
 var path = require('path');
+const { TableBody } = require('@material-ui/core');
 
 var controllers = {
 
@@ -61,7 +62,7 @@ var controllers = {
 
 
 
-            if (params.tipousuario == 'alumno')
+            if (params.tipousuario === 'Alumno')
                 documento.alumno = params.nombre;
             else {
                 documento.profesor = params.nombre;
@@ -131,10 +132,9 @@ var controllers = {
     getDocumentosAlumnos: (req, res) => {
 
         var userId = req.params.id;
+        var tipo= "compartida";
         
-        console.log(userId);
-
-        
+        console.log(userId);       
         
         Documento.find({
             $and: [
@@ -171,6 +171,7 @@ var controllers = {
 
     getDocumentosProfesor: (req, res) =>{
         var userId=req.params.id;
+        var tipo="compartida"
         
         Documento.find({
             $and: [
@@ -210,6 +211,38 @@ var controllers = {
                 { profesor: { $eq: userId } },
                 { tipo_nube: { $eq: tipo } }]
         }).populate('profesor', 'nombre apellido1 apellido2')
+                .exec((err, documento) => {
+
+                    if (err) {
+                        return res.status(500).send({
+                            status: 'error',
+                            message: 'Error en la petición'
+                        });
+                    }
+
+                    if (!documento || documento.length <= 0) {
+                        return res.status(404).send({
+                            status: 'error',
+                            message: ' no hay documentos que coincidan con tu usuario'
+                        });
+                    }
+                    console.log('hola');
+                    return res.status(200).send({
+
+                        status: 'sucess',
+                        documento
+                    });
+                });
+    },
+    getmydropboxAlumno: (req,res) =>{
+        var userId=req.params.id;
+        var tipo="particular";
+        
+    Documento.find({
+            $and: [
+                { alumno: { $eq: userId } },
+                { tipo_nube: { $eq: tipo } }]
+        }).populate('alumno', 'nombre apellido1 apellido2')
                 .exec((err, documento) => {
 
                     if (err) {

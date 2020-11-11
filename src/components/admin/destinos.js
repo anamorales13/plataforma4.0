@@ -5,6 +5,7 @@ import Menu from './menu-admin';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import Card from 'react-bootstrap/Card';
 import swal from 'sweetalert';
 import Alert from 'bootstrap';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -126,6 +127,7 @@ class destinos extends Component {
                         <div>
                             <h1 className="titulo-doc"> GESTIÓN DE DESTINOS </h1></div>
                         <div >
+                            
                             <Form className="form-añadir-destino" onSubmit={this.añadirDestino}>
                                 <Form.Group controlId="formBasicEmail">
                                     <Form.Label>Pais</Form.Label>
@@ -171,6 +173,7 @@ class destinos extends Component {
                                     CREAR
                             </Button>
                             </Form>
+                            
                         </div>
 
                     </div>

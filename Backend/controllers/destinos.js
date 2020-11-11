@@ -55,6 +55,32 @@ var controllers = {
 
     },
 
+    borrar:(req,res) =>{
+        var id= req.params.id;
+        
+        Destino.findOneAndDelete({ _id: { $eq: id } })
+        .exec((err, destino) => {
+            if (err) {
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'Error en la peticion'
+                });
+            }
+
+            if (!destino) {
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'No se encuentra el destino a eliminar'
+                })
+            }
+
+            return res.status(200).send({
+                status: 'sucess',
+                message: 'Destino eliminado correctamente'
+            })
+        })
+    },
+
     putcoordinador:(req,res) =>{
         var id= req.params.id;
         var update= req.body;
@@ -72,6 +98,26 @@ var controllers = {
                 destino: destino
             });
         });
+    },
+
+    updateprofesor:(req, res) =>{
+        var id= req.params.id;
+        var update= req.body;
+
+        Destino.findByIdAndUpdate(req.params.id, { $set: { profesor: update.profesor } }, { new: true }, function (err, destino) {
+            if (err || !destino) {
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'El destino no se ha guardado'
+                });
+            }
+
+            return res.status(200).send({
+                status: 'sucess',
+                destino: destino
+            });
+        });
+
     },
 
     buscar: (req, res) => {
@@ -136,7 +182,7 @@ var controllers = {
         var destinoId = req.params.id;
         console.log(destinoId);
 
-        Destino.findById(destinoId).populate('profesor coordinador', 'nombre apellido1 apellido2 edificio despacho telefono') 
+        Destino.findById(destinoId).populate('profesor coordinador', ' _id nombre apellido1 apellido2 edificio despacho telefono') 
                 .exec((err, destinoget )=> {
             if (err) {
                 return res.status(500).send({

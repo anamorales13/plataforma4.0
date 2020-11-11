@@ -75,14 +75,12 @@ export class FormDatosPersonales extends Component {
 
         //TELEFONO
 
-        if (!this.props.values.telefono) {
-            errors.telefono = "Campo obligatorio";
-        }
-        else {
+        if (this.props.values.telefono) {
             if (!regexnumeros.test(this.props.values.telefono)) {
                 errors.telefono = "Número no valido";
             }
         }
+        
 
 
         return errors;
@@ -97,11 +95,14 @@ export class FormDatosPersonales extends Component {
 
     continue = e => {
         e.preventDefault();
+        console.log("hey");
         const { errors, ...sinErrors } = this.state;
         const result = this.validate(sinErrors);
 
+        console.log(result);
         this.setState({ errors: result })
         if (!Object.keys(result).length) {
+            console.log("hey2");
             this.props.nextStep();
         }
 

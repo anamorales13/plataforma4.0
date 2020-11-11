@@ -39,7 +39,7 @@ class Dropbox extends Component {
     };
 
     url = GlobalDocumentos.url;
-    urlalumno = Global.urlalumno;
+    urlalumno = Global.url;
 
 
 
@@ -66,19 +66,20 @@ class Dropbox extends Component {
         var id = this.props.match.params.id;
         console.log(id);
         var body = {
-            tipo: id
+            tipo_nube:'compartida'
         }
 
         if (id == null) { //view: alumno
             console.log("hola");
-            axios.get(this.url + "documentosAlumnos/" + this.state.identity._id)
+            axios.get(this.url + "documentosAlumnos/" + this.state.identity._id, body)
                 .then(res => {
                     this.setState({
                         documentos: res.data.documento,
                         status: 'sucess'
                     });
                 });
-            axios.get(this.url + "documentosProfesor/" + this.state.identity.profesor)
+            
+            axios.get(this.url + "documentosProfesor/" + this.state.identity.profesor, body)
                 .then(res => {
                     this.setState({
                         docprofesor: res.data.documento,
@@ -90,7 +91,7 @@ class Dropbox extends Component {
         }
         else { //view: profesor
 
-            axios.get(this.url + "documentosAlumnos/" + this.state.identity._id,)
+            axios.get(this.url + "documentosAlumnos/" + this.state.identity._id, body)
                 .then(res => {
                     this.setState({
                         documentos: res.data.documento,
@@ -104,7 +105,7 @@ class Dropbox extends Component {
                         status: 'sucess'
                     })
                 })
-            axios.get(this.url + "documentosProfesor/" + this.state.identity._id)
+            axios.get(this.url + "documentosProfesor/" + this.state.identity._id, body)
                 .then(res => {
                     this.setState({
                         docprofesor: res.data.documento,

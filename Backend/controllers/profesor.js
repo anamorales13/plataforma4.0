@@ -659,6 +659,27 @@ var controllers = {
                     user: userget
                 });
             })
+    },
+
+    /******** DAR DE BAJA */
+    dardebaja:(req,res) =>{
+        var userId=req.params.id;
+
+        Profesor.findByIdAndDelete(userId)
+            .exec((err) =>{
+                if(err){
+                    return res.status(500).send({
+                        message:'Error en la peticion'
+                    });
+                }
+                
+
+                return res.status(200).send({
+                    status: 'sucess',
+                  
+                });
+            })
+
     }
 }
 

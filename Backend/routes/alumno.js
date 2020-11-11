@@ -35,6 +35,9 @@ router.put('/saveprofesor/:id', AlumnoController.guardarProfesorCoordinador);
 router.get('/get-alumnos-profesor/:id', AlumnoController.getalumnosdeprofesor);
 router.get('/coordinador/:id', AlumnoController.getalumnosdecoordinador);
 router.get('/alumnos', AlumnoController.getAlumnos);
+router.put('/setdestino/:iddestino', AlumnoController.setdestinos);
+/* dar de baja*/
+router.delete('/dardebaja/:id', AlumnoController.dardebaja);
 
 router.get('/get-image/:image', AlumnoController.getImage);
 

@@ -50,7 +50,7 @@ export class Useform extends Component {
     nextStep = e => {
         const { step } = this.state;
      
-       
+       console.log(this.state.step);
             this.setState({
                 step: step + 1
             });
@@ -118,7 +118,7 @@ export class Useform extends Component {
             case 1:
                 return (
                     <FormDatosPersonales
-                        nextStep={this.nextStep}
+                    nextStep={this.nextStep}
                         handleChange={this.handleChange}
                         values={values}
                         tipo={tipo}

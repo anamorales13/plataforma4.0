@@ -22,10 +22,11 @@ class Header extends Component {
     contador = '1';
     url = Global.url;
     urlmensaje = GlobalMensaje.url;
+    urlprofesor=Global.urlprofesor;
 
     state = {
         navigate: false,
-        identity: null,
+        identity: JSON.parse(localStorage.getItem('user')),
         noleidos: 0,
         show: false,
         showadmin: false
@@ -58,16 +59,9 @@ class Header extends Component {
     constructor(props) {
 
         super(props);
-
-
-
     }
 
-    componentWillMount() {
-        this.setState({
-            identity: JSON.parse(localStorage.getItem('user')),
-        })
-    }
+    
 
     componentDidMount() {
 
@@ -113,6 +107,8 @@ class Header extends Component {
 
             });
     }
+
+   
 
     render() {
 
@@ -194,7 +190,7 @@ class Header extends Component {
                                         <Dropdown.Item href="/user/edit">Editar Perfil</Dropdown.Item>
                                         <Dropdown.Item href="/user/erasmus">Erasmus</Dropdown.Item>
                                         <Dropdown.Item href="/user/seguridad">Constraseña</Dropdown.Item>
-                                        <Dropdown.Item href="#">Ayuda</Dropdown.Item>
+                                        <Dropdown.Item href="/solicitar_baja">Solicitar baja</Dropdown.Item>
                                         <Dropdown.Item onClick={() => this.setState({ navigate: true })}>Cerrar Sesion</Dropdown.Item>
                                     </DropdownButton>
                                 </div>
@@ -256,7 +252,7 @@ class Header extends Component {
                                         <Dropdown.Item href="/user/profile">Perfil</Dropdown.Item>
                                         <Dropdown.Item href="/user/edit">Editar Perfil</Dropdown.Item>
                                         <Dropdown.Item href="/user/seguridad">Constraseña</Dropdown.Item>
-                                        <Dropdown.Item href="#">Ayuda</Dropdown.Item>
+                                    
                                         <Dropdown.Item onClick={() => this.setState({ navigate: true })}>Cerrar Sesion</Dropdown.Item>
                                     </DropdownButton>
                                 </div>
