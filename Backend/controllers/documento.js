@@ -62,16 +62,26 @@ var controllers = {
 
 
 
-            if (params.tipousuario === 'Alumno')
+            if (params.tipousuario === 'Alumno'){
                 documento.alumno = params.nombre;
+                documento.profesor=params.nombre2;
+                documento.propietario='Alumno';
+            }
             else {
                 documento.profesor = params.nombre;
+                documento.alumno=params.nombre2;
+                documento.propietario="Profesor";
             }
 
             if(params.tipo_nube=='particular'){
                 documento.tipo_nube='particular';
             }else{
                 documento.tipo_nube="compartida";
+            }
+
+            console.log(params.descripcion);
+            if(params.descripcion!=null){
+                documento.descripcion=params.descripcion;
             }
 
             /*  if (params.comentario) {
@@ -132,6 +142,7 @@ var controllers = {
     getDocumentosAlumnos: (req, res) => {
 
         var userId = req.params.id;
+        var profesorId= req.params.idprofesor;
         var tipo= "compartida";
         
         console.log(userId);       
@@ -139,6 +150,7 @@ var controllers = {
         Documento.find({
             $and: [
                 { alumno: { $eq: userId } },
+                {profesor: {$eq:profesorId }},
                 { tipo_nube: { $eq: tipo } }]
         }).populate('alumno', 'nombre apellido1 apellido2')
                 .exec((err, documento) => {
@@ -171,13 +183,15 @@ var controllers = {
 
     getDocumentosProfesor: (req, res) =>{
         var userId=req.params.id;
+        var alumnoId= req.params.idalumno;
         var tipo="compartida"
         
         Documento.find({
             $and: [
                 { profesor: { $eq: userId } },
+                {alumno: {$eq: alumnoId}},
                 { tipo_nube: { $eq: tipo } }]
-        }).populate('profesor', 'nombre apellido1 apellido2')
+        }).populate('profesor alumno', 'nombre apellido1 apellido2')
                 .exec((err, documento) => {
 
                     if (err) {

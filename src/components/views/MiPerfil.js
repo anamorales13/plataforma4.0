@@ -99,21 +99,14 @@ class MiPerfil extends Component {
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <span className="form-perfil-value-title">Primer apellido</span>
-                                                    <span className="form-perfil-value">{this.state.identity.apellido1}</span>
+                                                    <span className="form-perfil-value-title">Apellidos</span>
+                                                    <span className="form-perfil-value">{this.state.identity.apellido1 + " " + this.state.identity.apellido2}</span>
                                                     <br /><br />
                                                     <div className="form-line">
 
                                                     </div>
                                                 </li>
-                                                <li>
-                                                    <span className="form-perfil-value-title">Segundo apellido</span>
-                                                    <span className="form-perfil-value">{this.state.identity.apellido2}</span>
-                                                    <br /><br />
-                                                    <div className="form-line">
-
-                                                    </div>
-                                                </li>
+                                               
                                                 <li>
                                                     <span className="form-perfil-value-title">Usuario</span>
                                                     <span className="form-perfil-value">{this.state.identity.usuario}</span>

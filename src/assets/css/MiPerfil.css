@@ -67,7 +67,7 @@ body{
 .form-edit-value-title{
     letter-spacing: .0727272727em;
     font-family: Roboto,Arial,sans-serif;
-    font-size: 1.5599812rem;
+    font-size: 1.199812rem;
     font-weight: 500;
     line-height: 1rem;
     /*text-transform: uppercase;*/
@@ -95,7 +95,7 @@ body{
 .form-perfil-value-title{
     letter-spacing: .0727272727em;
     font-family: Roboto,Arial,sans-serif;
-    font-size: 1.55812rem;
+    font-size: 1.15812rem;
     font-weight: 500;
     line-height: 1rem;
     /*text-transform: uppercase;*/
@@ -113,6 +113,8 @@ margin-top: 30px;
 border-radius: 25px;
 box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 transition: 0.3s;
+width:700px;
+
 
 }
 
@@ -141,7 +143,7 @@ transition: 0.3s;
     float: right;
     letter-spacing: .0727272727em;
     font-family: Roboto,Arial,sans-serif;
-    font-size:1.5598812rem;
+    font-size:1.0598812rem;
     font-weight: 500;
     line-height: 1.45rem;
     word-break: break-word;
@@ -174,12 +176,12 @@ transition: 0.3s;
     float: right;
     letter-spacing: .0727272727em;
     font-family: Roboto,Arial,sans-serif;
-    font-size:1.5598812rem;
+    font-size:1.1598812rem;
     font-weight: 500;
     line-height: 1.45rem;
     word-break: break-word;
     color:black;
-    margin-right:50px;
+    margin-right:100px;
     padding:0;
    
 }
@@ -294,7 +296,7 @@ transition: 0.3s;
    margin-right: 50px;
     letter-spacing: .01727272727em;
     font-family: Roboto,Arial,sans-serif;
-    font-size:1.4rem;
+    font-size:1.0rem;
     font-weight: 500;
     border: none;
     color: white;
@@ -308,3 +310,11 @@ transition: 0.3s;
    
 }
 
+
+/**** PERFIL ERASMUS DEL PROFESOR */
+
+.profesor-erasmus{
+    display:block;
+    margin:auto;
+    text-align: center;
+}

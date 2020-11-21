@@ -33,13 +33,14 @@ class Dropbox extends Component {
         docprofesor: [],
         status: null,
         identity: null,
-        alumno: {}
+        alumno: {},
+
 
 
     };
 
     url = GlobalDocumentos.url;
-    urlalumno = Global.url;
+    urlalumno = Global.urlalumno;
 
 
 
@@ -56,7 +57,7 @@ class Dropbox extends Component {
         this.getDocumentos();
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getDocumentos();
     }
 
@@ -64,22 +65,20 @@ class Dropbox extends Component {
     getDocumentos() {
 
         var id = this.props.match.params.id;
-        console.log(id);
-        var body = {
-            tipo_nube:'compartida'
-        }
 
-        if (id == null) { //view: alumno
-            console.log("hola");
-            axios.get(this.url + "documentosAlumnos/" + this.state.identity._id, body)
+
+
+        if (this.state.identity.tipo=== 'Alumno') { //view: alumno
+
+            /*axios.get(this.url + "documentosAlumnos/" + this.state.identity._id + '/' + this.state.identity.profesor)
                 .then(res => {
                     this.setState({
                         documentos: res.data.documento,
                         status: 'sucess'
                     });
-                });
-            
-            axios.get(this.url + "documentosProfesor/" + this.state.identity.profesor, body)
+                });*/
+
+            axios.get(this.url + "documentosProfesor/" + this.state.identity.profesor + '/' + this.state.identity._id)
                 .then(res => {
                     this.setState({
                         docprofesor: res.data.documento,
@@ -91,27 +90,22 @@ class Dropbox extends Component {
         }
         else { //view: profesor
 
-            axios.get(this.url + "documentosAlumnos/" + this.state.identity._id, body)
-                .then(res => {
-                    this.setState({
-                        documentos: res.data.documento,
-                        status: 'sucess'
-                    });
-                });
-            axios.get("http://localhost:3900/apiErasmus/user/" + id)
-                .then(res => {
-                    this.setState({
-                        alumno: res.data.user,
-                        status: 'sucess'
-                    })
-                })
-            axios.get(this.url + "documentosProfesor/" + this.state.identity._id, body)
+            /* axios.get(this.url + "documentosAlumnos/" + id + '/'+ this.state.identity._id)
+                 .then(res => {
+                     this.setState({
+                         documentos: res.data.documento,
+                         status: 'sucess'
+                     });
+                 });
+             */
+            axios.get(this.url + "documentosProfesor/" + this.state.identity._id + '/' + id)
                 .then(res => {
                     this.setState({
                         docprofesor: res.data.documento,
                         status: 'sucess'
                     });
                 });
+
         }
     }
 
@@ -135,13 +129,12 @@ class Dropbox extends Component {
 
     render() {
 
-
-        if (this.state.documentos != undefined && this.state.docprofesor != undefined) {
-            var listardocumentos = this.state.documentos.map((documentos) => {
+        if (this.state.docprofesor != undefined) {
+            var listardocumentos = this.state.docprofesor.map((documentos) => {
                 return (
                     <div className="documento-item">
 
-                        <table aria-rowcount={this.state.documentos.length} className="table-dropbox">
+                        <table aria-rowcount={this.state.docprofesor.length} className="table-dropbox">
                             <tbody>
                                 <tr>
                                     <td >
@@ -168,14 +161,18 @@ class Dropbox extends Component {
                                         </div>
                                     </td>
                                     <td>
-                                        {documentos.alumno.nombre + " " + documentos.alumno.apellido1 + " " + documentos.alumno.apellido2}
+                                        {documentos.propietario==='Alumno' ? (
+                                              documentos.alumno.nombre + " " + documentos.alumno.apellido1 + " " + documentos.alumno.apellido2
+                                        ): 
+                                        documentos.profesor.nombre + " " + documentos.profesor.apellido1 + " " + documentos.profesor.apellido2
+                                        }
+                                      
                                     </td>
 
                                     <td>
                                         <spain>
                                             <Moment format="DD-MM-YYYY">{documentos.date}</Moment>
                                         </spain>
-
 
                                     </td>
                                     <td className="th-pequeño">
@@ -191,63 +188,6 @@ class Dropbox extends Component {
                     </div>
                 );
             });
-            var listardocsegundo = this.state.docprofesor.map((documentos) => {
-                return (
-                    <div className="documento-item">
-
-
-                        <table aria-rowcount={this.state.documentos.length} className="table-dropbox" >
-                            <tbody>
-                                <tr>
-                                    <td >
-                                        <div>
-
-                                            {
-                                                documentos.tipoDocumento == "word.png" ? (
-                                                    <img src={btn1} alt="prueba" className="image-wrap" />
-                                                ) : documentos.tipoDocumento == "pdf.png" ? (
-                                                    <img src={btn2} alt="prueba" className="image-wrap" />
-                                                ) : documentos.tipoDocumento == "powerpoint.jpg" ? (
-                                                    <img src={btn3} alt="prueba" className="image-wrap" />
-                                                ) : documentos.tipoDocumento == "imagen" ? (
-                                                    <img src={this.url + 'get-image/' + documentos.url} alt={documentos.title} className="image-wrap" />
-                                                ) :
-                                                                (
-                                                                    <img src={btn4} alt="prueba" className="image-wrap" />
-                                                                )
-                                            }
-
-                                        </div>
-                                        <div>
-                                            <a target="_blank" href={this.url + '/get-image/' + documentos.url}>{documentos.title}</a>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        {documentos.profesor.nombre + " " + documentos.profesor.apellido1 + " " + documentos.profesor.apellido2}
-                                    </td>
-
-                                    <td>
-                                        <spain>
-                                            <Moment format="DD-MM-YYYY">{documentos.date}</Moment>
-                                        </spain>
-
-
-                                    </td>
-                                    <td className="th-pequeño">
-                                        <ButtonIcon onClick={() => { if (window.confirm('\n' + 'Estas seguro de eliminar el archivo ' + documentos.title + '?')) this.delete(documentos.title); }}
-                                            className="btn-delete" startIcon={<DeleteIcon />}></ButtonIcon>
-                                    </td>
-
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <div className="clearfix"></div>
-                    </div>
-                );
-            });
-
-
             return (
 
                 <div className="grid-documentos">
@@ -256,13 +196,12 @@ class Dropbox extends Component {
                         {this.props.match.params.nombre != null &&
                             <div>
                                 <h1 className="titulo-secundario">DROPBOX</h1>
-                                <h4 className="subtitulo-doc">{this.props.match.params.nombre + " " + this.props.match.params.apellido1 + "  " + this.props.match.params.apellido2}</h4>
+                                <h4 className="subtitulo-doc">Alumno: {this.props.match.params.nombre + " " + this.props.match.params.apellido1 + "  " + this.props.match.params.apellido2}</h4>
                             </div>
                         }
                         {this.state.identity.tipo == "Alumno" &&
                             <h1 className="titulo-doc">DROPBOX</h1>
                         }
-
 
                     </div>
                     <div className=" grid-documentos-col">
@@ -283,234 +222,16 @@ class Dropbox extends Component {
 
                             </div>
                             {listardocumentos}
-                            {listardocsegundo}
+
                         </div>
                         <div className="btn-docOficial">
-                            <NuevoDocumento type="documento" />
+                            <NuevoDocumento type="documento" alumno={this.props.match.params.id} message="hola" />
                         </div>
 
                     </div>
 
                 </div>
 
-
-            )
-        } else if (this.state.documentos != undefined && this.state.docprofesor == undefined) {
-            console.log("usuario documento");
-            var listardocumentos = this.state.documentos.map((documentos) => {
-                return (
-                    <div className="documento-item">
-
-                        <table aria-rowcount={this.state.documentos.length} className="table-dropbox" >
-                            <tbody>
-                                <tr>
-                                    <td >
-                                        <div>
-
-                                            {
-                                                documentos.tipoDocumento == "word.png" ? (
-                                                    <img src={btn1} alt="prueba" className="image-wrap" />
-                                                ) : documentos.tipoDocumento == "pdf.png" ? (
-                                                    <img src={btn2} alt="prueba" className="image-wrap" />
-                                                ) : documentos.tipoDocumento == "powerpoint.jpg" ? (
-                                                    <img src={btn3} alt="prueba" className="image-wrap" />
-                                                ) : documentos.tipoDocumento == "imagen" ? (
-                                                    <img src={this.url + 'get-image/' + documentos.url} alt={documentos.title} className="image-wrap" />
-                                                ) :
-                                                                (
-                                                                    <img src={btn4} alt="prueba" className="image-wrap" />
-                                                                )
-                                            }
-
-                                        </div>
-                                        <div>
-                                            <a target="_blank" href={this.url + '/get-image/' + documentos.url}>{documentos.title}</a>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        {documentos.alumno.nombre + "  " + documentos.alumno.apellido1 + " " + documentos.alumno.apellido2}
-                                    </td>
-
-                                    <td>
-                                        <spain>
-                                            <Moment format="DD-MM-YYYY">{documentos.date}</Moment>
-                                        </spain>
-
-
-                                    </td>
-                                    <td className="th-pequeño">
-                                        <ButtonIcon onClick={() => { if (window.confirm('\n' + 'Estas seguro de eliminar el archivo ' + documentos.title + '?')) this.delete(documentos.title); }}
-                                            className="btn-delete" startIcon={<DeleteIcon />}></ButtonIcon>
-                                    </td>
-
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <div className="clearfix"></div>
-                    </div>
-                );
-            });
-            return (
-
-                <div className="grid-documentos">
-                    <div >
-                        <h1 className="titulo-secundario">DROPBOX</h1>
-                        {this.props.match.params.nombre != null &&
-                            <h4 className="subtitulo-doc">{this.props.match.params.nombre + " " + this.props.match.params.apellido1 + "  " + this.props.match.params.apellido2}</h4>
-                        }
-                    </div>
-                    <div className=" grid-documentos-col">
-                        <div>
-                            <div >
-                                <table className="table-dropbox dropbox-cabecera">
-                                    <thead >
-                                        <tr>
-                                            <th >Nombre</th>
-                                            <th >Subido por:</th>
-                                            <th>Fecha de Subida</th>
-                                            <th className="th-pequeño"></th>
-                                        </tr>
-                                    </thead>
-                                </table>
-
-                            </div>
-                            {listardocumentos}
-
-                        </div>
-                        <div className="btn-docOficial">
-                            <NuevoDocumento type="documento" />
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-            )
-
-        } else if (this.state.documentos === undefined && this.state.docprofesor != undefined) { //esta
-            var listardocsegundo = this.state.docprofesor.map((documentos) => {
-                return (
-                    <div className="documento-item">
-
-                        <table aria-rowcount={this.state.docprofesor.length} className="table-dropbox">
-                            <tbody>
-                                <tr>
-                                    <td  >
-                                        <div>
-
-                                            {
-                                                documentos.tipoDocumento == "word.png" ? (
-                                                    <img src={btn1} alt="prueba" className="image-wrap" />
-                                                ) : documentos.tipoDocumento == "pdf.png" ? (
-                                                    <img src={btn2} alt="prueba" className="image-wrap" />
-                                                ) : documentos.tipoDocumento == "powerpoint.jpg" ? (
-                                                    <img src={btn3} alt="prueba" className="image-wrap" />
-                                                ) : documentos.tipoDocumento == "imagen" ? (
-                                                    <img src={this.url + 'get-image/' + documentos.url} alt={documentos.title} className="image-wrap" />
-                                                ) :
-                                                                (
-                                                                    <img src={btn4} alt="prueba" className="image-wrap" />
-                                                                )
-                                            }
-
-                                        </div>
-                                        <div>
-                                            <a target="_blank" href={this.url + '/get-image/' + documentos.url}>{documentos.title}</a>
-                                        </div>
-                                    </td>
-                                    <td >
-                                        {documentos.profesor.nombre + "  " + documentos.profesor.apellido1 + " " + documentos.profesor.apellido2}
-                                    </td>
-
-                                    <td >
-                                        <spain>
-                                            <Moment format="DD-MM-YYYY">{documentos.date}</Moment>
-                                        </spain>
-
-
-                                    </td>
-                                    <td className="th-pequeño">
-                                        <ButtonIcon onClick={() => { if (window.confirm('\n' + 'Estas seguro de eliminar el archivo ' + documentos.title + '?')) this.delete(documentos.title); }}
-                                            className="btn-delete" startIcon={<DeleteIcon />}></ButtonIcon>
-                                    </td>
-
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <div className="clearfix"></div>
-                    </div>
-                );
-            });
-            return (
-
-                <div className="grid-documentos">
-                    <div >
-                        <h1 className="titulo-secundario">DROPBOX</h1>
-                        {this.props.match.params.nombre != null &&
-                            <h4 className="subtitulo-doc">{this.props.match.params.nombre + " " + this.props.match.params.apellido1 + "  " + this.props.match.params.apellido2}</h4>
-                        }
-
-                    </div>
-                    <div className=" grid-documentos-col">
-                        <div>
-                            <div >
-                                <table className="table-dropbox dropbox-cabecera">
-                                    <thead className="dropbox-cabecera">
-                                        <tr >
-
-                                            <th >Nombre</th>
-                                            <th >Subido por:</th>
-                                            <th >Fecha de subida</th>
-                                            <th className="th-pequeño"></th>
-                                        </tr>
-                                    </thead>
-                                </table>
-
-                            </div>
-
-                            {listardocsegundo}
-                        </div>
-                        <div className="btn-docOficial">
-                            <NuevoDocumento type="documento" />
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-            )
-        } else if (this.state.documentos == undefined && this.state.docprofesor == undefined) {
-            return (
-                <div className="grid-documentos">
-                    <div >
-                        <h1 className="titulo-secundario">DROPBOX</h1>
-                        {this.props.match.params.nombre != null &&
-                            <h4 className="subtitulo-doc">{this.props.match.params.nombre + " " + this.props.match.params.apellido1 + "  " + this.props.match.params.apellido2}</h4>
-                        }
-
-                    </div>
-                    <div className=" grid-documentos-col">
-                        <div>
-                            <div className="mensaje-no-documentos">
-
-                                <h2 className="subheader " >No hay documentos para mostrar</h2>
-                                <p >Todavia no hay contenido en esta sección</p>
-
-                            </div>
-
-                        </div>
-                        <div className="btn-docOficial">
-                            <NuevoDocumento type="documento"  />
-                        </div>
-
-                    </div>
-
-                </div>
             );
         } else {
             return (
@@ -531,16 +252,22 @@ class Dropbox extends Component {
 
                         </div>
                         <div className="btn-docOficial">
-                            <NuevoDocumento type="documento" />
+
+
+                            <NuevoDocumento type="documento" alumno={this.props.match.params.id} message="hola" />
+
+
                         </div>
 
                     </div>
 
                 </div>
             );
-        }
-    }
 
+        }
+
+
+    }
 }
 
-export default Dropbox;
+    export default Dropbox;

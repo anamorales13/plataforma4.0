@@ -67,6 +67,7 @@ var controllers = {
             profesor.image = 'user-default.jpg';
             profesor.edificio = params.edificio;
             profesor.tipo = 'profesor';
+            profesor.rol='coordinador_de_destino';
 
             if (params.datos) {
                 profesor.datos = params.datos;
@@ -440,6 +441,67 @@ var controllers = {
                     });
                 }
                 if (users) {
+console.log("hay usuario");
+
+                    bcrypt.compare(passwString, users.password, (err, check) => {
+                        if (check) {
+                            // if(params.gettoken){
+                            //generar y devolver el token
+                            users.password = undefined;
+                            users.alumnos = undefined;
+                            console.log("hay password");
+                            return res.status(200).send({
+                                status: 'sucess',
+                                users,
+                                token: jwt.createToken(users)
+
+                            })
+                            // req.session.user=JSON.stringify(users);
+                            /*
+                            return res.status(200).send({
+                                token: jwt.createToken(users)
+                            });*/
+
+                            //  }else{
+
+                            //     }
+
+                            /*para no enviar la password */
+
+
+                        } else {
+                            return res.status(404).send({
+                                status: 'error',
+                                message: 'El usuario no ha introducido los datos correstamente'
+                            });
+                        }
+                    })
+                } else {
+                    return res.status(404).send({
+                        status: 'error',
+                        message: 'El usuario no ha introducido los datos correstamente'
+                    });
+                }
+            })
+    },
+    loginUserAdmin:(req, res) =>{
+        var params = req.body;
+        var administrador="administrador";
+
+        userString = params.usuario;
+        passwString = params.password;
+        
+
+        Profesor.findOne({ usuario: { $eq: userString }, tipo: {$eq: administrador} })
+            .exec((err, users) => {
+
+                if (err) {
+                    return res.status(500).send({
+                        status: 'error',
+                        message: "Error en la petición"
+                    });
+                }
+                if (users) {
 
 
                     bcrypt.compare(passwString, users.password, (err, check) => {
@@ -481,6 +543,7 @@ var controllers = {
                     });
                 }
             })
+
     },
 
     comparePassword: (req, res) => {
@@ -578,9 +641,50 @@ var controllers = {
 
 
     },
+    updatecoordinador:(req,res) =>{
+        var update=req.body;
+        var cord="coordinador_de_centro";
+        var nocord="coordinador_de_destino";
+
+        console.log(update.profesor);
+        console.log(update.coordinador);
+        //cambiar de coordinador de destino a coordinador de centro
+        Profesor.findByIdAndUpdate(update.profesor, { $set: { rol:cord } }, { new: true }, function (err, user) {
+            if (err) {
+                return res.status(500).send({
+                    message: 'Error en la peticion'
+                });
+            }
+            if (!user) {
+                return res.status(404).send({
+                    message: 'No se ha podido actualizar el usuario'
+                });
+            }
+            Profesor.findByIdAndUpdate(update.coordinador, { $set: { rol:nocord } }, { new: true }, function (err, user) {
+                if (err) {
+                    return res.status(500).send({
+                        message: 'Error en la peticion'
+                    });
+                }
+                if (!user) {
+                    return res.status(404).send({
+                        message: 'No se ha podido actualizar el usuario'
+                    });
+                }
+                return res.status(200).send({
+                    status: 'sucess',
+                   
+    
+                })
+            });
+        });
+
+        //cambiar de coordinador de centro a coordinador de destino
+        
+    },
 
 
-    setAlumno: (req, res) => {
+   /* setAlumno: (req, res) => {
         var update = req.body;
         var userId = req.params.id;
         console.log("update" + update.alumno);
@@ -611,7 +715,7 @@ var controllers = {
 
         });
     },
-
+*/
     getprofesor: (req, res) => {
 
         var userId = req.params.id;
@@ -665,6 +769,7 @@ var controllers = {
     dardebaja:(req,res) =>{
         var userId=req.params.id;
 
+        console.log("eliminar profesor"+ userId);
         Profesor.findByIdAndDelete(userId)
             .exec((err) =>{
                 if(err){
@@ -672,7 +777,7 @@ var controllers = {
                         message:'Error en la peticion'
                     });
                 }
-                
+                console.log("sucess eliminar");
 
                 return res.status(200).send({
                     status: 'sucess',

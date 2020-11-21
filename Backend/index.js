@@ -56,8 +56,8 @@ client.on('connection', (socket) => {
         
         if(error) return callback (error);
         
-        socket.emit('message', {user:'admin', text:`${user.name}, welcome to the room ${user.room}`});
-        socket.broadcast.to(user.room).emit('message',{user:'admin', text:`${user.name}, has joined!`});
+        socket.emit('message', {user:'admin', text:`${user.name}, Bienvenido a la sala ${user.room}`});
+        socket.broadcast.to(user.room).emit('message',{user:'admin', text:`${user.name}, se acaba de unir!`});
 
         socket.join(user.room);
 
@@ -67,10 +67,9 @@ client.on('connection', (socket) => {
     });
 
     socket.on('sendMessage', (message, callback)=>{
-        console.log("hola");
+      
         const user=getUser(socket.id);
-        console.log("usuario: " + user.id + user.room);
-
+      
         client.to(user.room).emit('message', {user:user.name, text:message});
         client.to(user.room).emit('roomData', {room: user.room, users: getUserInRoom(user.room)});
         callback();
@@ -81,7 +80,7 @@ client.on('connection', (socket) => {
        const user= removeUser(socket.id);
 
        if(user){
-           client.to(user.room).emit('message', {user:'admin', text:`${user.name} ha abandonad la sala.`})
+           client.to(user.room).emit('message', {user:'admin', text:`${user.name} ha abandonado la sala.`})
        }
     })
     

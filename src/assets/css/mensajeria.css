@@ -124,8 +124,10 @@
 
 .title-pantalla-mensaje{
     margin-bottom: 1.5em;
-    font-size:20px;
-    font-weight: bold;
+    font-size:25px;
+    font-weight: 500;
+    margin-left: 20px;
+    border-bottom: 1px solid grey;
     
 }
 
@@ -161,7 +163,7 @@
     margin-right: auto;
      letter-spacing: .01727272727em;
      font-family: Roboto,Arial,sans-serif;
-     font-size:1.5rem;
+     font-size:1.1rem;
      font-weight: 500;
      border: none;
      color: white;
@@ -174,8 +176,7 @@
 }
 
 .btn-enviar:hover{
-    transform: scale(1.04);
-    box-shadow: 0 4px 8px 0  rgba(11, 151, 151, 0.644); ;
+    background-color:rgb(14, 23, 105);
 }
 
 
@@ -223,11 +224,15 @@
     box-shadow: 0 5px 7px 0 rgba(0,0,0,0.2);
     transform: scale(1.006);
 }
+.card-mensaje-novisto:hover{
+    box-shadow: 0 5px 7px 0 rgba(0,0,0,0.2);
+    transform: scale(1.006);
+}
 
 
 
 .card-mensajes{
-   height: 6.5em;
+   height: 6.8em;
    margin-left: 3em;
    
    background-color: rgb(233, 232, 232);
@@ -243,7 +248,7 @@
 }
 
 .card-mensaje-novisto{
-    height: 6.5em;
+    height: 6.8em;
     margin-left: 3em;
     
 
@@ -313,7 +318,7 @@
 }
 
 .mensaje-enlace{
-    float: left;
+    float: right;
     margin-top: 25px;
     
 }
@@ -328,9 +333,30 @@
     display: inline-flex; 
 }
 
-.glyphicon.glyphicon-arrow-left{
-    font-size:30px;
-    right: 0;
-    
+
+.boton-sin-estilo{
+    border:none;
+    background-color: transparent;
 }
 
+
+
+/* PAGINATION */
+
+.pagination{
+    margin-top:10px;
+}
+
+.page-link{
+    color:black;
+    padding: 0.3rem 0.75rem;
+}
+
+ a{
+    color:black;
+}
+
+.page-item.active .page-link{
+    background-color: grey;
+    border-color: grey;
+}

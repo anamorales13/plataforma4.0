@@ -207,7 +207,7 @@ class mydropbox extends Component {
             return(
                 <div className="grid-documentos">
                 <div >
-                    <h1 className="titulo-secundario">NUBE PARTICULAR</h1>
+                    <h1 className="titulo-doc">MI NUBE</h1>
                     
                 </div>
                 <div className=" grid-documentos-col">

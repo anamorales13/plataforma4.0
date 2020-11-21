@@ -13,13 +13,13 @@ class MenuMensajes extends Component {
                 
                 <nav> <ul>
                     <li>
-                        <NavLink exact to="/mensajes/enviar" activeClassName="active"> <span className="glyphicon glyphicon-send"></span> Enviar mensaje</NavLink >
+                        <NavLink exact to="/mensajes/enviar" activeClassName="active" style={{borderBottom:'1px solid grey'}}>  Enviar mensaje</NavLink >
                     </li>
                     <li>
-                        <NavLink exact to="/mensajes" activeClassName="active"> <span className="glyphicon glyphicon-save"></span> Recibidos </NavLink >
+                        <NavLink exact to="/mensajes" activeClassName="active" style={{borderBottom:'1px solid grey'}}> Recibidos </NavLink >
                     </li>
                     <li>
-                        <NavLink exact to="/enviados" activeClassName="active"> <span className="glyphicon glyphicon-open"></span> Enviados </NavLink >
+                        <NavLink exact to="/enviados" activeClassName="active" style={{borderBottom:'1px solid grey'}}>  Enviados </NavLink >
                     </li>
                 </ul>
                 </nav>

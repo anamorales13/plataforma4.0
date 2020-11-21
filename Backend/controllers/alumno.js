@@ -336,6 +336,8 @@ var controllers = {
         })
     },
 
+    
+
 
     /*--------------------------------*/
     /***** ACTUALIZAR DATOS ALUMNO  *****/
@@ -829,16 +831,26 @@ var controllers = {
     },
     getalumnosdeprofesor: (req, res) => {
         var userId = req.params.id;
-        console.log("hola busqueda de profesor");
-        Alumno.find({ profesor: { $eq: userId } }).populate('destino', 'pais ciudad carrera')
-            .exec((err, users) => {
+
+        var page= 1;
+        if(req.params.pages){
+            page=req.params.pages;
+        }
+
+        var itemsPerPage= 6;
+        console.log("pagina" + page);
+        
+        Alumno.find({ profesor: { $eq: userId } }).populate('destino', 'pais ciudad carrera').paginate(page, itemsPerPage, (err, users, total) =>{
+           
                 if (err) return res.status(500).send({
                     status: 'fail',
                     message: 'error en al peticion'
                 });
                 if (users) {
                     return res.status(200).send({
-                        users
+                        users,
+                        total: total,
+                        pages: Math.ceil(total/itemsPerPage),
                     });
                 }
             });
@@ -849,15 +861,24 @@ var controllers = {
         console.log("hola busqueda de coordinador");
         console.log(userId);
 
-        Alumno.find({ coordinador: { $eq: userId } }).populate('destino', 'pais ciudad carrera')
-            .exec((err, users) => {
+        var page= 1;
+        if(req.params.pages){
+            page=req.params.pages;
+        }
+
+        var itemsPerPage= 6;
+
+        Alumno.find({ coordinador: { $eq: userId } }).populate('destino', 'pais ciudad carrera').paginate(page, itemsPerPage, (err, users, total) =>{
+            
                 if (err) return res.status(500).send({
                     status: 'fail',
                     message: 'error en al peticion'
                 });
                 if (users) {
                     return res.status(200).send({
-                        users
+                        users,
+                        total: total,
+                        pages: Math.ceil(total/itemsPerPage),
                     });
                 }
             });
@@ -881,11 +902,30 @@ var controllers = {
                 }
             });
     },
+    setcoordinador:(req, res) =>{
+        var id = req.params.id;
+       
+
+        Alumno.updateMany({ coordinador: id })
+            .exec((err, users) => {
+                if (err) return res.status(500).send({
+                    status: 'fail',
+                    message: 'error en al peticion'
+                });
+                if (users) {
+                    return res.status(200).send({
+                        status: 'sucess'
+                    });
+                }
+            });
+
+    },
 
     /**** DAR DE BAJA */
     dardebaja:(req,res) =>{
         var userId=req.params.id;
 
+        console.log("userId" + userId);
         Alumno.findByIdAndDelete(userId)
             .exec((err) =>{
                 if(err){

@@ -11,13 +11,14 @@ const DocumentosSchema = Schema({
     title:String,
     url: String,
     tipoDocumento:String,
-    comentario: String, 
     date: {type:Date, default: Date.now},
-    link:String,
+    descripcion:String,
+    /*link:String,*/
     /*alumno: {
        type: Schema.Types.ObjectId,
        ref: "Alumno"
     }*/
+    propietario:String,
     alumno: {type: Schema.ObjectId, ref: 'Alumno'},
     profesor: {type: Schema.ObjectId, ref: 'Profesor'},
     tipo_nube:String

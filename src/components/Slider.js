@@ -30,10 +30,20 @@ class Slider extends Component {
                                         Gestiona los destinos: edita, añade y elimina.
                             </Card.Text>
                                     <br></br>
-                                    <Link to={"/destinos"} className="boton-sin-deco">gestionar
+                                    <div style={{display:'block'}}>
+                                    <Link to={"/destinos"} className="boton-sin-deco">Nuevo destino
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
                                         </svg></Link>
+                                        <Link to={"/borrar-destinos"} className="boton-sin-deco">Eliminar destino
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
+                                        </svg></Link>
+                                        <Link to={"/editar-destinos"} className="boton-sin-deco">Editar destino
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
+                                        </svg></Link>
+                                        </div>
                                 </Card.Body>
                             </Card>
                         </div>
@@ -44,10 +54,18 @@ class Slider extends Component {
                                     <Card.Text>
                                         Gestión del profesorado: 
                          </Card.Text>
-                                    <Link to={"/gestion-profesores"} className="boton-sin-deco">gestionar
+                         <div>
+                         <Link to={"/dar_de_baja"} className="boton-sin-deco">Eliminar profesor
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
                                         </svg></Link>
+                         <Link to={"/cambiar-coordinador"} className="boton-sin-deco">Modificar coordinador de centro
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
+                                        </svg></Link>
+                                       
+                         </div>
+                                    
                                 </Card.Body>
 
                             </Card>

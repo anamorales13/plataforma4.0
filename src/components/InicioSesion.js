@@ -206,7 +206,7 @@ class InicioSesion extends Component {
                             </article>
                         </div>
                         <div id="administrador">
-                    <label>¿Eres administrador?</label> <Link to={"/inicioAdministrador"}>Inicia sesión aquí</Link>
+                    <label>¿Eres administrador?</label> <Link to={"/inicioAdministrador"} style={{color:'blue'}}>Inicia sesión aquí</Link>
                  </div>
                     </div>
 

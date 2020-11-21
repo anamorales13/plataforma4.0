@@ -6,6 +6,7 @@ import axios from 'axios';
 import GlobalPerfil from '../../Global';
 import Moment from 'react-moment';
 import Card from 'react-bootstrap/Card';
+import ReactPaginate from "react-paginate";
 
 
 
@@ -17,21 +18,28 @@ class enviados extends Component {
         profesores: [],
         identity: JSON.parse(localStorage.getItem('user')),
         status: 'false',
-        nuevoMensaje: {}
+        nuevoMensaje: {},
+        pages:"",
+        currentPage:0,
+        elements: [], //los que cargamos en la pagina actual
+        mensajesPerPage: 5,
+        offset: 0,
     }
 
     componentWillMount() {
 
-        this.getmensajes();
+        this.getMessage();
     }
 
    
     urlprofesor = Global.urlprofesor;
 
 
-    getmensajes = (e) => {
+    getMessage = (e) => {
 
-        axios.get(this.url + 'messages/' + this.state.identity._id)
+        var pages= this.state.currentPage+1;
+
+        axios.get(this.url + 'messages/' + this.state.identity._id+"/"+ pages)
             .then(res => {
 
                 this.setState({
@@ -49,8 +57,48 @@ class enviados extends Component {
             });
     }
 
+    handlePageClick = mensajes => {
+       
+        const selectedPage = mensajes.selected;
+        const offset = selectedPage * this.state.mensajesPerPage;
+        this.setState({
+            currentPage: selectedPage,
+            offset: offset
+      
+       }, () => 
+            this.getMessage());
+        
+    }
+
+    componentDidMount() {
+        this.getMessage();
+    }
 
     render() {
+
+        let paginationElement;
+
+        if (this.state.pages > 1) {
+            paginationElement = (
+                <ReactPaginate
+                    previousLabel={"← Anterior"}
+                    nextLabel={"Siguiente →"}
+                    breakLabel={<span className="gap">...</span>}
+                    pageCount={this.state.pages}
+                    onPageChange={this.handlePageClick}
+                    forcePage={this.state.currentPage}
+                    containerClassName={"pagination justify-content-center"}
+                    pageClassName={"page-link"}
+                    previousClassName={"page-link"}
+                    previousLinkClassName={"page-item"}
+                    nextClassName={"page-link"}
+                    nextLinkClassName={"page-item"}
+                    disabledClassName={"disabled"}
+                    activeClassName={"page-item active"}
+                    activeLinkClassName={"page-link"}
+                />
+            )
+}
 
         if (this.state.mensaje.length >= 1) {
             var listarmensajes = this.state.mensaje.map((mensajes) => {
@@ -104,6 +152,7 @@ class enviados extends Component {
                        
                        
                         {listarmensajes}
+                        {paginationElement}
 
                     </div>
 

@@ -77,8 +77,8 @@ header nav{
   #logo img { /*queremos modificar la imagen*/
     display: block; /*el elemento se comporta como un bloque*/
     float:left;
-    height:90px;
-    width: 170px;
+    height:110px;
+    width: 110px;
     margin-top:2px;
     margin-right: -40px;
     transition: transform .2s; 

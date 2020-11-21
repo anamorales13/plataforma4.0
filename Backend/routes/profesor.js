@@ -11,9 +11,11 @@ var md_uploadd= multipart({uploadDir: './upload/users'});
 
 router.post('/save', ProfesorController.save);
 router.post('/login', ProfesorController.loginUser);
+router.post('/login-admin', ProfesorController.loginUserAdmin);
+
 router.get('/profesores', ProfesorController.getProfesores);
 router.put('/update-user/:id', ProfesorController.setprofesor);
-router.put('/saveAlumnos/:id', ProfesorController.setAlumno);
+//router.put('/saveAlumnos/:id', ProfesorController.setAlumno);
 router.get('/profesor/:id', ProfesorController.getprofesor);
 router.get('/alumnos/:id', ProfesorController.getAlumnos);
 router.post('/compararPassword/:id', ProfesorController.comparePassword);
@@ -21,9 +23,11 @@ router.put('/update-password/:id', ProfesorController.updatePassword);
 
 /*coordinador de centro */
 router.get('/get-coordinador-centro', ProfesorController.getcoordinador_de_centro);
+router.put('/updatecoordinador', ProfesorController.updatecoordinador);
 
 /*dar de baja */
-router.delete('dardebaja/:id', ProfesorController.dardebaja);
+router.delete('/dardebaja/:id', ProfesorController.dardebaja);
+
 
 
 router.post('/upload-image-user/:id',/* [md_auth.ensureAuth,*/ md_uploadd, ProfesorController.uploadImage);

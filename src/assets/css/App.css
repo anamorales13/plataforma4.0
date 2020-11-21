@@ -297,7 +297,7 @@ color: rgb(6, 78, 129);
     margin-left: 30px;
     margin-bottom: 15px;
     margin-top:20px;
-    font-size: 28px;    
+    font-size: 24px;    
     color: rgb(201, 15, 15);
   }
 
@@ -309,7 +309,7 @@ color: rgb(6, 78, 129);
   }
 
   .ayuda a{
-    font-size: 20px;
+    font-size: 17px;
     font-weight: bold;
 
   }
@@ -532,7 +532,7 @@ input[type="submit"]:hover{
   .grid-inicio{
     
       display:grid;
-      grid-template-rows: 120px 120px auto;
+      grid-template-rows: 120px 40px auto;
   
   }
 
@@ -592,7 +592,7 @@ input[type="submit"]:hover{
   .grid-logo-inicio{
     display:grid;
     grid-template-rows: 450px;
-    grid-template-columns: 720px auto;
+    grid-template-columns: 750px auto;
   }
 
   .logo-titulo {
@@ -663,7 +663,7 @@ input[type="submit"]:hover{
 #header-boton{
   text-align: center;
   font-size: 22px;
-  font-weight: bold;
+  font-weight: 600;
   color:rgb(155, 18, 18);
 }
 
@@ -968,7 +968,7 @@ margin-top:12px;
 }
 
 .icono-form{
-  padding:12px 22px;
+  padding:8px 22px;
   border: solid 1px   rgb(141, 141, 141);
   font-size:15px;
  
@@ -1062,7 +1062,7 @@ letter-spacing: 0.8px;
 .titulo-doc{
   text-align: center;
   font-style: initial;
-  font-size: 38px;
+  font-size: 33px;
   color: #222831;
   border-bottom: 1px solid grey;
   align-items: center;
@@ -1121,6 +1121,22 @@ width:60%;
   font-family: "arial", serif;
   
 }
+
+/**** FOOTER *****/
+
+#footer{
+  background: #f7f7f7;
+  width: 100%;
+  height: 70px;
+  line-height: 70px;
+  color: #444;
+}
+
+#footer p {
+  margin: 0px;
+  padding: 0px;
+}
+
 
 
   /* RESPONSIVE */ 

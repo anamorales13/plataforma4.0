@@ -58,11 +58,12 @@ var controllers = {
     getReceivedMessage: (req,res) =>{
         var userId=  req.params.id;
         var page= 1;
-        if(req.params.page){
-            page=req.params.page;
+        if(req.params.pages){
+            page=req.params.pages;
         }
 
-        var itemsPerPage= 4;
+        var itemsPerPage= 5;
+        console.log("pagina" + page);
 
         Mensaje.find({ $or: 
             [ 

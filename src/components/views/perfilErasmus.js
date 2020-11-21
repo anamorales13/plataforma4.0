@@ -4,6 +4,7 @@ import "../../assets/css/MiPerfil.css";
 import { NavLink } from 'react-router-dom';
 import Global from '../../Global';
 import MenuPerfil from './MenuPerfil';
+import Card from 'react-bootstrap/Card';
 
 class MiPerfil extends Component {
 
@@ -69,131 +70,38 @@ class MiPerfil extends Component {
                 </div>
 
                 <div >
-                    <h1 className="titulo"> Infomación ERASMUS </h1>
-
-                    <article className="elemt-one">
-
-                        <div className="elemt-form">
-                            <header >
-                                <h2 className="form-perfil-title">Coordinador de destino</h2>
-
-                            </header>
-                            <div>
-                                <div>
-                                    <div>
-                                        <ul className="form-perfil">
-                                            <li>
-                                                <span className="form-perfil-value-title">Nombre</span>
-                                                <span className="form-perfil-value">{this.state.profesor.nombre + " " + this.state.profesor.apellido1 + " " + this.state.profesor.apellido2}</span>
-                                                <br /><br />
-                                                <div className="form-line">
-
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <span className="form-perfil-value-title">Edificio</span>
-                                                <span className="form-perfil-value">{this.state.profesor.edificio}</span>
-                                                <br /><br />
-                                                <div className="form-line">
-
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <span className="form-perfil-value-title">Despacho</span>
-                                                <span className="form-perfil-value">{this.state.profesor.despacho}</span>
-                                                <br /><br />
-                                                <div className="form-line">
-
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <span className="form-perfil-value-title">Teléfono</span>
-                                                <span className="form-perfil-value">{this.state.profesor.telefono}</span>
-                                                <br /><br />
-                                                <div className="form-line">
-
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <span className="form-perfil-value-title">Correo electrónico</span>
-                                                <span className="form-perfil-value">{this.state.profesor.email}</span>
-                                                <br /><br />
-                                                <div className="form-line">
-
-                                                </div>
-                                            </li>
-
-
-                                        </ul>
-
-                                    </div>
-
-                                </div>
+                    <h1 className="titulo"> Información ERASMUS </h1>
+                    <Card className="elemt-one">
+                        <Card.Body>
+                            <Card.Title className="form-perfil-title" style={{ borderBottom: '1px solid grey' }}>Coordinador de destino</Card.Title>
+                            <div className="profesor-erasmus">
+                                <h6><strong>Nombre: </strong> {this.state.profesor.nombre + " " + this.state.profesor.apellido1 + " " + this.state.profesor.apellido2}</h6>
+                                <h6><strong>Correo electrónico: </strong>{this.state.profesor.email}</h6>
+                                <h6><strong>Télefono: </strong> {this.state.profesor.telefono}</h6>
+                                <h6><strong>Edificio: </strong> {this.state.profesor.edificio} <strong>Nº despacho: </strong>{this.state.profesor.despacho}</h6>
+                                <h6>{this.state.profesor.datos}</h6>
                             </div>
-                        </div>
-                    </article>
-
-                    <article className="elemt-one">
-
-                        <div className="elemt-form">
-                            <header >
-                                <h2 className="form-perfil-title">Coordinador de centro</h2>
-
-                            </header>
-                            <div>
-                                <div>
-                                    <div>
-                                        <ul className="form-perfil">
-                                            <li>
-                                                <span className="form-perfil-value-title">Nombre</span>
-                                                <span className="form-perfil-value">{this.state.coordinador.nombre + " " + this.state.coordinador.apellido1 + " " + this.state.coordinador.apellido2}</span>
-                                                <br /><br />
-                                                <div className="form-line">
-
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <span className="form-perfil-value-title">Edificio</span>
-                                                <span className="form-perfil-value">{this.state.coordinador.edificio}</span>
-                                                <br /><br />
-                                                <div className="form-line">
-
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <span className="form-perfil-value-title">Despacho</span>
-                                                <span className="form-perfil-value">{this.state.coordinador.despacho}</span>
-                                                <br /><br />
-                                                <div className="form-line">
-
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <span className="form-perfil-value-title">Teléfono</span>
-                                                <span className="form-perfil-value">{this.state.coordinador.telefono}</span>
-                                                <br /><br />
-                                                <div className="form-line">
-
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <span className="form-perfil-value-title">Correo electrónico</span>
-                                                <span className="form-perfil-value">{this.state.coordinador.email}</span>
-                                                <br /><br />
-                                                <div className="form-line">
-
-                                                </div>
-                                            </li>
+                        </Card.Body>
 
 
-                                        </ul>
+                    </Card>
 
-                                    </div>
-
-                                </div>
+                    <Card className="elemt-one">
+                        <Card.Body>
+                            <Card.Title className="form-perfil-title" style={{ borderBottom: '1px solid grey' }}>Coordinador de Centro</Card.Title>
+                            <div className="profesor-erasmus">
+                                <h6><strong>Nombre: </strong> {this.state.coordinador.nombre + " " + this.state.coordinador.apellido1 + " " + this.state.coordinador.apellido2}</h6>
+                                <h6><strong>Correo electrónico: </strong>{this.state.coordinador.email}</h6>
+                                <h6><strong>Télefono: </strong> {this.state.coordinador.telefono}</h6>
+                                <h6><strong>Edificio: </strong> {this.state.coordinador.edificio} <strong>Nº despacho: </strong>{this.state.coordinador.despacho}</h6>
+                                <h6>{this.state.coordinador.datos}</h6>
                             </div>
-                        </div>
-                    </article>
+                        </Card.Body>
+
+
+                    </Card>
+
+                    
                 </div>
             </div>
         );

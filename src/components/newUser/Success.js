@@ -26,25 +26,25 @@ export class Sucess extends Component {
                 <div className="registro-nuevoUsuario">
                     <h1 className="titulo titulo-registro "> ALTA DE ALUMNO/A</h1>
 
-                    <Card className="card-nuevoUser card-mensajes-sucess">
+                    <Card className="card-nuevoUser card-mensajes-sucess card-bajas">
 
                         <div className="mensaje-sucess">
-                            <h1>USUARIO GUARDADO CORRECTAMENTE</h1>
+                            <h1 style={{ fontSize: '30px' }}>USUARIO GUARDADO CORRECTAMENTE</h1>
                             <br></br>
-                            <h2>Pulse <strong>SIGUIENTE</strong> para ser redirigido a la pagina de Inicio de Sesion</h2>
+                            <h2 style={{ fontSize: '22px' }}>Pulse <strong> <Link
+                                label="continue"
+
+                                className=" link-continue"
+                                style={styles.button}
+                                to={
+                                    '/'
+                                }
+
+                            > SIGUIENTE </Link></strong> para ser redirigido a la pagina de Inicio de Sesion</h2>
 
                         </div>
 
-                        <Link
-                            label="continue"
 
-                            className=" link-continue"
-                            style={styles.button}
-                            to={
-                                '/'
-                            }
-
-                        > SIGUIENTE </Link>
 
 
                         <br></br>

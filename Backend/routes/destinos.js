@@ -16,7 +16,10 @@ router.get('/buscar',DestinoController.buscar );
 router.delete('/delete/:id', DestinoController.borrar);
 router.get('/destinos' , DestinoController.getDestinos);
 router.get('/destino/:id' , DestinoController.getdestino);
+router.get('/destinoByProfesor/:id', DestinoController.getDestinoByProfesor);
 router.put('/update_coordinador/:id', DestinoController.putcoordinador);
 router.put('/updateProfesor/:id', DestinoController.updateprofesor);
+
+router.get('/comprobarprofesor/:id', DestinoController.comprobarProfesor);
 
 module.exports= router;

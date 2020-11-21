@@ -85,7 +85,7 @@ export class FormDatosErasmus extends Component {
 
                     })
                     console.log("mensaje");
-                axios.put('http://localhost:3900/apiProfesor/saveAlumnos/' + profesor, body3)
+              /*  axios.put('http://localhost:3900/apiProfesor/saveAlumnos/' + profesor, body3)
                     .then(res => {
                         this.setState({
                             status: 'sucess'
@@ -93,15 +93,15 @@ export class FormDatosErasmus extends Component {
                     
                        
                     });
-                   this.notificarProfesor(profesor);
+                  
 
-                    axios.put('http://localhost:3900/apiProfesor/saveAlumnos/' + coordinador, body3)
+                  /*  axios.put('http://localhost:3900/apiProfesor/saveAlumnos/' + coordinador, body3)
                     .then(res => {
                         this.setState({
                             status: 'sucess'
                         });
-                    });
-
+                    });*/
+                    this.notificarProfesor(profesor);
                     this.notificarProfesor(coordinador);
                     
 
@@ -161,7 +161,7 @@ export class FormDatosErasmus extends Component {
                                         {destino.carrera}
                                     </td>
                                     <td>
-                                        {destino.profesor.nombre}
+                                        {destino.profesor.nombre + " " + destino.profesor.apellido1 + " " + destino.profesor.apellido2}
                                     </td>
                                     <td className="th-pequeño">
                                         <button
@@ -223,9 +223,11 @@ export class FormDatosErasmus extends Component {
                                 <th>Coordinador</th>
                             </tr>
                         </thead>
+                       
                     </table>
                     {listarDestinos}
-
+                    <table>
+                        <tbody>
                     <button
                         label="continue"
                         className="btn-continue form-login"
@@ -238,6 +240,10 @@ export class FormDatosErasmus extends Component {
                         style={styles.button}
                         onClick={this.back}
                     > VOLVER </button>
+                    </tbody>
+                    </table>
+
+                   
 
                 </div>
 

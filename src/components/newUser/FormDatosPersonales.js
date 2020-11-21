@@ -87,12 +87,6 @@ export class FormDatosPersonales extends Component {
     }
 
 
-
-
-
-
-
-
     continue = e => {
         e.preventDefault();
         console.log("hey");
@@ -105,10 +99,6 @@ export class FormDatosPersonales extends Component {
             console.log("hey2");
             this.props.nextStep();
         }
-
-
-
-
     }
 
 

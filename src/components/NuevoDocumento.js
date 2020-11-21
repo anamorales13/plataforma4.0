@@ -38,6 +38,7 @@ class NuevoDocumento extends Component {
             selectedFile: null,
             open: false,
             identity: JSON.parse(localStorage.getItem('user')),
+            
 
 
         };
@@ -53,12 +54,12 @@ class NuevoDocumento extends Component {
 
     changeState = () => {
 
+
         if (this.props.type === "documento-particular") {
             this.setState({
                 documento: {
                     title: this.titleRef.current.value,
                     url: this.fileRef.current.value,
-                    // comentario: this.contentRef.current.value,
                     nombre: this.state.identity._id,
                     tipoDocumento: null,
                     tipousuario: this.state.identity.tipo,
@@ -68,18 +69,37 @@ class NuevoDocumento extends Component {
             });
         }
         else {
-            this.setState({
-                documento: {
-                    title: this.titleRef.current.value,
-                    url: this.fileRef.current.value,
-                    // comentario: this.contentRef.current.value,
-                    nombre: this.state.identity._id,
-                    tipoDocumento: null,
-                    tipousuario: this.state.identity.tipo,
-                    descripcion: this.descripcionRef.current.value,
-                    tipo_nube: "compartida"
-                }
-            });
+            if(this.state.identity.tipo==="profesor"){
+                var alumnoid ={ alumno:this.props.alumno}
+                console.log("change - profesor"+ alumnoid.alumno)
+                console.log("message:" + this.props.message);
+                this.setState({
+                    documento: {
+                        title: this.titleRef.current.value,
+                        url: this.fileRef.current.value,
+                        nombre: this.state.identity._id, //propietario
+                        nombre2: alumnoid.alumno,
+                        tipoDocumento: null,
+                        tipousuario: this.state.identity.tipo,
+                        descripcion: this.descripcionRef.current.value,
+                        tipo_nube: "compartida"
+                    }
+                });
+            }else{
+                this.setState({
+                    documento: {
+                        title: this.titleRef.current.value,
+                        url: this.fileRef.current.value,
+                        nombre: this.state.identity._id, //propietario
+                        nombre2: this.state.identity.profesor,
+                        tipoDocumento: null,
+                        tipousuario: this.state.identity.tipo,
+                        descripcion: this.descripcionRef.current.value,
+                        tipo_nube: "compartida"
+                    }
+                });
+            }
+          
         }
     }
 
@@ -115,6 +135,8 @@ class NuevoDocumento extends Component {
 
         const formData = new FormData();
 
+       
+
         formData.append(
             'file0',
             this.state.selectedFile,
@@ -134,7 +156,7 @@ class NuevoDocumento extends Component {
                     var docId = this.state.documento._id;
 
 
-                    console.log("upload")
+                  
                     axios.post(this.url + 'upload-image/' + docId, formData)
                         .then(res => {
                             if (res.data.documento) {
@@ -178,11 +200,6 @@ class NuevoDocumento extends Component {
     saveDocOficial = (e) => {
 
         e.preventDefault();
-
-        // 1- Rellenar el state con el formulario
-
-
-
         const formDatadoc = new FormData();
 
         formDatadoc.append(
@@ -191,14 +208,9 @@ class NuevoDocumento extends Component {
             this.state.selectedFile.name
         );
 
-
-        console.log("id: " + this.props.type);
-
-        console.log("upload")
-        console.log("nombre: " + this.state.nombre)
         // VENTANA ALUMNO
         if (this.props.type === "nuevo") {
-            console.log("1");
+           
             axios.put(this.urldocoficial + 'upload-image/' + this.state.identity._id + '/' + this.state.nombre, formDatadoc)
                 .then(res => {
                     if (res.data.userUpdate) {
@@ -206,7 +218,7 @@ class NuevoDocumento extends Component {
                             documentoOficial: res.data.userUpdate,
 
                         });
-                        console.log("entra");
+                       
 
                         swal({
                             title: 'Documento creado con exito',
@@ -224,7 +236,7 @@ class NuevoDocumento extends Component {
                         this.notificarProfesor(this.state.documentoOficial.nombre);
 
                     } else {
-                        console.log("mal");
+                       
                         this.setState({
                             // documentoOficial: res.data.documento,
                             statuss: 'failed'
@@ -235,7 +247,7 @@ class NuevoDocumento extends Component {
                 });
             //VENTANA PROFESOR
         } else {
-            console.log("2");
+           
             axios.put(this.urldocoficial + 'upload-image/' + this.props.type + '/' + this.state.nombre, formDatadoc)
                 .then(res => {
                     if (res.data.userUpdate) {
@@ -243,8 +255,7 @@ class NuevoDocumento extends Component {
                             documentoOficial: res.data.userUpdate,
 
                         });
-                        console.log("entra");
-
+                        
                         swal({
                             title: 'Documento creado con exito',
                             text: "El documento ha sido creado correctamente",
@@ -259,7 +270,7 @@ class NuevoDocumento extends Component {
                         this.notificarAlumno();
 
                     } else {
-                        console.log("mal");
+                       
                         this.setState({
                             // documentoOficial: res.data.documento,
                             statuss: 'failed'

@@ -27,6 +27,7 @@
   display:block;
   margin:auto;
   width: 1000px;
+  margin-bottom: 25px;
   
 
 }
@@ -39,9 +40,9 @@
 
 }
 
+
 .btn-style{
   background-color:rgb(14, 23, 105);
-
    letter-spacing: .0727272727em;
    font-family: Roboto,Arial,sans-serif;
    font-size:15px;

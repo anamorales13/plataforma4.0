@@ -99,12 +99,12 @@
 
 
   .titulo-registro{
-      margin-top:20px;
+      margin-top:5px;
       font-size: 30px
   }
   
   .titulo-registro-secundario{
-      margin-top: 40px;
+      margin-top:13px;
       font-size: 22px;
       
   }
@@ -182,11 +182,13 @@
   
 }
 
+.link-continue{
+  color:black;
+}
+
 .link-continue:hover{
   text-decoration: none;
   color:white;
-  
-  background-color: rgb(56, 56, 148);
 }
 
 .alert-sucess-middle{
@@ -194,14 +196,22 @@ align-items: center;
 }
 
 .card-mensajes-sucess{
+  
+  display:block;
+  width: 1000px;
+  margin:auto;
   background-color: rgba(124, 219, 124, 0.637);
 }
 
+
 .mensaje-sucess{
+  
   display: block;
+  text-align: center;
   margin-left: auto;
   margin-right: auto;
   margin-top: 10px;
+  
   
 }
 
