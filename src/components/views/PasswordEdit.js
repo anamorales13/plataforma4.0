@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import "../../assets/css/MiPerfil.css";
-import { NavLink } from 'react-router-dom';
+
 import Global from '../../Global';
-import ReactDOM from 'react-dom';
+
 import swal from 'sweetalert';
 import "../../assets/css/Password.css";
 import MenuPerfil from './MenuPerfil';
 import SimpleReactValidator from 'simple-react-validator';
-var bcrypt = require('bcrypt-nodejs');
+
 
 
 class PasswordEdit extends Component {
@@ -112,14 +112,14 @@ class PasswordEdit extends Component {
         console.log(nueva);
 
         if(this.state.identity==='Alumno'){
-        if (this.state.passwordActual != "" && this.state.passwordNuevaDos != "" && this.state.passwordNueva != "") {
+        if (this.state.passwordActual !== "" && this.state.passwordNuevaDos !== "" && this.state.passwordNueva !== "") {
             if (this.validator.fieldValid('min')) {
                 /* if(this.validator.allValid()){*/
                    
                 axios.post(this.url + 'compararPassword/' + this.state.identity._id, currentlypassword)
                     .then(res => {
-                        if (res.data.status == 'sucess') {
-                            if (this.state.passwordNueva == this.state.passwordNuevaDos) {
+                        if (res.data.status === 'sucess') {
+                            if (this.state.passwordNueva === this.state.passwordNuevaDos) {
                                 
                                 axios.put(this.url + 'update-password/' + this.state.identity._id, nueva)
                                     .then(res => {
@@ -170,15 +170,15 @@ class PasswordEdit extends Component {
         }
     }else{
         console.log("profesor")
-        if (this.state.passwordActual != null && this.state.passwordNuevaDos != null && this.state.passwordNueva != null) {
+        if (this.state.passwordActual !== null && this.state.passwordNuevaDos !== null && this.state.passwordNueva !== null) {
            // if (this.validator.fieldValid('min')) {
                 console.log("no estan vacias");
                 /* if(this.validator.allValid()){*/
                 axios.post(this.urlprofesor + 'compararPassword/' + this.state.identity._id, currentlypassword)
                     .then(res => {
                         console.log("2");
-                        if (res.data.status == 'sucess') {
-                            if (this.state.passwordNueva == this.state.passwordNuevaDos) {
+                        if (res.data.status === 'sucess') {
+                            if (this.state.passwordNueva === this.state.passwordNuevaDos) {
                                 console.log("son iguales");
                                 axios.put(this.urlprofesor + 'update-password/' + this.state.identity._id, nueva)
                                     .then(res => {
@@ -271,7 +271,7 @@ class PasswordEdit extends Component {
                                     {this.validator.message('actual', this.state.passwordActual, 'required')}
                                 </div>
 
-                                {this.state.errores.actual != undefined &&
+                                {this.state.errores.actual !== undefined &&
                                     <label className="error"> {this.state.errores.actual.toString()}</label>
 
                                 }
@@ -284,7 +284,7 @@ class PasswordEdit extends Component {
                                 <div className="error">
                                     {this.validator.message('nueva', this.state.passwordNueva, 'required|min:8')}
                                 </div>
-                                {this.state.errores.nueva != undefined &&
+                                {this.state.errores.nueva !== undefined &&
                                     <label className="error"> {this.state.errores.nueva.toString()}</label>
                                 }
                             </div>
@@ -294,7 +294,7 @@ class PasswordEdit extends Component {
                                 <div className="error">
                                     {this.validator.message('nuevarep', this.state.passwordNuevaDos, 'required|min:8')}
                                 </div>
-                                {this.state.errores.nuevarep != undefined &&
+                                {this.state.errores.nuevarep !== undefined &&
                                     <label className="error"> {this.state.errores.nuevarep.toString()}</label>
                                 }
                             </div>

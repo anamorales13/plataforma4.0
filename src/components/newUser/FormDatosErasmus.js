@@ -67,10 +67,10 @@ export class FormDatosErasmus extends Component {
             profesor: profesor,
             coordinador: coordinador
         }
-        var body3 = {
+       /* var body3 = {
             alumno: alumno
-        }
-        var mensaje = {
+        }*/
+        /*var mensaje = {
             asunto: 'Nueva notificación Plataforma Erasmus+',
             texto: 'Se ha añadido un nuevo alumno'
                 + '  Puede obtener más información en el apartado de ALUMNOS. ',
@@ -83,7 +83,7 @@ export class FormDatosErasmus extends Component {
                 + '  Puede obtener más información en el apartado de ALUMNOS. ',
             emisor: { profesor: '5f7c4c32fceb54223c41cf44' },
             receptor: { profesor: coordinador }
-        }
+        }*/
 
         axios.put('http://localhost:3900/apiErasmus/savedestino/' + alumno, body)
             .then(res => {
@@ -175,14 +175,14 @@ export class FormDatosErasmus extends Component {
             )
 }
 
-        const { values, handleChange, tipo } = this.props;
+        const { values, tipo } = this.props;
 
 
         const listarDestinos = this.state.destinos.map((destino) => {
             return (
 
                 <div>
-                    {tipo == 'alumno' &&
+                    {tipo === 'alumno' &&
                         <table>
                             <tbody style={{overflow:'scroll'}}>
                                 <tr>
@@ -230,7 +230,7 @@ export class FormDatosErasmus extends Component {
                     <div className="subtitulo">Es posible que otros usuarios puedan ver parte de la infomación al usar la plataforma. </div>
                     <Link to='/' className="link-cancelar">Cancelar registro de usuario</Link><br />
                     <div>
-                        {this.state.status == 'sucess' &&
+                        {this.state.status === 'sucess' &&
                             <div className="alert alert-success alert-sucess-middle">
 
                                 <strong>¡Destino guardado correctamente!</strong>
@@ -239,7 +239,7 @@ export class FormDatosErasmus extends Component {
                             </div>
 
                         }
-                        {this.state.status == 'failed' &&
+                        {this.state.status === 'failed' &&
                             <div className="alert alert-danger">
 
                                 <strong>¡Error!</strong> El correo no se pudo enviar correctamente

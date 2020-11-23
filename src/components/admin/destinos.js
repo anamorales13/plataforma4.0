@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 
-import { Link } from 'react-router-dom';
+
 import Menu from './menu-admin';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-import Card from 'react-bootstrap/Card';
-import swal from 'sweetalert';
-import Alert from 'bootstrap';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import TextField from '@material-ui/core/TextField';
+
 import '../../assets/css/admin.css';
-import { ColorizeRounded } from '@material-ui/icons';
+
 
 class destinos extends Component {
 

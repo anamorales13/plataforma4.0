@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Router } from 'react-router-dom';
+
 import Global from '../../GlobalMensaje';
 import GlobalPerfil from '../../Global';
 
 import Menu from './menu-mensajes';
 import axios from 'axios';
-import Button from 'react-bootstrap/Button';
+
 import Moment from 'react-moment';
 
 import { Link } from 'react-router-dom';

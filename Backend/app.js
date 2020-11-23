@@ -5,7 +5,7 @@
 var express= require('express'); //el que crea el servidor.
 var bodyParser= require('body-parser')  //recibir las peticiones
 const cors = require('cors');
-
+const path = require('path');
 
 // 2- Ejecutar express (para poder trabajar con http)
 var app= express(); //esto va a ser la app en si, es lo que 
@@ -24,6 +24,12 @@ var mensaje_routes=require('./routes/mensaje');
 
 // 4- cargar middlewares: siempre se ejecuta antes de 
 //                     cargar una ruta de la web.
+
+app.use(express.static(path.join(__dirname, 'src/build')))
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/src/build/index.html'))
+})
+
 
 app.use(bodyParser.urlencoded({extended:false}))//cargar el bodyparser
 app.use(bodyParser.json()); //convertir cualquier peticion que me llege a json.

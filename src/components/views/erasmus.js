@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MenuPerfil from './MenuPerfil';
-import { Link } from 'react-router-dom';
+
 import Global from '../../Global';
 import axios from 'axios';
 import Card from 'react-bootstrap/Card';
@@ -52,7 +52,7 @@ class erasmus extends Component {
 
     render() {
 
-        if (this.state.destinos != undefined) {
+        if (this.state.destinos !== undefined) {
             var listardocumentos = this.state.destinos.map((destino, index) => {
                 return (
                     <div>

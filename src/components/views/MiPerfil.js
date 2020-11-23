@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import "../../assets/css/MiPerfil.css";
-import { NavLink } from 'react-router-dom';
+
 import Global from '../../Global';
 import MenuPerfil from './MenuPerfil';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
@@ -57,10 +57,10 @@ class MiPerfil extends Component {
 
                 <div id="content" className="grid">
 
-                    {this.props.match.params.id == null &&
+                    {this.props.match.params.id === null &&
                         <MenuPerfil />
                     }
-                    {this.props.match.params.id != null &&
+                    {this.props.match.params.id !== null &&
                         < Breadcrumb >
                             <Breadcrumb.Item href="/inicio" > Home</Breadcrumb.Item>
                             <Breadcrumb.Item href="/Alumnos" >
@@ -112,7 +112,7 @@ class MiPerfil extends Component {
                                     <h5><strong>Correo electrónico: </strong>{this.state.identity.email}</h5>
                                     <h5><strong>Teléfono: </strong> {this.state.identity.telefono}</h5>
 
-                                    {this.state.identity.tipo == 'profesor' &&
+                                    {this.state.identity.tipo === 'profesor' &&
                                         <div>
                                             <h5><strong>Edificio: </strong>{this.state.identity.edificio}</h5>
                                             <h5>{this.state.identity.datos}</h5>

@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component } from 'react';
 
 import Menu from './menu-mensajes';
 import axios from 'axios';
@@ -8,7 +8,7 @@ import Global from '../../GlobalMensaje';
 import GlobalPerfil from '../../Global';
 import Moment from 'react-moment';
 import ReactPaginate from "react-paginate";
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 

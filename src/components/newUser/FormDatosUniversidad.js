@@ -2,18 +2,17 @@
 
 import React, { Component } from 'react';
 
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+
+
 import imagenlogo from '../../assets/images/logo-erasmus.png';
 import Card from 'react-bootstrap/Card';
 import '../../assets/css/NuevoUsuario.css';
 import { Link } from 'react-router-dom';
 import Global from '../../Global';
-import SimpleReactValidator from 'simple-react-validator';
-import axios from 'axios';
+
 import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
-import InputGroup from 'react-bootstrap/InputGroup';
+
+
 
 export class FormDatosUniversidad extends Component {
 
@@ -71,7 +70,7 @@ export class FormDatosUniversidad extends Component {
     render() {
 
 
-        const { values, handleChange, tipo } = this.props;
+        const { values, handleChange } = this.props;
 
         return (
             <div>

@@ -3,10 +3,7 @@ import React, { Component } from 'react';
 import Menu from './menu-mensajes';
 import Global from '../../GlobalMensaje';
 import axios from 'axios';
-import swal from 'sweetalert';
-import Alert from 'bootstrap';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import TextField from '@material-ui/core/TextField';
+
 
 class responder extends Component {
 

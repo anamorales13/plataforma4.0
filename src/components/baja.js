@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Global from '../Global';
 import axios from 'axios';
 import Card from 'react-bootstrap/Card';
-import { Link, Redirect } from 'react-router-dom';
+
 
 import swal from 'sweetalert';
 

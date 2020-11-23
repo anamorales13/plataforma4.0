@@ -2,15 +2,15 @@
 
 import React, { Component } from 'react';
 
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+
+
 import imagenlogo from '../../assets/images/logo-erasmus.png';
 import Card from 'react-bootstrap/Card';
 import '../../assets/css/NuevoUsuario.css';
 import { Link } from 'react-router-dom';
 import Global from '../../Global';
-import SimpleReactValidator from 'simple-react-validator';
-import axios from 'axios';
+
+
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -130,10 +130,10 @@ export class FormDatosPersonales extends Component {
                     <hr className="linea"></hr>
 
                     < div className="registro-nuevoUsuario">
-                        {tipo == 'alumno' &&
+                        {tipo === 'alumno' &&
                             <h1 className="titulo titulo-registro "> ALTA DE ALUMNO/A</h1>
                         }
-                        {tipo == 'profesor' &&
+                        {tipo === 'profesor' &&
                             <h1 className="titulo titulo-registro " > ALTA DE PROFESOR/A</h1>
                         }
                         <h1 className="titulo titulo-registro titulo-registro-secundario" style={{ fontSize: '21px' }}> DATOS PERSONALES </h1>

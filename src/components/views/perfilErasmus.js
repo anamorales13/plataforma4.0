@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import "../../assets/css/MiPerfil.css";
-import { NavLink } from 'react-router-dom';
+
 import Global from '../../Global';
 import MenuPerfil from './MenuPerfil';
 import Card from 'react-bootstrap/Card';

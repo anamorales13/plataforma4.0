@@ -3,14 +3,14 @@ import NuevoDocumento from './NuevoDocumento';
 
 import GlobalDocumentos from '../GlobalDocumentos';
 import '../assets/css/dropbox.css';
-import Documentos from './Documentos';
+
 import Spinner from 'react-bootstrap/Spinner';
 import '../assets/css/dropbox.css';
 import axios from 'axios';
 import Moment from 'react-moment';
-import Global from '../Global';
+
 import ButtonIcon from "@material-ui/core/Button";
-import EditIcon from '@material-ui/icons/Edit';
+
 import DeleteIcon from '@material-ui/icons/Delete';
 import ReactPaginate from "react-paginate";
 
@@ -21,7 +21,7 @@ import btn1 from '../assets/images/word.png';
 import btn2 from '../assets/images/pdf.png';
 import btn3 from '../assets/images/powerpoint.jpg';
 import btn4 from '../assets/images/default.png';
-import SelectInput from '@material-ui/core/Select/SelectInput';
+
 
 
 class mydropbox extends Component {
@@ -146,7 +146,7 @@ class mydropbox extends Component {
 }
 
 
-        if (this.state.documentos != undefined ) {
+        if (this.state.documentos !== undefined ) {
             var listardocumentos = this.state.documentos.map((documentos) => {
                 return (
                     <div className="documento-item">
@@ -159,13 +159,13 @@ class mydropbox extends Component {
                                             <div>
 
                                                 {
-                                                    documentos.tipoDocumento == "word.png" ? (
+                                                    documentos.tipoDocumento === "word.png" ? (
                                                         <img src={btn1} alt="prueba" className="image-wrap" />
-                                                    ) : documentos.tipoDocumento == "pdf.png" ? (
+                                                    ) : documentos.tipoDocumento === "pdf.png" ? (
                                                         <img src={btn2} alt="prueba" className="image-wrap" />
-                                                    ) : documentos.tipoDocumento == "powerpoint.jpg" ? (
+                                                    ) : documentos.tipoDocumento === "powerpoint.jpg" ? (
                                                         <img src={btn3} alt="prueba" className="image-wrap" />
-                                                    ) : documentos.tipoDocumento == "imagen" ? (
+                                                    ) : documentos.tipoDocumento === "imagen" ? (
                                                         <img src={this.url + 'get-image/' + documentos.url} alt={documentos.title} className="image-wrap" />
                                                     ) :
                                                                     (

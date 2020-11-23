@@ -6,9 +6,9 @@ var mongoose = require('mongoose');
 var app=require('./app');
 const socketio = require('socket.io')
 const http = require('http')
-
-
-var port=3900;
+var express= require('express');
+const path = require('path');
+var port= process.env.PORT || 3900;
 
 
 
@@ -18,13 +18,14 @@ require('dotenv').config({path: 'variables.env'});
 console.log(process.env.MONGO_URI);
  
 
+
 mongoose.set('useFindAndModify', false);
 mongoose.Promise = global.Promise;
 
 
 
 //mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost:27017/baseerasmus",{ useUnifiedTopology: true, useNewUrlParser: true})
-mongoose.connect('mongodb://localhost:27017/baseerasmus',{ useUnifiedTopology: true, useNewUrlParser: true})
+mongoose.connect('mongodb+srv://anamorales13:vBac1UreWvszfgNe@plataforma.2cxua.mongodb.net/test?retryWrites=true&w=majority',{ useUnifiedTopology: true, useNewUrlParser: true})
         .then(()=>{
             console.log('La conexion a la BD se ha realizado con exito');
 

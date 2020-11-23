@@ -1,7 +1,7 @@
 
 
 import React, { Component } from 'react';
-import { Redirect, Link, hashHistory } from 'react-router-dom';
+import {  Link } from 'react-router-dom';
 
 import imagenlogo from '../../assets/images/logo-erasmus.png';
 import Card from 'react-bootstrap/Card';

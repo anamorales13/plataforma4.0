@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import Menu from './menu-mensajes';
 import Global from '../../GlobalMensaje';
 import axios from 'axios';
-import swal from 'sweetalert';
-import Alert from 'bootstrap';
+
+
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 
@@ -81,7 +81,7 @@ class enviar extends Component {
     addMessage = (e) => {
         e.preventDefault();
 
-        if (this.state.identity.tipo == 'Alumno' && this.state.tags.tipo == 'Alumno') {
+        if (this.state.identity.tipo === 'Alumno' && this.state.tags.tipo === 'Alumno') {
             var mensaje = {
                 texto: this.state.texto,
                 asunto: this.state.asunto,
@@ -89,7 +89,7 @@ class enviar extends Component {
                 receptor: { alumno: this.state.tags._id },
                 tipo: this.state.tags.tipo,
             }
-        } else if (this.state.identity.tipo == 'Alumno' && this.state.tags.tipo == 'profesor') {
+        } else if (this.state.identity.tipo === 'Alumno' && this.state.tags.tipo === 'profesor') {
             var mensaje = {
                 texto: this.state.texto,
                 asunto: this.state.asunto,
@@ -97,7 +97,7 @@ class enviar extends Component {
                 receptor: { profesor: this.state.tags._id },
                 tipo: this.state.tags.tipo,
             }
-        } else if (this.state.identity.tipo == 'profesor' && this.state.tags.tipo == 'Alumno') {
+        } else if (this.state.identity.tipo === 'profesor' && this.state.tags.tipo === 'Alumno') {
             var mensaje = {
                 texto: this.state.texto,
                 asunto: this.state.asunto,
@@ -105,7 +105,7 @@ class enviar extends Component {
                 receptor: { alumno: this.state.tags._id },
                 tipo: this.state.tags.tipo,
             }
-        } else if (this.state.identity.tipo == 'profesor' && this.state.tags.tipo == 'profesor') {
+        } else if (this.state.identity.tipo === 'profesor' && this.state.tags.tipo === 'profesor') {
             var mensaje = {
                 texto: this.state.texto,
                 asunto: this.state.asunto,
@@ -177,7 +177,7 @@ class enviar extends Component {
                     <Menu />
 
                     <div>
-                        {this.state.status == 'sucess' &&
+                        {this.state.status === 'sucess' &&
                             <div className="alert alert-success">
 
                                 <strong>¡Correo enviado correctamente!</strong>
@@ -185,7 +185,7 @@ class enviar extends Component {
                             </div>
 
                         }
-                        {this.state.status == 'failed' &&
+                        {this.state.status === 'failed' &&
                             <div className="alert alert-danger">
 
                                 <strong>¡Error!</strong> El correo no se pudo enviar correctamente
@@ -204,7 +204,7 @@ class enviar extends Component {
                                     </p>
                                     <div className="destinatario">
                                         <label>Para</label>
-                                        {this.state.identity.tipo == "Alumno" &&
+                                        {this.state.identity.tipo === "Alumno" &&
                                             <Autocomplete
                                                 className="autocomplete"
                                                 value={this.state.profesor._id}
@@ -215,7 +215,7 @@ class enviar extends Component {
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
                                         }
-                                        {this.state.identity.tipo == "profesor" &&
+                                        {this.state.identity.tipo === "profesor" &&
                                             <Autocomplete
                                                 className="autocomplete"
                                                 value={this.state.usuarios._id}
@@ -236,7 +236,7 @@ class enviar extends Component {
                                     </p>
                                 </div>
                                 <div className="mensaje-estilo-dos">
-                                        {this.props.location.state!=null 
+                                        {this.props.location.state!==null 
                                            ?  <textarea type="text" name="text" onChange={this.handleChange('texto')} ref={this.mensajeRef} value={this.state.texto} placeholder="Escribe tu mensaje" className="textarea-mensaje">     {this.texto}</textarea>
                                             : <textarea type="text" name="text" onChange={this.handleChange('texto')} ref={this.mensajeRef} value={this.state.texto} placeholder="Escribe tu mensaje" className="textarea-mensaje"> </textarea>
                                         }

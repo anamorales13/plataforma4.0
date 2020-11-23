@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, {  useState, useEffect } from 'react';
 import queryString from 'query-string';
 import InfoBar from './InfoBar';
 import Input from './Input';
