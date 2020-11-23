@@ -154,13 +154,13 @@ class Header extends Component {
                                     <NavLink to="/documentos" activeClassName="active"> DOCUMENTOS </NavLink >
                                 </li>
                                 <li>
-                                    <NavLink to="/dropbox" activeClassName="active">  DROPBOX </NavLink >
+                                    <NavLink to="/nube" activeClassName="active">  NUBE COMPARTIDA </NavLink >
                                 </li>
                                 {/*<li>
                                     <NavLink to="/mensaje" activeClassName="active"> <span className="glyphicon glyphicon-envelope" > </span>   </NavLink >
                                 </li>*/}
                                 <li>
-                                    <NavLink to="/mydropbox" activeClassName="active">
+                                    <NavLink to="/mi_nube" activeClassName="active">
                                         MI NUBE </NavLink >
                                 </li>
                             </ul>
@@ -222,7 +222,7 @@ class Header extends Component {
                                     <NavLink to="/Alumnos" activeClassName="active"> ALUMNOS </NavLink >
                                 </li>
                                 <li>
-                                    <NavLink to="/mydropbox" activeClassName="active">   MI NUBE </NavLink >
+                                    <NavLink to="/mi_nube" activeClassName="active">   MI NUBE </NavLink >
                                 </li>
 
 

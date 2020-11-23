@@ -74,6 +74,8 @@
     padding: 3px 3px 3px 3px;
 }
 
+
+
 .textarea-mostrarmensaje{
     width:110%;
     height: 310px;
@@ -91,6 +93,7 @@
     
 }
 
+
 .pruebaresponder{
     display:flex;
 }
@@ -100,6 +103,7 @@
 
 .textarea-mensaje:focus{
     outline:none;
+    border:1px solid grey;
 }
 
 .mensaje-estilo-uno{
@@ -305,7 +309,7 @@
 
 #mensaje-nombre-novisto{
     font-weight:bold;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .mensaje-texto-novisto{

@@ -100,32 +100,32 @@ class mensaje extends Component {
                                 <h6 className="fecha"> <Moment format="DD-MM-YYYY">{mensajes.fecha}</Moment></h6>
                             </div>
                             {mensajes.emisor.profesor != null &&
-                                <h5  > {"    <" + mensajes.emisor.profesor.email + ">"} </h5>
+                                <h5  style={{fontSize:'15px'}}> {"    <" + mensajes.emisor.profesor.email + ">"} </h5>
 
                             }
                             {mensajes.emisor.alumno != null &&
-                                <h5 > {"    <" + mensajes.emisor.alumno.email + ">"} </h5>
+                                <h5 style={{fontSize:'15px'}} > {"    <" + mensajes.emisor.alumno.email + ">"} </h5>
 
                             }
 
-                            <br></br>
+                           
                             <hr></hr>
                             <div className="pruebaresponder">
-                                <strong style={{ fontSize: '16px' }}>{mensajes.asunto}</strong>
+                              <strong style={{ fontSize: '16px' }}>{mensajes.asunto}</strong>
                                 {mensajes.emisor.profesor != null &&  
-                                    <Link to={'/mensajes/enviar'} params={{ mensajeId: mensajes._id, emisor: mensajes.emisor.profesor.email, texto:mensajes.texto }} className="responder" title="responder"><span className="glyphicon glyphicon-share-alt" style={{fontSize:'19px'}}> </span></Link>
+                                    <Link to={'/responder/'+ mensajes._id} params={{ mensajeId: mensajes._id, emisor: mensajes.emisor.profesor.email, texto:mensajes.texto }} className="responder" title="responder"><span className="glyphicon glyphicon-share-alt" style={{fontSize:'19px'}}> Responder</span></Link>
                                  }
                                 {mensajes.emisor.alumno != null &&
-                                    <Link to={'/mensajes/enviar'} params={{ mensajeId: mensajes._id, emisor: mensajes.emisor.alumno.email, texto: mensajes.texto  }} className="responder" title="responder"><span className="glyphicon glyphicon-share-alt" style={{fontSize:'19px'}}> </span></Link>
+                                    <Link to={'/responder/'+ mensajes._id} params={{ mensajeId: mensajes._id, emisor: mensajes.emisor.alumno.email, texto: mensajes.texto  }} className="responder" title="responder"><span className="glyphicon glyphicon-share-alt" style={{fontSize:'19px'}}> Responder</span></Link>
 
                                 }
 
-                               
+
                             </div>
 
 
                             <Card.Text >
-                                <br></br>
+                                <br/>
                                 <label className="textarea-mostrarmensaje" readonly>{mensajes.texto}</label>
 
                             </Card.Text>

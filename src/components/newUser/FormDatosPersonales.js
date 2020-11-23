@@ -75,11 +75,17 @@ export class FormDatosPersonales extends Component {
 
         //TELEFONO
 
+      if(this.props.tipo==='alumno'){
+
+      
         if (this.props.values.telefono) {
             if (!regexnumeros.test(this.props.values.telefono)) {
                 errors.telefono = "Número no valido";
             }
+        }else{
+            errors.telefono="Campo obligatorio";
         }
+    }
         
 
 
@@ -216,7 +222,7 @@ export class FormDatosPersonales extends Component {
                                     {this.state.errors.email2 && <Form.Label style={{ color: 'red', fontSize: '12px' }}>{this.state.errors.email2}</Form.Label>}
                                 </Form.Group>
                                 </Form.Row>
-                            {tipo == 'alumno' &&
+                            {tipo === 'alumno' &&
                                 <Form.Group >
 
                                     <Form.Control

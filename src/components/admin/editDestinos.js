@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import axios from 'axios';
 import Global from '../../Global';
-
+import ReactPaginate from "react-paginate";
 
 import Menu from './menu-admin';
 
@@ -20,7 +20,12 @@ class editdestinos extends Component {
         destino:"",
         open: false,
         profesor:"",
-        update:{}
+        update:{},
+        pages:"",
+        currentPage:0,
+        mensajesPerPage: 5,
+        offset: 0,
+
 
     }
 
@@ -42,14 +47,31 @@ class editdestinos extends Component {
         
     }
   
+    handlePageClick = mensajes => {
+       
+        const selectedPage = mensajes.selected;
+        const offset = selectedPage * this.state.mensajesPerPage;
+        this.setState({
+            currentPage: selectedPage,
+            offset: offset
+      
+       }, () => 
+            this.listarDestinos());
+        
+    }
+
 
     onCloseModal = () => { this.setState({ open: false }); }
 
     listarDestinos() {
-        axios.get('http://localhost:3900/apiDestino/destinos')
+        var pages= this.state.currentPage+1;
+
+
+        axios.get('http://localhost:3900/apiDestino/destinos/' + pages)
             .then(res => {
                 this.setState({
                     destinos: res.data.destino,
+                    pages:res.data.pages
 
                 });
             });
@@ -97,6 +119,30 @@ class editdestinos extends Component {
 
 
     render() {
+        
+        let paginationElement;
+
+        if (this.state.pages > 1) {
+            paginationElement = (
+                <ReactPaginate
+                    previousLabel={"<<"}
+                    nextLabel={">>"}
+                    breakLabel={<span className="gap">...</span>}
+                    pageCount={this.state.pages}
+                    onPageChange={this.handlePageClick}
+                    forcePage={this.state.currentPage}
+                    containerClassName={"pagination justify-content-center"}
+                    pageClassName={"page-link"}
+                    previousClassName={"page-link"}
+                    previousLinkClassName={"page-item"}
+                    nextClassName={"page-link"}
+                    nextLinkClassName={"page-item"}
+                    disabledClassName={"disabled"}
+                    activeClassName={"page-item active"}
+                    activeLinkClassName={"page-link"}
+                />
+            )
+}
         const listarDestinos = this.state.destinos.map((destino) => {
             return (
 
@@ -163,6 +209,7 @@ class editdestinos extends Component {
                             </thead>
                         </table>
                         {listarDestinos}
+                        {paginationElement}
                         <div>
                             <Modal show={this.state.open} onHide={this.onCloseModal}>
                                 <Modal.Header closeButton>

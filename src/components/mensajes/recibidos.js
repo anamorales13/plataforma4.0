@@ -23,6 +23,7 @@ class recibidos extends Component {
         elements: [], //los que cargamos en la pagina actual
         mensajesPerPage: 5,
         offset: 0,
+        eliminado: {},
 
     }
 
@@ -66,8 +67,8 @@ class recibidos extends Component {
                 });
             });
     }
-    
-   
+
+
 
 
     /* setElementsForCurrentPage() {
@@ -90,6 +91,23 @@ class recibidos extends Component {
 
     componentDidMount() {
         this.getMessage();
+    }
+
+    deleteMessage(id) {
+        axios.delete(this.url + 'delete/' + id)
+            .then(res => {
+                this.setState({
+                    eliminado: res.data.mensaje,
+                    status: 'sucess',
+                });
+                window.location.reload(true);
+            })
+            .catch(err => {
+                this.setState({
+                    eliminado: {},
+                    status: 'failed'
+                });
+            });
     }
 
 
@@ -132,46 +150,51 @@ class recibidos extends Component {
                 return (
                     <div >
                         {mensajes.visto == 'true' &&
-                            <Link to={'/mensajes/' + mensajes._id}>
-                                <Card style={{ width: '70em' }} className="card-mensajes row no-gutters ">
-                                    {mensajes.emisor.profesor != null &&
-                                        <Card.Img variant="left" src={this.urlperfil + '/get-image-user/' + mensajes.emisor.profesor.image} className="image-user" />
-                                    }
-                                    {mensajes.emisor.alumno != null &&
-                                        <Card.Img variant="left" src={this.urlperfil + '/get-image-user/' + mensajes.emisor.alumno.image} className="image-user" />
-                                    }
 
-                                    <Card.Body id="cardbody">
-                                        <div className="mensaje-header">
-                                            {mensajes.emisor.profesor != null &&
-                                                <h4 id="mensaje-nombre">{mensajes.emisor.profesor.nombre + "  " + mensajes.emisor.profesor.apellido1 + "    " + mensajes.emisor.profesor.apellido2} </h4>
-                                            }
-                                            {mensajes.emisor.alumno != null &&
-                                                <h4 id="mensaje-nombre">{mensajes.emisor.alumno.nombre + "  " + mensajes.emisor.alumno.apellido1 + "    " + mensajes.emisor.alumno.apellido2} </h4>
-                                            }
 
-                                            <h6 className="fecha"> <Moment format="DD-MM-YYYY">{mensajes.fecha}</Moment></h6>
-                                        </div>
+                            <Card style={{ width: '70em' }} className="card-mensajes row no-gutters ">
+                                {mensajes.emisor.profesor != null &&
+                                    <Card.Img variant="left" src={this.urlperfil + '/get-image-user/' + mensajes.emisor.profesor.image} className="image-user" />
+                                }
+                                {mensajes.emisor.alumno != null &&
+                                    <Card.Img variant="left" src={this.urlperfil + '/get-image-user/' + mensajes.emisor.alumno.image} className="image-user" />
+                                }
 
+                                <Card.Body id="cardbody">
+                                    <Link to={'/mensajes/' + mensajes._id}>
+                                    <div className="mensaje-header">
+                                        {mensajes.emisor.profesor != null &&
+                                            <h4 id="mensaje-nombre">{mensajes.emisor.profesor.nombre + "  " + mensajes.emisor.profesor.apellido1 + "    " + mensajes.emisor.profesor.apellido2} </h4>
+                                        }
+                                        {mensajes.emisor.alumno != null &&
+                                            <h4 id="mensaje-nombre">{mensajes.emisor.alumno.nombre + "  " + mensajes.emisor.alumno.apellido1 + "    " + mensajes.emisor.alumno.apellido2} </h4>
+                                        }
+
+                                        <h6 className="fecha"> <Moment format="DD-MM-YYYY">{mensajes.fecha}</Moment></h6>
+                                    </div>
+                                    
                                         <Card.Text className="mensaje-texto">
                                             <strong>{mensajes.asunto}        </strong>
                                             {mensajes.texto}
                                         </Card.Text>
-                                        <button href={"#"} className="mensaje-enlace boton-sin-estilo" onClick={() => this.deleteMessage() } >
-                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z" />
-                                            </svg>
-                                        </button>
-                                    </Card.Body>
+                                    </Link>
+                                    <button href={"#"} className="mensaje-enlace boton-sin-estilo" onClick={() => { if (window.confirm('\n' + '¿Estas seguro de eliminar el mensaje ?')) this.deleteMessage(mensajes._id); }} >
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z" />
+                                        </svg>
+                                    </button>
+                                </Card.Body>
 
 
 
-                                </Card>
-                            </Link>
+                            </Card>
+
+
+
                         }
 
                         {mensajes.visto == 'false' &&
-                            <Link to={'/mensajes/' + mensajes._id}>
+                           
                                 <Card style={{ width: '70em' }} className="card-mensaje-novisto row no-gutters ">
                                     {mensajes.emisor.profesor != null &&
                                         <Card.Img variant="left" src={this.urlperfil + '/get-image-user/' + mensajes.emisor.profesor.image} className="image-user" />
@@ -180,6 +203,7 @@ class recibidos extends Component {
                                         <Card.Img variant="left" src={this.urlperfil + '/get-image-user/' + mensajes.emisor.alumno.image} className="image-user" />
                                     }
                                     <Card.Body id="cardbody">
+                                    <Link to={'/mensajes/' + mensajes._id}>
                                         <div className="mensaje-header-novisto">
                                             {mensajes.emisor.profesor != null &&
                                                 <h4 id="mensaje-nombre">{mensajes.emisor.profesor.nombre + "  " + mensajes.emisor.profesor.apellido1 + "    " + mensajes.emisor.profesor.apellido2} </h4>
@@ -194,17 +218,18 @@ class recibidos extends Component {
                                             <strong>{mensajes.asunto}       </strong>
                                             {mensajes.texto}
                                         </Card.Text>
-                                        <button href={"#"} className="mensaje-enlace boton-sin-estilo"  onClick={() => this.deleteMessage() }>
-                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z" />
-                                            </svg>
-                                        </button>
+                                        </Link>
+                                        <button href={"#"} className="mensaje-enlace boton-sin-estilo" onClick={() => { if (window.confirm('\n' + '¿Estas seguro de eliminar el mensaje ?')) this.deleteMessage(mensajes._id); }} >
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z" />
+                                        </svg>
+                                    </button>
                                     </Card.Body>
 
 
 
                                 </Card>
-                            </Link>
+                            
                         }
 
                     </div>

@@ -378,7 +378,7 @@ class NuevoDocumento extends Component {
          const { open } = this.state.open;*/
 
 
-        if (this.props.type == 'documento') {
+        if (this.props.type === 'documento') {
             return (
 
 
@@ -396,12 +396,12 @@ class NuevoDocumento extends Component {
                             <form onSubmit={this.saveDocument} className="nuevo-doc">
                                 <div >
                                     {/*<label for="tittle">Titulo:</label>*/}
-                                    <input type="text" id="tittle" name="tittle" ref={this.titleRef} placeholder="Titulo" className="form-input-nuevo" />
+                                    <input type="text" id="tittle" name="tittle" ref={this.titleRef} placeholder="Titulo" className="form-input-nuevo" maxlength="35" />
                                     {this.validator.message('tittle', this.state.documento.title, 'required')}
                                 </div>
                                 <div >
                                     {/*<label for="tittle">Titulo:</label>*/}
-                                    <textarea type="text" id="descripcion" name="descripcion" ref={this.descripcionRef} placeholder="Comentario (opcional)" className="form-input-nuevo" style={{ resize:'none'}} />
+                                    <textarea type="text" id="descripcion" name="descripcion" ref={this.descripcionRef} maxlength="80" placeholder="Comentario (opcional)" className="form-input-nuevo" style={{ resize:'none'}} />
 
                                 </div>
                                 <div id="div_file" >
@@ -437,12 +437,12 @@ class NuevoDocumento extends Component {
                             <form onSubmit={this.saveDocument} className="nuevo-doc">
                                 <div >
                                     {/*<label for="tittle">Titulo:</label>*/}
-                                    <input type="text" id="tittle" name="tittle" ref={this.titleRef} placeholder="Titulo" className="form-input-nuevo" />
+                                    <input type="text" id="tittle" name="tittle" ref={this.titleRef} placeholder="Titulo"  maxlength="35" className="form-input-nuevo" />
                                     {this.validator.message('tittle', this.state.documento.title, 'required')}
                                 </div>
                                 <div >
                                     {/*<label for="tittle">Titulo:</label>*/}
-                                    <textarea type="text" id="descripcion" name="descripcion" ref={this.descripcionRef} placeholder="Comentario (opcional)" className="form-input-nuevo" style={{ resize:'none'}} />
+                                    <textarea type="text" id="descripcion" name="descripcion" ref={this.descripcionRef}  maxlength="80" placeholder="Comentario (opcional)" className="form-input-nuevo" style={{ resize:'none'}} />
 
                                 </div>
                                 <div id="div_file" >

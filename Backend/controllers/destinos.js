@@ -153,9 +153,14 @@ var controllers = {
 
     getDestinos: (req, res) => {
 
-        Destino.find().populate('profesor coordinador', '_id nombre apellido1 apellido2 telefono despacho edificio')
-            .exec((err, destino) => {
+        var page= 1;
+        if(req.params.page){
+            page=req.params.page;
+        }
 
+        var itemsPerPage=10;
+
+        Destino.find().populate('profesor coordinador', '_id nombre apellido1 apellido2 telefono despacho edificio').sort({pais:1}).paginate(page, itemsPerPage, (err, destino, total) =>{
                 if (err) {
                     return res.status(500).send({
                         status: 'error',
@@ -173,7 +178,9 @@ var controllers = {
                 return res.status(200).send({
 
                     status: 'sucess',
-                    destino
+                    destino,
+                    total: total,
+                    pages: Math.ceil(total/itemsPerPage),
                 });
             });
 

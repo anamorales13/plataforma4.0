@@ -17,6 +17,7 @@
     "express-session": "^1.17.1",
     "google-map-react": "^2.1.9",
     "jquery": "^3.5.1",
+    "mdbreact": "^4.27.0",
     "moment": "^2.29.1",
     "popper.js": "^1.16.1",
     "query-string": "^6.13.6",

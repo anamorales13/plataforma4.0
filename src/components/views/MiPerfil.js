@@ -84,45 +84,19 @@ class MiPerfil extends Component {
                             <div className="elemt-form">
                                 <header >
                                     <h2 className="form-perfil-title">Perfil</h2>
-
+                                    <hr/>
                                 </header>
-                                <div>
-                                    <div>
-                                        <div>
-                                            <ul className="form-perfil">
-                                                <li>
-                                                    <span className="form-perfil-value-title">Nombre</span>
-                                                    <span className="form-perfil-value">{this.state.identity.nombre}</span>
-                                                    <br /><br />
-                                                    <div className="form-line">
-
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <span className="form-perfil-value-title">Apellidos</span>
-                                                    <span className="form-perfil-value">{this.state.identity.apellido1 + " " + this.state.identity.apellido2}</span>
-                                                    <br /><br />
-                                                    <div className="form-line">
-
-                                                    </div>
-                                                </li>
-                                               
-                                                <li>
-                                                    <span className="form-perfil-value-title">Usuario</span>
-                                                    <span className="form-perfil-value">{this.state.identity.usuario}</span>
-                                                    <br /><br />
-                                                    <div className="form-line">
-
-                                                    </div>
-                                                </li>
+                                <div className="profesor-erasmus">
+                                    <h5><strong>Nombre: </strong> {this.state.identity.nombre + " " + this.state.identity.apellido1 + " " + this.state.identity.apellido2}</h5>
+                                    <h5><strong>Nombre de usuario: </strong> {this.state.identity.usuario}</h5>
 
 
-                                            </ul>
 
-                                        </div>
 
-                                    </div>
                                 </div>
+
+
+
                             </div>
                         </article>
 
@@ -130,72 +104,34 @@ class MiPerfil extends Component {
                             <div className="elemt-form">
                                 <header >
                                     <h2 className="form-perfil-title">Informacion de contacto</h2>
-
+                                    <hr/>
 
                                 </header>
-                                <div>
-                                    <div>
+                                <div className="profesor-erasmus">
+
+                                    <h5><strong>Correo electrónico: </strong>{this.state.identity.email}</h5>
+                                    <h5><strong>Teléfono: </strong> {this.state.identity.telefono}</h5>
+
+                                    {this.state.identity.tipo == 'profesor' &&
                                         <div>
-                                            <ul className="form-perfil">
-                                                <li>
-                                                    <span className="form-perfil-value-title">Email</span>
-                                                    <span className="form-perfil-value">{this.state.identity.email}</span>
-                                                    <br /><br />
-                                                    <div className="form-line">
-
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <span className="form-perfil-value-title">Teléfono</span>
-                                                    <span className="form-perfil-value">{this.state.identity.telefono}</span>
-                                                    <br /><br />
-                                                    <div className="form-line">
-
-                                                    </div>
-                                                </li>
-                                                {this.state.identity.tipo == 'profesor' &&
-                                                    <li>
-                                                        <span className="form-perfil-value-title">Edificio</span>
-                                                        <span className="form-perfil-value">{this.state.identity.edificio}</span>
-                                                        <br /><br />
-                                                        <div className="form-line">
-
-                                                        </div>
-                                                    </li>
-                                                }
-                                                {this.state.identity.tipo === "profesor" &&
-                                                    <li>
-                                                        <span className="form-perfil-value-title">Datos de interés</span>
-                                                        <span className="form-perfil-value">{this.state.identity.datos}</span>
-                                                        <br /><br />
-                                                        <div className="form-line">
-
-                                                        </div>
-                                                    </li>
-                                                }
-                                                {this.state.identity.tipo == 'profesor' &&
-                                                    <li>
-                                                        <span className="form-perfil-value-title">Numero despacho</span>
-                                                        <span className="form-perfil-value">{this.state.identity.despacho}</span>
-                                                        <br /><br />
-                                                        <div className="form-line">
-
-                                                        </div>
-                                                    </li>
-                                                }
-
-                                            </ul>
-
+                                            <h5><strong>Edificio: </strong>{this.state.identity.edificio}</h5>
+                                            <h5>{this.state.identity.datos}</h5>
+                                            <h5><strong>Nº Despacho: </strong>{this.state.identity.despacho}</h5>
+                                            <h5><strong>Tutoria</strong></h5>
+                                            <h5>{this.state.identity.tutoria}</h5>
                                         </div>
+                                    }
 
-                                    </div>
+
+
+
                                 </div>
-                            </div>
+                                </div>
                         </article>
                     </div>
-                </div>
+                    </div>
 
-            </div >
+                </div >
         );
     }
 }

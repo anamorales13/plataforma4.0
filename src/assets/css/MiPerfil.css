@@ -131,7 +131,7 @@ width:700px;
   }
 
   .elemt-form{
-      padding: 1.25em;
+      padding: 2.55em;
   }
 
  
@@ -152,6 +152,10 @@ width:700px;
     padding:2px 2px 2px 2px;
     width: 50%;
     border: 1px solid #ccc;
+  }
+
+  .form-edit-value{
+      padding:4px 4px 4px 4px;
   }
 
   .form-editImage-value{

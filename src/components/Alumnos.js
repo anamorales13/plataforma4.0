@@ -188,7 +188,7 @@ class Alumnos extends Component {
                             <Link size="small" color="secondary" style={{ color: 'rgb(16,8,168)' }} to={"/documentos/" + alumno._id} >
                                 Documentos
                          </Link>
-                            <Link size="small" color="primary" style={{ color: 'rgb(39,149,192)' }} to={"/dropbox/" + alumno._id + '/' + alumno.nombre + "/" + alumno.apellido1 + "/" + alumno.apellido2}>
+                            <Link size="small" color="primary" style={{ color: 'rgb(39,149,192)' }} to={"/nube/" + alumno._id + '/' + alumno.nombre + "/" + alumno.apellido1 + "/" + alumno.apellido2}>
                                 Nube Compartida
                          </Link>
 
@@ -241,7 +241,7 @@ class Alumnos extends Component {
                             <Link size="small" color="secondary" style={{ color: 'rgb(16,8,168)' }} to={"/documentos/" + alumno._id} >
                                 Documentos
                          </Link>
-                            <Link size="small" color="primary" style={{ color: 'rgb(39,149,192)' }} to={"/dropbox/" + alumno._id + "/" + alumno.nombre + "/" + alumno.apellido1 + "/" + alumno.apellido2}>
+                            <Link size="small" color="primary" style={{ color: 'rgb(39,149,192)' }} to={"/nube/" + alumno._id + "/" + alumno.nombre + "/" + alumno.apellido1 + "/" + alumno.apellido2}>
                                 Nube Compartida
                          </Link>
 

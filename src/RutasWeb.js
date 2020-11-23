@@ -28,6 +28,7 @@ import borrardestino from './components/admin/borrardestino';
 import baja from './components/baja';
 import coordinador from './components/admin/coordinador';
 import deleteProfesor from './components/admin/deleteProfesor';
+import responder from './components/mensajes/responder';
 
 class Rutas extends Component {
 
@@ -43,8 +44,8 @@ class Rutas extends Component {
                             <Route exact path="/inicio" component={Inicio} />
                             <Route exact path="/informacion" component={Informacion}></Route>
                             <Route exact path="/documentos/:id?" component={Documento}></Route>
-                            <Route exact path="/dropbox/:id?/:nombre?/:apellido1?/:apellido2?" component={Dropbox}></Route>
-                            <Route exact path="/mydropbox" component={mydropbox}></Route>
+                            <Route exact path="/nube/:id?/:nombre?/:apellido1?/:apellido2?" component={Dropbox}></Route>
+                            <Route exact path="/mi_nube" component={mydropbox}></Route>
                             <Route exact path="/user/profile/:id?" component={MiPerfil}></Route>
                             <Route exact path="/user/edit" component={EditPerfil}></Route>
                             <Route exact path="/user/erasmus" component={perfilErasmus}/>
@@ -52,6 +53,7 @@ class Rutas extends Component {
                             <Route exact path="/user/seguridad" component={PasswordEdit}></Route>
                             <Route exact path="/mensajes" component={recibidos} />
                             <Route exact path="/mensajes/enviar" component={enviar}/>
+                            <Route exact path="/responder/:id" component={responder}/>
                             <Route exact path="/mensajes/:id" component={mensaje}></Route>
                             <Route exact path="/enviados" component={enviados}/>
                             <Route exact path="/Alumnos" component={Alumnos} />

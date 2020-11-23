@@ -34,6 +34,7 @@ export class Useform extends Component {
         despacho: "",
         edificio: "",
         datos:"",
+        tutoria:"",
         alumno: {},
         profesor: {},
         
@@ -92,7 +93,8 @@ export class Useform extends Component {
             password: this.state.password1,
             despacho: this.state.despacho,
             edificio: this.state.edificio,
-            datos:this.state.datos
+            datos:this.state.datos,
+            tutoria: this.state.tutoria
 
         }
 
@@ -110,8 +112,8 @@ export class Useform extends Component {
         const { step } = this.state;
 
 
-        const { nombre, apellido1, apellido2, usuario, password1,password2, email1,email2, telefono, destino, alumno, profesor, despacho, edificio,datos  } = this.state;
-        const values = { nombre, apellido1, apellido2, usuario, password1,password2, email1,email2, telefono, destino, alumno, profesor, despacho, edificio,datos }
+        const { nombre, apellido1, apellido2, usuario, password1,password2, email1,email2, telefono, destino, alumno, profesor, despacho, edificio,datos, tutoria  } = this.state;
+        const values = { nombre, apellido1, apellido2, usuario, password1,password2, email1,email2, telefono, destino, alumno, profesor, despacho, edificio,datos, tutoria }
         const { tipo } = this.props.location.state
 
         switch (step) {

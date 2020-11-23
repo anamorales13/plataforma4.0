@@ -44,8 +44,8 @@ class baja extends Component {
                     'sucess'
                 )
 
-                localStorage.setItem('user', "");
-                localStorage.setItem('tipo', '');
+                localStorage.removeItem('user');
+              //  localStorage.setItem('tipo', '');
             })
 
 
@@ -57,7 +57,8 @@ class baja extends Component {
     render() {
         const { navigate } = this.state
         if (navigate) {
-            return <Redirect to="/" push={true} />
+            localStorage.clear();
+            window.location.assign('/')
         }
 
         return (

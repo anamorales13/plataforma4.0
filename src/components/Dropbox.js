@@ -12,6 +12,7 @@ import Global from '../Global';
 import ButtonIcon from "@material-ui/core/Button";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ReactPaginate from "react-paginate";
 
 import swal from 'sweetalert';
 
@@ -33,7 +34,12 @@ class Dropbox extends Component {
         docprofesor: [],
         status: null,
         identity: null,
-        alumno: {},
+        eliminado: {},
+        value:false,
+        pages:"",
+        currentPage:0,
+        mensajesPerPage: 5,
+        offset: 0,
 
 
 
@@ -43,32 +49,27 @@ class Dropbox extends Component {
     urlalumno = Global.urlalumno;
 
 
-
     constructor(props) {
         super(props);
         this.state = {
             identity: JSON.parse(localStorage.getItem('user')),
         };
-
-    }
-
-
-    componentWillMount() {
-        this.getDocumentos();
-    }
-
-    componentDidMount() {
         this.getDocumentos();
     }
 
 
-    getDocumentos() {
+    componentDidUpdate() {
+        this.getDocumentos();
+    }
+
+
+
+    getDocumentos = (e) => {
+      /*  e.preventDefault();*/
 
         var id = this.props.match.params.id;
-
-
-
-        if (this.state.identity.tipo=== 'Alumno') { //view: alumno
+        var pages= this.state.currentPage+1;
+        if (this.state.identity.tipo === 'Alumno') { //view: alumno
 
             /*axios.get(this.url + "documentosAlumnos/" + this.state.identity._id + '/' + this.state.identity.profesor)
                 .then(res => {
@@ -78,63 +79,105 @@ class Dropbox extends Component {
                     });
                 });*/
 
-            axios.get(this.url + "documentosProfesor/" + this.state.identity.profesor + '/' + this.state.identity._id)
+            axios.get(this.url + "documentosProfesor/" + this.state.identity.profesor + '/' + this.state.identity._id +"/" + pages)
                 .then(res => {
                     this.setState({
                         docprofesor: res.data.documento,
-                        status: 'sucess'
+                        status: 'sucess',
+                        pages:res.data.pages,
                     });
                 });
 
 
         }
-        else { //view: profesor
-
-            /* axios.get(this.url + "documentosAlumnos/" + id + '/'+ this.state.identity._id)
-                 .then(res => {
-                     this.setState({
-                         documentos: res.data.documento,
-                         status: 'sucess'
-                     });
-                 });
-             */
-            axios.get(this.url + "documentosProfesor/" + this.state.identity._id + '/' + id)
+        else { 
+            axios.get(this.url + "documentosProfesor/" + this.state.identity._id + '/' + id + '/'+ pages)
                 .then(res => {
                     this.setState({
                         docprofesor: res.data.documento,
-                        status: 'sucess'
+                        status: 'sucess',
+                        pages:res.data.pages,
                     });
                 });
 
         }
+    }
+
+
+    handlePageClick = mensajes => {
+       
+        const selectedPage = mensajes.selected;
+        const offset = selectedPage * this.state.mensajesPerPage;
+        this.setState({
+            currentPage: selectedPage,
+            offset: offset
+      
+       }, () => 
+            this.getDocumentos());
+        
     }
 
     delete(title) {
         axios.delete(this.url + "delete/" + title)
             .then(res => {
                 this.setState({
-                    status: 'sucess'
+                  
+                    status: 'sucess',
+                    value:true
+                });
+                swal({
+                    title: 'Documento eliminado con exito',
+                    text: "El documento ha sido eliminado correctamente",
+                    icon: "sucess",
+                    buttons: true,
                 })
-            })
-        swal(
-            'Documento eliminado con exito',
-            'El documento ha sido eliminado correctamente',
-            'success'
-        )
+                    .then((value) => {
+                        if (value) {
+                            window.location.reload(true);
+                        }
+                    });
 
-        this.forceUpdate();
+            })
+
+
+
+
     }
 
 
 
     render() {
 
+        let paginationElement;
+
+        if (this.state.pages > 1) {
+            paginationElement = (
+                <ReactPaginate
+                    previousLabel={"<<"}
+                    nextLabel={">>"}
+                    breakLabel={<span className="gap">...</span>}
+                    pageCount={this.state.pages}
+                    onPageChange={this.handlePageClick}
+                    forcePage={this.state.currentPage}
+                    containerClassName={"pagination justify-content-center"}
+                    pageClassName={"page-link"}
+                    previousClassName={"page-link"}
+                    previousLinkClassName={"page-item"}
+                    nextClassName={"page-link"}
+                    nextLinkClassName={"page-item"}
+                    disabledClassName={"disabled"}
+                    activeClassName={"page-item active"}
+                    activeLinkClassName={"page-link"}
+                />
+            )
+}
+
         if (this.state.docprofesor != undefined) {
             var listardocumentos = this.state.docprofesor.map((documentos) => {
                 return (
                     <div className="documento-item">
 
-                        <table aria-rowcount={this.state.docprofesor.length} className="table-dropbox">
+                        <table aria-rowcount={this.state.docprofesor.length} className="table-dropbox" >
                             <tbody>
                                 <tr>
                                     <td >
@@ -160,14 +203,18 @@ class Dropbox extends Component {
                                             <a target="_blank" href={this.url + '/get-image/' + documentos.url}>{documentos.title}</a>
                                         </div>
                                     </td>
-                                    <td>
-                                        {documentos.propietario==='Alumno' ? (
-                                              documentos.alumno.nombre + " " + documentos.alumno.apellido1 + " " + documentos.alumno.apellido2
-                                        ): 
-                                        documentos.profesor.nombre + " " + documentos.profesor.apellido1 + " " + documentos.profesor.apellido2
-                                        }
-                                      
+                                    <td style={{ overflow: 'auto', maxHeight: '200px' }}>
+                                        {documentos.descripcion}
                                     </td>
+                                    <td>
+                                        {documentos.propietario === 'Alumno' ? (
+                                            documentos.alumno.nombre + " " + documentos.alumno.apellido1 + " " + documentos.alumno.apellido2
+                                        ) :
+                                            documentos.profesor.nombre + " " + documentos.profesor.apellido1 + " " + documentos.profesor.apellido2
+                                        }
+
+                                    </td>
+
 
                                     <td>
                                         <spain>
@@ -199,7 +246,7 @@ class Dropbox extends Component {
                                 <h4 className="subtitulo-doc">Alumno: {this.props.match.params.nombre + " " + this.props.match.params.apellido1 + "  " + this.props.match.params.apellido2}</h4>
                             </div>
                         }
-                        {this.state.identity.tipo == "Alumno" &&
+                        {this.state.identity.tipo === "Alumno" &&
                             <h1 className="titulo-doc">DROPBOX</h1>
                         }
 
@@ -211,9 +258,10 @@ class Dropbox extends Component {
                                 <table className="table-dropbox dropbox-cabecera">
                                     <thead >
                                         <tr>
-                                            <th >Nombre</th>
-                                            <th >Subido por:</th>
-                                            <th>Fecha de subida</th>
+                                            <th className="table-dropbox-th" >Nombre</th>
+                                            <th className="table-dropbox-th">Comentario</th>
+                                            <th className="table-dropbox-th">Subido por:</th>
+                                            <th className="table-dropbox-th">Fecha de subida</th>
                                             <th className="th-pequeño"></th>
 
                                         </tr>
@@ -222,6 +270,7 @@ class Dropbox extends Component {
 
                             </div>
                             {listardocumentos}
+                            {paginationElement}
 
                         </div>
                         <div className="btn-docOficial">
@@ -241,13 +290,15 @@ class Dropbox extends Component {
                         {this.props.match.params.nombre != null &&
                             <h4 className="subtitulo-doc">{this.props.match.params.nombre + " " + this.props.match.params.apellido1 + "  " + this.props.match.params.apellido2}</h4>
                         }
+                        <h1 className="titulo-doc"></h1>
                     </div>
                     <div className=" grid-documentos-col">
                         <div>
-                            <div >
-                                <Spinner animation="border" role="status">
+                            <div style={{ textAlign: 'center' }}>
+                                <Spinner animation="border" role="status" >
                                     <span className="sr-only">Loading...</span>
                                 </Spinner>
+
                             </div>
 
                         </div>
@@ -270,4 +321,4 @@ class Dropbox extends Component {
     }
 }
 
-    export default Dropbox;
+export default Dropbox;

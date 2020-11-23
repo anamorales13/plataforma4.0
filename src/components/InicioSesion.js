@@ -100,8 +100,8 @@ class InicioSesion extends Component {
 
 
                 localStorage.setItem('user', JSON.stringify(this.state.alumno));
-                localStorage.setItem('token', this.state.token);
-                localStorage.setItem('tipo', 'alumno');
+              //  localStorage.setItem('token', this.state.token);
+              //  localStorage.setItem('tipo', 'alumno');
                 this.router.navigateByUrl('/');
 
                 //  this.get_token();

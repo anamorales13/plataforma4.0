@@ -12,6 +12,7 @@ import Global from '../Global';
 import ButtonIcon from "@material-ui/core/Button";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ReactPaginate from "react-paginate";
 
 import swal from 'sweetalert';
 
@@ -30,7 +31,11 @@ class mydropbox extends Component {
 
     state = {
         documentos:[],
-        identity: null
+        identity: null,
+        pages:"",
+        currentPage:0,
+        mensajesPerPage: 5,
+        offset: 0,
 
 
     };
@@ -60,26 +65,42 @@ class mydropbox extends Component {
 
     getDocumentos() {
 
+        var pages= this.state.currentPage+1;
 
         if (this.state.identity.tipo === "profesor") {
-            axios.get(this.url + "mydropboxProfesor/" + this.state.identity._id)
+            axios.get(this.url + "mydropboxProfesor/" + this.state.identity._id + '/'+ pages)
                 .then(res => {
                     this.setState({
                         documentos: res.data.documento,
-                        status: 'sucess'
+                        status: 'sucess',
+                        pages: res.data.pages
                     });
                 });
         } else {
-            axios.get(this.url + "mydropboxAlumno/" + this.state.identity._id)
+            axios.get(this.url + "mydropboxAlumno/" + this.state.identity._id + '/' + pages)
                 .then(res => {
                     this.setState({
                         documentos: res.data.documento,
-                        status: 'sucess'
+                        status: 'sucess',
+                        pages:res.data.pages
                     });
                 });
         }
     }
 
+
+    handlePageClick = mensajes => {
+       
+        const selectedPage = mensajes.selected;
+        const offset = selectedPage * this.state.mensajesPerPage;
+        this.setState({
+            currentPage: selectedPage,
+            offset: offset
+      
+       }, () => 
+            this.getDocumentos());
+        
+    }
 
     delete(title) {
         axios.delete(this.url + "delete/" + title)
@@ -100,6 +121,29 @@ class mydropbox extends Component {
 
 
     render() {
+        let paginationElement;
+
+        if (this.state.pages > 1) {
+            paginationElement = (
+                <ReactPaginate
+                    previousLabel={"<<"}
+                    nextLabel={">>"}
+                    breakLabel={<span className="gap">...</span>}
+                    pageCount={this.state.pages}
+                    onPageChange={this.handlePageClick}
+                    forcePage={this.state.currentPage}
+                    containerClassName={"pagination justify-content-center"}
+                    pageClassName={"page-link"}
+                    previousClassName={"page-link"}
+                    previousLinkClassName={"page-item"}
+                    nextClassName={"page-link"}
+                    nextLinkClassName={"page-item"}
+                    disabledClassName={"disabled"}
+                    activeClassName={"page-item active"}
+                    activeLinkClassName={"page-link"}
+                />
+            )
+}
 
 
         if (this.state.documentos != undefined ) {
@@ -189,6 +233,7 @@ class mydropbox extends Component {
 
                             </div>
                             {listardocumentos}
+                            {paginationElement}
                           
                         </div>
                         <div className="btn-docOficial">
@@ -213,7 +258,7 @@ class mydropbox extends Component {
                 <div className=" grid-documentos-col">
                     <div>
                         <div >
-                            <Spinner animation="border" role="status">
+                            <Spinner animation="border" role="status" style={{textAlign:'center'}}>
                                 <span className="sr-only">Loading...</span>
                             </Spinner>
                         </div>

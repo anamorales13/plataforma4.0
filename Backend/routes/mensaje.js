@@ -21,7 +21,9 @@ router.get('/messages/:id/:pages?', mensajeController.getEmittedMessage);
 router.get('/mensajes-no-leidos/:id', mensajeController.getMensajesNoVisto);
 router.get('/set-mensajes-leidos/:id', mensajeController.setMensajesVisto);
 router.get('/mensaje/:id', mensajeController.getMensaje);
+router.get('/responder/:id', mensajeController.getmensajeresponder);
 router.put('/marcar-leido/:id', mensajeController.marcarLeido);
+router.delete('/delete/:id', mensajeController.deletebyId);
 
 module.exports=router;
 

@@ -44,7 +44,7 @@ export class Useform extends Component {
 
     nextStep = (tipo) => {
         const { step } = this.state;
-        console.log("pasos:"+ step);
+        console.log("pasos:" + step);
         this.setState({
             step: step + 1
         });
@@ -74,7 +74,7 @@ export class Useform extends Component {
 
     }
 
-    guardarAlumno=()=> {
+    guardarAlumno = () => {
 
         var body = {
             nombre: this.state.nombre,
@@ -102,19 +102,24 @@ export class Useform extends Component {
         const { step } = this.state;
 
 
-        const { nombre, apellido1, apellido2, usuario, password1,password2, email1, email2, telefono, destino, alumno, profesor, despacho } = this.state;
+        const { nombre, apellido1, apellido2, usuario, password1, password2, email1, email2, telefono, destino, alumno, profesor, despacho } = this.state;
         const values = { nombre, apellido1, apellido2, usuario, password1, password2, email1, email2, telefono, destino, alumno, profesor, despacho }
         const { tipo } = this.props.location.state
 
         switch (step) {
-           case 1:
+            case 1:
                 return (
-                    <FormDatosPersonales
-                        nextStep={this.nextStep}
-                        handleChange={this.handleChange}
-                        values={values}
-                        tipo={tipo}
-                    />
+                    <div>
+                        <FormDatosPersonales
+                            nextStep={this.nextStep}
+                            handleChange={this.handleChange}
+                            values={values}
+                            tipo={tipo}
+                        />
+
+
+                    </div>
+
                 );
             case 2:
                 return (
@@ -128,18 +133,15 @@ export class Useform extends Component {
                 )
             case 3:
                 return (
-                    <div>
+                    <FormDatosErasmus
+                        nextStep={this.nextStep}
+                        prevStep={this.prevStep}
+                        handleChange={this.handleChange}
+                        values={values}
+                        tipo={tipo}
 
-                        <FormDatosErasmus
-                            nextStep={this.nextStep}
-                            prevStep={this.prevStep}
-                            handleChange={this.handleChange}
-                            values={values}
-                            tipo={tipo}
+                    />
 
-                        />
-
-                    </div>
 
                 );
 

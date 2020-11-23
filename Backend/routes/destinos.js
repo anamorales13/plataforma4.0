@@ -14,7 +14,7 @@ router.post('/save', DestinoController.save);
 router.get('/buscar',DestinoController.buscar );
 
 router.delete('/delete/:id', DestinoController.borrar);
-router.get('/destinos' , DestinoController.getDestinos);
+router.get('/destinos/:page?' , DestinoController.getDestinos);
 router.get('/destino/:id' , DestinoController.getdestino);
 router.get('/destinoByProfesor/:id', DestinoController.getDestinoByProfesor);
 router.put('/update_coordinador/:id', DestinoController.putcoordinador);

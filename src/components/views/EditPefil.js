@@ -37,6 +37,7 @@ class EditPerfil extends Component {
     apellido2Ref = React.createRef();
     imageRef = React.createRef();
     datosRef = React.createRef();
+    tutoriasRef= React.createRef();
 
     url = Global.url;
 
@@ -83,6 +84,7 @@ class EditPerfil extends Component {
 
 
 
+
             }
         });
 
@@ -100,6 +102,7 @@ class EditPerfil extends Component {
                 edificio: this.edificioRef.current.value,
                 despacho: this.despachoRef.current.value,
                 datos: this.datosRef.current.value,
+                tutoria: this.tutoriasRef.current.value,
 
 
 
@@ -156,6 +159,8 @@ class EditPerfil extends Component {
 
     updateUserProfesor = (e) => {
         e.preventDefault();
+        this.changeStateProfesor();
+
         if (this.validator.allValid()) {
             axios.put('http://localhost:3900/apiProfesor/update-user/' + this.state.identity._id, this.state.profesor)
                 .then(res => {
@@ -441,7 +446,8 @@ class EditPerfil extends Component {
                                             onChange={this.changeStateProfesor}
                                             type="text"
                                             defaultValue={this.state.identity.edificio}
-                                            ref={this.edificioRef} />
+                                            ref={this.edificioRef} 
+                                            maxLength="50" />
                                         {this.validator.message('edificio', this.state.profesor.edificio, 'required', { className: 'text-danger' })}
                                     </Form.Group>
 
@@ -456,19 +462,33 @@ class EditPerfil extends Component {
                                         {this.validator.message('despacho', this.state.profesor.despacho, 'required', { className: 'text-danger' })}
                                     </Form.Group>
 
-                                    <Form.Group className="form-edit" style={{ marginBottom: '0.8em' }}>
-                                        <label className="form-edit-value-title">Datos de interes</label>
+                                    <Form.Group className="form-edit" style={{ marginBottom: '1.2em' }}>
+                                        <label className="form-edit-value-title ">Datos de interes</label>
                                         <textarea
-                                            className=" form-control form-edit-value-textarea"
+                                            className=" form-control form-edit-value form-edit-value-textarea"
                                             style={{ resize: 'none' }}
                                             onChange={this.changeStateProfesor}
                                             type="textarea"
                                             defaultValue={this.state.identity.datos}
-                                            ref={this.datosRef} />
+                                            ref={this.datosRef} 
+                                            maxLength="80" />
+
+                                    </Form.Group>
+                                    <Form.Group className="form-edit" style={{ marginBottom: '1.5em' }}>
+                                        <label className="form-edit-value-title">Tutorias</label>
+                                        <textarea
+                                            className=" form-control form-edit-value form-edit-value-textarea"
+                                            style={{ resize: 'none' }}
+                                            onChange={this.changeStateProfesor}
+                                            type="textarea"
+                                            defaultValue={this.state.identity.tutoria}
+                                            ref={this.tutoriasRef}
+                                            maxLength="80"
+                                            />
 
                                     </Form.Group>
 
-                                    <input type="submit" value="ACTUALIZAR" className="btn-update" ></input>
+                                    <input type="submit" value="ACTUALIZAR" className="btn-update" style={{float:'right'}}></input>
                                 </Form>
 
 

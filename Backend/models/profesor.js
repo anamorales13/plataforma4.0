@@ -19,6 +19,7 @@ var ProfesorSchema=Schema ({
     image: String,
     tipo:String,
     datos:String,
+    tutoria: String,
   /*  alumnos:[{type: Schema.ObjectId, ref:'Alumno'}],*/
     rol:String
       

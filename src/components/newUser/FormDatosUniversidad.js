@@ -44,6 +44,10 @@ export class FormDatosUniversidad extends Component {
             }
         }
 
+        if (!this.props.values.tutoria) {
+            errors.tutoria = "Campo obligatorio";
+        }
+
         return errors;
     }
 
@@ -132,6 +136,18 @@ export class FormDatosUniversidad extends Component {
                                         type="textarea"
                                         name="datos"
                                         placeholder="Datos de interés" />
+
+                                </Form.Group>
+                                <Form.Group >
+
+                                    <textarea
+                                        className="form-control-textarea"
+                                        style={{ width: '380px', height: '50px' }}
+                                        onChange={handleChange('tutoria')}
+                                        defaultValue={values.tutoria}
+                                        type="textarea"
+                                        name="datos"
+                                        placeholder="Tutorias" />
 
                                 </Form.Group>
 

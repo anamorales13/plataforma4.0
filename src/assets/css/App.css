@@ -168,7 +168,7 @@ color: rgb(6, 78, 129);
   border-radius: 3px;
   margin-bottom: 5px;
   margin-top: 10px;
-  transition: 150ms all;
+ /* transition: 150ms all;*/
   
   
   
@@ -488,7 +488,7 @@ input[type="submit"]:hover{
     /*para ocultar toda la imagen que sobresalga*/
     overflow:hidden;
     float:left;
-    margin-right: 15px;
+    margin-right: 5px;
     
   }
 
@@ -1083,6 +1083,11 @@ letter-spacing: 0.8px;
   width: 88%;
   margin-left: 70px;
 }
+
+.table-dropbox-th{
+  width: 22%;
+}
+
 
 .dropbox-cabecera{
   margin-top:30px;

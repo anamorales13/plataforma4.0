@@ -25,6 +25,8 @@ var controllers = {
             });
         }
 
+
+
         if (validate_title /*&& validate_url*/) {
             var documento = new Documento();
 
@@ -62,26 +64,26 @@ var controllers = {
 
 
 
-            if (params.tipousuario === 'Alumno'){
+            if (params.tipousuario === 'Alumno') {
                 documento.alumno = params.nombre;
-                documento.profesor=params.nombre2;
-                documento.propietario='Alumno';
+                documento.profesor = params.nombre2;
+                documento.propietario = 'Alumno';
             }
             else {
                 documento.profesor = params.nombre;
-                documento.alumno=params.nombre2;
-                documento.propietario="Profesor";
+                documento.alumno = params.nombre2;
+                documento.propietario = "Profesor";
             }
 
-            if(params.tipo_nube=='particular'){
-                documento.tipo_nube='particular';
-            }else{
-                documento.tipo_nube="compartida";
+            if (params.tipo_nube == 'particular') {
+                documento.tipo_nube = 'particular';
+            } else {
+                documento.tipo_nube = "compartida";
             }
 
             console.log(params.descripcion);
-            if(params.descripcion!=null){
-                documento.descripcion=params.descripcion;
+            if (params.descripcion != null) {
+                documento.descripcion = params.descripcion;
             }
 
             /*  if (params.comentario) {
@@ -93,19 +95,46 @@ var controllers = {
 
             //Guardar el objeto
 
-            documento.save((err, documentoStored) => {
-                if (err || !documentoStored) {
-                    return res.status(404).send({
-                        status: 'error',
-                        message: 'El documento no se ha guardado'
-                    });
-                }
+            Documento.findOne({ title: { $eq: params.title } })
+                .exec((err, doc) => {
+                    if (err) return res.status(500).send({
+                        status: 'err',
+                        message: "error en la peticion"
+                    })
 
-                return res.status(200).send({
-                    status: 'sucess',
-                    documento: documentoStored
-                });
-            });
+                    if (doc) { //existe el titulo del documento - modificamos el title.
+                        documento.title = documento.title + Math.floor(Math.random() * (1 - 100)) + 1;;
+                        documento.save((err, documentoStored) => {
+                            if (err || !documentoStored) {
+                                return res.status(404).send({
+                                    status: 'error',
+                                    message: 'El documento no se ha guardado'
+                                });
+                            }
+
+                            return res.status(200).send({
+                                status: 'sucess',
+                                documento: documentoStored
+                            });
+                        });
+                    }
+                    else { //no existe el documento
+
+                        documento.save((err, documentoStored) => {
+                            if (err || !documentoStored) {
+                                return res.status(404).send({
+                                    status: 'error',
+                                    message: 'El documento no se ha guardado'
+                                });
+                            }
+
+                            return res.status(200).send({
+                                status: 'sucess',
+                                documento: documentoStored
+                            });
+                        });
+                    }
+                })
         } else {
             return res.status(200).send({
                 status: 'error',
@@ -134,7 +163,8 @@ var controllers = {
 
                 return res.status(200).send({
                     status: 'sucess',
-                    message: 'Documento eliminado correctamente'
+                    message: 'Documento eliminado correctamente',
+                    documento: documento
                 })
             })
     },
@@ -142,143 +172,182 @@ var controllers = {
     getDocumentosAlumnos: (req, res) => {
 
         var userId = req.params.id;
-        var profesorId= req.params.idprofesor;
-        var tipo= "compartida";
-        
-        console.log(userId);       
-        
+        var profesorId = req.params.idprofesor;
+        var tipo = "compartida";
+
+
+
+        var page = 1;
+        if (req.params.pages) {
+            page = req.params.pages;
+        }
+
+        var itemsPerPage = 1;
+
         Documento.find({
             $and: [
                 { alumno: { $eq: userId } },
-                {profesor: {$eq:profesorId }},
+                { profesor: { $eq: profesorId } },
                 { tipo_nube: { $eq: tipo } }]
-        }).populate('alumno', 'nombre apellido1 apellido2')
-                .exec((err, documento) => {
+        }).populate('alumno', 'nombre apellido1 apellido2').paginate(page, itemsPerPage, (err, documento, total) => {
 
-                    if (err) {
-                        return res.status(500).send({
-                            status: 'error',
-                            message: 'Error en la petición'
-                        });
-                    }
 
-                    if (!documento || documento.length <= 0) {
-                        return res.status(404).send({
-                            status: 'error',
-                            message: ' no hay documentos que coincidan con tu usuario'
-                        });
-                    }
-                    console.log('hola');
-                    return res.status(200).send({
-
-                        status: 'sucess',
-                        documento
-                    });
+            if (err) {
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'Error en la petición'
                 });
-        
-            
-        
+            }
+
+            if (!documento || documento.length <= 0) {
+                return res.status(404).send({
+                    status: 'error',
+                    message: ' no hay documentos que coincidan con tu usuario'
+                });
+            }
+            console.log('hola');
+            return res.status(200).send({
+
+                status: 'sucess',
+                documento,
+                total: total,
+                pages: Math.ceil(total / itemsPerPage),
+            });
+        });
+
+
+
 
     },
 
-    getDocumentosProfesor: (req, res) =>{
-        var userId=req.params.id;
-        var alumnoId= req.params.idalumno;
-        var tipo="compartida"
-        
+    getDocumentosProfesor: (req, res) => {
+        var userId = req.params.id;
+        var alumnoId = req.params.idalumno;
+        var tipo = "compartida"
+
+
+        var page = 1;
+        if (req.params.pages) {
+            page = req.params.pages;
+        }
+
+        var itemsPerPage = 10;
+
+
+
         Documento.find({
             $and: [
                 { profesor: { $eq: userId } },
-                {alumno: {$eq: alumnoId}},
+                { alumno: { $eq: alumnoId } },
                 { tipo_nube: { $eq: tipo } }]
-        }).populate('profesor alumno', 'nombre apellido1 apellido2')
-                .exec((err, documento) => {
+        }).populate('profesor alumno', 'nombre apellido1 apellido2').paginate(page, itemsPerPage, (err, documento, total) => {
 
-                    if (err) {
-                        return res.status(500).send({
-                            status: 'error',
-                            message: 'Error en la petición'
-                        });
-                    }
 
-                    if (!documento || documento.length <= 0) {
-                        return res.status(404).send({
-                            status: 'error',
-                            message: ' no hay documentos que coincidan con tu usuario'
-                        });
-                    }
-                    console.log('hola');
-                    return res.status(200).send({
-
-                        status: 'sucess',
-                        documento
-                    });
+            if (err) {
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'Error en la petición'
                 });
+            }
+
+            if (!documento || documento.length <= 0) {
+                return res.status(404).send({
+                    status: 'error',
+                    message: ' no hay documentos que coincidan con tu usuario'
+                });
+            }
+            console.log('hola');
+            return res.status(200).send({
+
+                status: 'sucess',
+                documento,
+                total: total,
+                pages: Math.ceil(total / itemsPerPage),
+            });
+        });
     },
 
-    getmydropbox: (req,res) =>{
-        var userId=req.params.id;
-        var tipo="particular";
-        
-    Documento.find({
+    getmydropbox: (req, res) => {
+        var userId = req.params.id;
+        var tipo = "particular";
+
+        var page = 1;
+        if (req.params.pages) {
+            page = req.params.pages;
+        }
+
+        var itemsPerPage = 10;
+
+        Documento.find({
             $and: [
                 { profesor: { $eq: userId } },
                 { tipo_nube: { $eq: tipo } }]
-        }).populate('profesor', 'nombre apellido1 apellido2')
-                .exec((err, documento) => {
+        }).populate('profesor', 'nombre apellido1 apellido2').paginate(page, itemsPerPage, (err, documento, total) => {
 
-                    if (err) {
-                        return res.status(500).send({
-                            status: 'error',
-                            message: 'Error en la petición'
-                        });
-                    }
 
-                    if (!documento || documento.length <= 0) {
-                        return res.status(404).send({
-                            status: 'error',
-                            message: ' no hay documentos que coincidan con tu usuario'
-                        });
-                    }
-                    console.log('hola');
-                    return res.status(200).send({
-
-                        status: 'sucess',
-                        documento
-                    });
+            if (err) {
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'Error en la petición'
                 });
+            }
+
+            if (!documento || documento.length <= 0) {
+                return res.status(404).send({
+                    status: 'error',
+                    message: ' no hay documentos que coincidan con tu usuario'
+                });
+            }
+            console.log('hola');
+            return res.status(200).send({
+
+                status: 'sucess',
+                documento,
+                total: total,
+                pages: Math.ceil(total / itemsPerPage),
+            });
+        });
     },
-    getmydropboxAlumno: (req,res) =>{
-        var userId=req.params.id;
-        var tipo="particular";
-        
-    Documento.find({
+    getmydropboxAlumno: (req, res) => {
+        var userId = req.params.id;
+        var tipo = "particular";
+
+        var page = 1;
+        if (req.params.pages) {
+            page = req.params.pages;
+        }
+
+        var itemsPerPage = 10;
+
+        Documento.find({
             $and: [
                 { alumno: { $eq: userId } },
                 { tipo_nube: { $eq: tipo } }]
-        }).populate('alumno', 'nombre apellido1 apellido2')
-                .exec((err, documento) => {
+        }).populate('alumno', 'nombre apellido1 apellido2').paginate(page, itemsPerPage, (err, documento, total) => {
 
-                    if (err) {
-                        return res.status(500).send({
-                            status: 'error',
-                            message: 'Error en la petición'
-                        });
-                    }
 
-                    if (!documento || documento.length <= 0) {
-                        return res.status(404).send({
-                            status: 'error',
-                            message: ' no hay documentos que coincidan con tu usuario'
-                        });
-                    }
-                    console.log('hola');
-                    return res.status(200).send({
-
-                        status: 'sucess',
-                        documento
-                    });
+            if (err) {
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'Error en la petición'
                 });
+            }
+
+            if (!documento || documento.length <= 0) {
+                return res.status(404).send({
+                    status: 'error',
+                    message: ' no hay documentos que coincidan con tu usuario'
+                });
+            }
+            console.log('hola');
+            return res.status(200).send({
+
+                status: 'sucess',
+                documento,
+                total: total,
+                pages: Math.ceil(total / itemsPerPage),
+            });
+        });
     },
 
     upload: (req, res) => {

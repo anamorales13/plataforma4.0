@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import imagenlogo from '../../assets/images/logo-erasmus.png';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import Card from 'react-bootstrap/Card';
 
+import ReactPaginate from "react-paginate";
 
 
 export class FormDatosErasmus extends Component {
@@ -24,23 +24,38 @@ export class FormDatosErasmus extends Component {
     state = {
         destinos: [],
         alumno: {},
-        status: ""
+        status: "",
+        pages:"",
+        currentPage:0,
+        mensajesPerPage: 5,
+        offset: 0,
     }
+
+
 
     constructor(props) {
         super(props);
         this.listarDestinos();
     }
 
-    listarDestinos() {
-        axios.get('http://localhost:3900/apiDestino/destinos')
+    listarDestinos =(e) => {
+        var pages= this.state.currentPage+1;
+        axios.get('http://localhost:3900/apiDestino/destinos/' + pages)
             .then(res => {
                 this.setState({
                     destinos: res.data.destino,
+                    pages: res.data.pages
 
                 });
             });
+
     }
+
+    componentDidMount(){
+        this.listarDestinos();
+    }
+
+ 
 
 
     guardarDestino(alumno, update, profesor, coordinador) {
@@ -85,22 +100,7 @@ export class FormDatosErasmus extends Component {
 
                     })
                     console.log("mensaje");
-              /*  axios.put('http://localhost:3900/apiProfesor/saveAlumnos/' + profesor, body3)
-                    .then(res => {
-                        this.setState({
-                            status: 'sucess'
-                        });
-                    
-                       
-                    });
-                  
-
-                  /*  axios.put('http://localhost:3900/apiProfesor/saveAlumnos/' + coordinador, body3)
-                    .then(res => {
-                        this.setState({
-                            status: 'sucess'
-                        });
-                    });*/
+          
                     this.notificarProfesor(profesor);
                     this.notificarProfesor(coordinador);
                     
@@ -135,10 +135,45 @@ export class FormDatosErasmus extends Component {
             });
     }
 
+    handlePageClick = mensajes => {
+       
+        const selectedPage = mensajes.selected;
+        const offset = selectedPage * this.state.mensajesPerPage;
+        this.setState({
+            currentPage: selectedPage,
+            offset: offset
+      
+       }, () => 
+            this.listarDestinos());
+        
+    }
 
 
 
     render() {
+        let paginationElement;
+
+        if (this.state.pages > 1) {
+            paginationElement = (
+                <ReactPaginate
+                    previousLabel={"<<"}
+                    nextLabel={">>"}
+                    breakLabel={<span className="gap">...</span>}
+                    pageCount={this.state.pages}
+                    onPageChange={this.handlePageClick}
+                    forcePage={this.state.currentPage}
+                    containerClassName={"pagination justify-content-center"}
+                    pageClassName={"page-link"}
+                    previousClassName={"page-link"}
+                    previousLinkClassName={"page-item"}
+                    nextClassName={"page-link"}
+                    nextLinkClassName={"page-item"}
+                    disabledClassName={"disabled"}
+                    activeClassName={"page-item active"}
+                    activeLinkClassName={"page-link"}
+                />
+            )
+}
 
         const { values, handleChange, tipo } = this.props;
 
@@ -149,7 +184,7 @@ export class FormDatosErasmus extends Component {
                 <div>
                     {tipo == 'alumno' &&
                         <table>
-                            <tbody>
+                            <tbody style={{overflow:'scroll'}}>
                                 <tr>
                                     <td className="th-pequeño">
                                         {destino.pais}
@@ -199,7 +234,7 @@ export class FormDatosErasmus extends Component {
                             <div className="alert alert-success alert-sucess-middle">
 
                                 <strong>¡Destino guardado correctamente!</strong>
-                                <h5>Pulse <strong>CONFIMAR</strong> para completar el alta de usuario</h5>
+                                <h5>Pulse <strong>SIGUIENTE</strong> para completar el alta de usuario</h5>
                                 <button classsName="close" data-dismiss="alert"> <span>&times;</span></button>
                             </div>
 
@@ -213,10 +248,10 @@ export class FormDatosErasmus extends Component {
                         }
                     </div>
                     {/* NUEVOOOOO TABLAS */}
-
+                  
                     <table >
-                        <thead className="cabecera">
-                            <tr>
+                        <thead className="cabecera" >
+                            <tr style={{background:'white'}}>
                                 <th className="th-pequeño">Pais</th>
                                 <th className="th-pequeño">Ciudad</th>
                                 <th>Especialidad</th>
@@ -226,6 +261,8 @@ export class FormDatosErasmus extends Component {
                        
                     </table>
                     {listarDestinos}
+                      {paginationElement}
+                    
                     <table>
                         <tbody>
                     <button
@@ -233,7 +270,7 @@ export class FormDatosErasmus extends Component {
                         className="btn-continue form-login"
                         style={styles.button}
                         onClick={this.continue}
-                    > CONFIMAR </button>
+                    > SIGUIENTE </button>
                     <button
                         label="volver"
                         className="btn-back form-login"

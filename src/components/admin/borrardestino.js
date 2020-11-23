@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import Menu from './menu-admin';
-
+import ReactPaginate from "react-paginate";
 
 
 class borrar extends Component {
@@ -16,6 +16,10 @@ class borrar extends Component {
         profesor: "",
         update: {},
         status: "",
+        pages:"",
+        currentPage:0,
+        mensajesPerPage: 5,
+        offset: 0,
 
     }
 
@@ -37,11 +41,27 @@ class borrar extends Component {
 
     onCloseModal = () => { this.setState({ open: false }); }
 
+    handlePageClick = mensajes => {
+       
+        const selectedPage = mensajes.selected;
+        const offset = selectedPage * this.state.mensajesPerPage;
+        this.setState({
+            currentPage: selectedPage,
+            offset: offset
+      
+       }, () => 
+            this.listarDestinos());
+        
+    }
+
     listarDestinos() {
-        axios.get('http://localhost:3900/apiDestino/destinos')
+
+        var pages= this.state.currentPage+1;
+        axios.get('http://localhost:3900/apiDestino/destinos/'+ pages)
             .then(res => {
                 this.setState({
                     destinos: res.data.destino,
+                    pages:res.data.pages
 
                 });
             });
@@ -79,6 +99,30 @@ class borrar extends Component {
 
 
     render() {
+
+        let paginationElement;
+
+        if (this.state.pages > 1) {
+            paginationElement = (
+                <ReactPaginate
+                    previousLabel={"<<"}
+                    nextLabel={">>"}
+                    breakLabel={<span className="gap">...</span>}
+                    pageCount={this.state.pages}
+                    onPageChange={this.handlePageClick}
+                    forcePage={this.state.currentPage}
+                    containerClassName={"pagination justify-content-center"}
+                    pageClassName={"page-link"}
+                    previousClassName={"page-link"}
+                    previousLinkClassName={"page-item"}
+                    nextClassName={"page-link"}
+                    nextLinkClassName={"page-item"}
+                    disabledClassName={"disabled"}
+                    activeClassName={"page-item active"}
+                    activeLinkClassName={"page-link"}
+                />
+            )
+}
         const listarDestinos = this.state.destinos.map((destino) => {
             return (
 
@@ -150,6 +194,7 @@ class borrar extends Component {
                             </thead>
                         </table>
                         {listarDestinos}
+                        {paginationElement}
 
                     </div>
                 </div>

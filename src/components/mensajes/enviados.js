@@ -7,7 +7,7 @@ import GlobalPerfil from '../../Global';
 import Moment from 'react-moment';
 import Card from 'react-bootstrap/Card';
 import ReactPaginate from "react-paginate";
-
+import { Link, Redirect } from 'react-router-dom';
 
 
 class enviados extends Component {
@@ -21,7 +21,6 @@ class enviados extends Component {
         nuevoMensaje: {},
         pages:"",
         currentPage:0,
-        elements: [], //los que cargamos en la pagina actual
         mensajesPerPage: 5,
         offset: 0,
     }
@@ -44,6 +43,7 @@ class enviados extends Component {
 
                 this.setState({
                     mensaje: res.data.mensajes,
+                    pages:res.data.pages,
                     status: 'sucess',
 
                 });
@@ -52,6 +52,23 @@ class enviados extends Component {
             .catch(err => {
                 this.setState({
                     mensaje: {},
+                    status: 'failed'
+                });
+            });
+    }
+
+    deleteMessage(id) {
+        axios.delete(this.url + 'delete/' + id)
+            .then(res => {
+                this.setState({
+                    eliminado: res.data.mensaje,
+                    status: 'sucess',
+                });
+                window.location.reload(true);
+            })
+            .catch(err => {
+                this.setState({
+                    eliminado: {},
                     status: 'failed'
                 });
             });
@@ -81,8 +98,8 @@ class enviados extends Component {
         if (this.state.pages > 1) {
             paginationElement = (
                 <ReactPaginate
-                    previousLabel={"← Anterior"}
-                    nextLabel={"Siguiente →"}
+                    previousLabel={"<<"}
+                    nextLabel={">>"}
                     breakLabel={<span className="gap">...</span>}
                     pageCount={this.state.pages}
                     onPageChange={this.handlePageClick}
@@ -111,6 +128,7 @@ class enviados extends Component {
                                 <Card.Img variant="left" src={'http://localhost:3900/apiErasmus/get-image-user/' + this.state.identity.image} className="image-user" />
                               
                                 <Card.Body id="cardbody">
+                                <Link to={'/mensajes/' + mensajes._id}>
                                     <div className="mensaje-header">
                                         {mensajes.receptor.profesor !=null &&
                                         <h4 id="mensaje-nombre">Para: {mensajes.receptor.profesor.nombre + "  " + mensajes.receptor.profesor.apellido1 + "    " + mensajes.receptor.profesor.apellido2} </h4>
@@ -125,7 +143,12 @@ class enviados extends Component {
                                     <strong>{mensajes.asunto}       </strong>
                                         {mensajes.texto}
                                     </Card.Text>
-                                    <Card.Link href={'/mensajes/' + mensajes._id} className="mensaje-enlace">ver mensaje</Card.Link>
+                                    </Link>
+                                    <button href={"#"} className="mensaje-enlace boton-sin-estilo" onClick={() => { if (window.confirm('\n' + '¿Estas seguro de eliminar el mensaje ?')) this.deleteMessage(mensajes._id); }} >
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z" />
+                                        </svg>
+                                    </button>
                                 </Card.Body>
                             </Card>
 
@@ -148,8 +171,7 @@ class enviados extends Component {
                     <div>
                        
                         <h3 className="title-pantalla-mensaje">{this.state.title} </h3>
-                        
-                       
+                                        
                        
                         {listarmensajes}
                         {paginationElement}
