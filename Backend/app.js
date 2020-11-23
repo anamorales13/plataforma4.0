@@ -25,10 +25,11 @@ var mensaje_routes=require('./routes/mensaje');
 // 4- cargar middlewares: siempre se ejecuta antes de 
 //                     cargar una ruta de la web.
 
+/*
 app.use(express.static(path.join(__dirname, '../src/build')))
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '../src/build/index.html'))
-})
+})*/
 
 
 app.use(bodyParser.urlencoded({extended:false}))//cargar el bodyparser
